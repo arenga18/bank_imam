@@ -1,130 +1,84 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const cart = document.getElementById("cart");
-    const cartItemsInput = document.getElementById("cart-items-input");
-    const totalWeightInput = document.getElementById("total-weight-input");
-    const totalPriceInput = document.getElementById("total-price-input");
-    const continueButton = document.querySelector(
-        "#cart button[type='submit']"
-    );
+    const addToCartButtons = document.querySelectorAll(".add-to-cart");
+    const filterTags = document.querySelectorAll(".filter-tag");
+    const categoryGroups = document.querySelectorAll(".category-group");
+    const cartItems = [];
+    let totalWeight = 0;
+    let totalPrice = 0;
+    let itemTypes = 0;
 
-    // Load cart data from sessionStorage
-    let cartItems = JSON.parse(sessionStorage.getItem("cartItems")) || [];
-    let totalWeight = parseFloat(sessionStorage.getItem("totalWeight")) || 0;
-    let totalPrice = parseFloat(sessionStorage.getItem("totalPrice")) || 0;
+    addToCartButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+            const itemId = this.dataset.id;
+            const itemName = this.dataset.name;
+            const itemPrice = parseFloat(this.dataset.price);
+            const itemImage = this.dataset.image;
+            const itemWeight = 1; // Default weight to 1 kg
 
-    // Function to update cart display
-    function updateCartDisplay() {
-        // Group items by name and calculate total weight
-        const groupedItems = cartItems.reduce((acc, item) => {
-            if (!acc[item.name]) {
-                acc[item.name] = { ...item, weight: 0, count: 0 };
+            // Add item to cart
+            const cartItem = cartItems.find((item) => item.id === itemId);
+            if (cartItem) {
+                cartItem.weight += itemWeight;
+            } else {
+                cartItems.push({
+                    id: itemId,
+                    name: itemName,
+                    price: itemPrice,
+                    image: itemImage,
+                    weight: itemWeight,
+                });
+                itemTypes++;
             }
-            acc[item.name].weight += 1; // Assuming each item adds 1 Kg
-            acc[item.name].count += 1;
-            return acc;
-        }, {});
 
-        const groupedItemsArray = Object.values(groupedItems);
+            totalWeight += itemWeight;
+            totalPrice += itemPrice;
 
-        // Create HTML for cart items
-        const cartItemsHtml = groupedItemsArray
-            .map(
-                (item) => `
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                    <strong>${item.name}</strong>
-                    <div class="text-muted">
-                        Jual ${item.weight} Kg | ${item.count} Jenis Item
-                    </div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <a href="#" class="me-2 text-danger remove-from-cart" data-id="${item.id}"><i class="bi bi-trash"></i></a>
-                </div>
-            </li>
-        `
-            )
-            .join("");
+            updateCart();
+        });
+    });
 
-        document.getElementById("cart-items").innerHTML = cartItemsHtml;
+    filterTags.forEach((tag) => {
+        tag.addEventListener("click", function () {
+            const filter = this.dataset.filter;
+
+            // Update active tag
+            filterTags.forEach((t) => t.classList.remove("active"));
+            this.classList.add("active");
+
+            // Filter categories
+            categoryGroups.forEach((group) => {
+                if (filter === "all" || group.dataset.category === filter) {
+                    group.style.display = "block";
+                } else {
+                    group.style.display = "none";
+                }
+            });
+        });
+    });
+
+    function updateCart() {
+        const cartElement = document.getElementById("cart");
+        // const cartItemsElement = document.getElementById("cart-items");
+        const cartWeightElement = document.getElementById("cart-weight");
+        const cartTotalElement = document.getElementById("cart-total");
+        const cartItemsInput = document.getElementById("cart-items-input");
+        const totalWeightInput = document.getElementById("total-weight-input");
+        const totalPriceInput = document.getElementById("total-price-input");
+
+        // cartItemsElement.innerHTML = "";
+
+        cartWeightElement.textContent = `Jual · ${totalWeight} kg | ${itemTypes} jenis`;
+        cartTotalElement.textContent = `Rp. ${totalPrice}`;
+
         cartItemsInput.value = JSON.stringify(cartItems);
         totalWeightInput.value = totalWeight;
         totalPriceInput.value = totalPrice;
-        cart.classList.remove("d-none");
 
-        // Show or hide the continue button based on cart items
-        if (cartItems.length === 0) {
-            continueButton.classList.add("d-none");
-        } else {
-            continueButton.classList.remove("d-none");
-        }
+        cartElement.classList.remove("d-none");
+        cartElement.classList.add(
+            "d-flex",
+            "justify-content-between",
+            "align-items-center"
+        );
     }
-
-    // Add to cart button event listeners
-    document.querySelectorAll(".add-to-cart").forEach((button) => {
-        button.addEventListener("click", function () {
-            const itemId = this.getAttribute("data-id");
-            const itemName = this.getAttribute("data-name");
-            const itemPrice = parseFloat(this.getAttribute("data-price"));
-            const itemImage = this.getAttribute("data-image");
-
-            // Update cart items
-            cartItems.push({
-                id: itemId,
-                name: itemName,
-                price: itemPrice,
-                image: itemImage,
-            });
-
-            totalWeight += 1; // Assume each item adds 1 Kg for simplicity
-            totalPrice += itemPrice;
-
-            // Save to sessionStorage
-            sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
-            sessionStorage.setItem("totalWeight", totalWeight);
-            sessionStorage.setItem("totalPrice", totalPrice);
-
-            updateCartDisplay();
-        });
-    });
-
-    // Remove from cart button event listener
-    document.addEventListener("click", function (event) {
-        if (event.target.matches(".remove-from-cart, .remove-from-cart *")) {
-            event.preventDefault();
-
-            const itemId = event.target
-                .closest(".remove-from-cart")
-                .getAttribute("data-id");
-
-            // Debugging
-            console.log("Item ID to remove:", itemId);
-
-            // Remove item from cartItems
-            cartItems = cartItems.filter((item) => item.id !== itemId);
-
-            // Recalculate total weight and price
-            totalWeight = cartItems.length; // Assuming 1 Kg per item
-            totalPrice = cartItems.reduce(
-                (total, item) => total + item.price,
-                0
-            );
-
-            // Save updated cart to sessionStorage
-            sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
-            sessionStorage.setItem("totalWeight", totalWeight);
-            sessionStorage.setItem("totalPrice", totalPrice);
-
-            updateCartDisplay();
-        }
-    });
-
-    // Update cart display on form submit
-    document
-        .getElementById("sales-form")
-        .addEventListener("submit", function (event) {
-            updateCartDisplay();
-        });
-
-    // Initial display update
-    updateCartDisplay();
 });
