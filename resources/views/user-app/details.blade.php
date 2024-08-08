@@ -3,13 +3,13 @@
 @section('content')
 
 <header class="gradient-brand-toRight mx-auto rounded-bottom" style="max-width: 428px; width: 100%">
-    <a href="{{ url('dashboard') }}">
-        <i style="font-size: 1.3rem; color: black;" class="bi bi-arrow-left me-3"></i>
+    <a href="{{ url('kategori-sampah') }}" class="d-inline-block m-3 mb-0">
+        <i style="font-size: 2rem; color: white;" class="bi bi-arrow-left me-3"></i>
     </a>
     {{-- Nav Header --}}
     <div class="container text-center px-4 py-4">
         <div class="row">
-            <div class="col py-4 text-center text-light">
+            <div class="col text-center text-light">
                 <h4 class="mb-0 fw-bold" style="letter-spacing: 1px;">
                     DETAIL TRANSAKSI
                 </h4>

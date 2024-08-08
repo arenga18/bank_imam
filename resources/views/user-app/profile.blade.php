@@ -3,10 +3,23 @@
 
 @section('content')
 <div id="profile-detail" class="main-container" style="min-height: 100vh">
-    <header id="profile-header" class="mx-auto py-4" style="max-width: 428px; width: 100%">
+    <header class="gradient-brand-toRight mx-auto rounded-bottom" style="max-width: 428px; width: 100%">
+        <a href="{{ url('kategori-sampah') }}" class="d-inline-block m-3 mb-0">
+            <i style="font-size: 2rem; color: black;" class="bi bi-arrow-left me-3"></i>
+        </a>
+        {{-- Nav Header --}}
+        <div class="container text-center px-4 py-4">
+            <div class="row">
+                <div class="col text-center text-light">
+                    <h4 class="text-black mb-0 fw-bold" style="letter-spacing: 1px;">
+                        EDIT PROFIL
+                    </h4>
+                </div>
+            </div>
+        </div>
     </header>
     <div class="row">
-        <div class="col d-flex justify-content-center">
+        <div class="col d-flex justify-content-center mt-4">
             <img class="rounded-circle border border-3 border-white" style="z-index:11;" width="150px"
                 src="{{ $user->picture ?? asset('/images/profile3.png') }}">
         </div>
@@ -44,41 +57,12 @@
                 <input type="password" class="form-control" value="password" disabled readonly>
             </div> --}}
             <div class="row mt-4 mx-4 mb-5 pb-5">
-                <button type="submit" class="btn btn-primary rounded-pill fw-bold my-2 px-4 py-2">
+                <button type="submit" class="btn btn-primary-custom rounded-pill fw-bold my-2 px-4 py-2">
                     Simpan
                 </button>
             </div>
         </form>
 
-    </div>
-
-</div>
-<div class="navigation-menu">
-    <div class="container d-flex justify-content-evenly">
-        <div>
-            <a class="btn btn-lg border-0 px-1 py-auto" href="/dashboard">
-                <i class="bi bi-house" style="font-size: 1.5rem; color:#0575E6;"></i>
-                <p class="text-dark fw-bold font-sm p-0 m-0">Beranda</p>
-            </a>
-        </div>
-        <div>
-            <a class="btn btn-lg border-0 px-1 py-auto" href="/kategori-sampah">
-                <i class="bi bi-trash" style="font-size: 1.5rem; color:#0575E6;"></i>
-                <p class="text-dark fw-bold font-sm p-0 m-0">Kategori</p>
-            </a>
-        </div>
-        <div>
-            <a class="btn btn-lg border-0 px-1 py-auto" href="/profile">
-                <i class="bi bi-person" style="font-size: 1.5rem; color:#0575E6;"></i>
-                <p class="text-dark fw-bold font-sm p-0 m-0">Profil</p>
-            </a>
-        </div>
-        <div>
-            <a class=" btn btn-lg border-0 px-1 py-auto" href="/settings" role="button">
-                <i class="bi bi-gear" style="font-size: 1.5rem; color:#0575E6;"></i>
-                <p class="text-dark fw-bold font-sm p-0 m-0">Pengaturan</p>
-            </a>
-        </div>
     </div>
 </div>
 @endsection

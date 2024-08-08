@@ -5,11 +5,11 @@
     {{-- Nav Header --}}
     <div class="container text-center px-4">
         <div class="row">
-            <div class="col py-4 d-flex align-items-center justify-content-between text-start text-light">
+            <div class="col py-4 d-flex align-items-center justify-content-between text-start ">
                 <div>
-                    <p class="mb-0" style="font-weight: 500; letter-spacing: 1px;">
+                    <h5 class="mb-0" style="font-weight: 500;">Hi, 
                         {{ auth()->user()->username ?? 'Anonim'}}
-                    </p>
+                    </h5>
                 </div>
                 <div class="profile">
                     <img src="{{ auth()->user()->picture ?? asset('images/profile3.png') }}" alt="profile"
@@ -21,7 +21,7 @@
 </header>
 <div id="tukar-poin-page" class="main-container">
     <div class="container pt-4">
-        <div class="row mt-2 mx-3 py-3 rounded-3 text-light gradient-brand-toRight">
+        <div class="row mt-2 mx-3 py-3 rounded-3 gradient-brand-toRight">
             <div class="col my-auto text-center">
                 <img class="m-0" src="{{ asset('images/logo-hero.png') }}" alt="we-cycle-logo" srcset="">
                 <p class="m-0 fw-bold">Points</p>

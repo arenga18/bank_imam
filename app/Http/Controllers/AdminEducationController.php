@@ -1,71 +1,55 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
+	use Session;
+	use Request;
+	use DB;
+	use CRUDBooster;
 
-use DB;
-use Request;
-use Session;
-use CRUDBooster;
-use App\Models\Point;
+	class AdminEducationController extends \crocodicstudio\crudbooster\controllers\CBController {
 
-class AdminTransactionsController extends \crocodicstudio\crudbooster\controllers\CBController
-{
+	    public function cbInit() {
 
-	public function cbInit()
-	{
+			# START CONFIGURATION DO NOT REMOVE THIS LINE
+			$this->title_field = "id";
+			$this->limit = "20";
+			$this->orderby = "updated_at,desc";
+			$this->global_privilege = false;
+			$this->button_table_action = true;
+			$this->button_bulk_action = true;
+			$this->button_action_style = "button_icon";
+			$this->button_add = true;
+			$this->button_edit = true;
+			$this->button_delete = true;
+			$this->button_detail = true;
+			$this->button_show = true;
+			$this->button_filter = true;
+			$this->button_import = false;
+			$this->button_export = false;
+			$this->table = "education";
+			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
-		# START CONFIGURATION DO NOT REMOVE THIS LINE
-		$this->title_field = "id";
-		$this->limit = "20";
-		$this->orderby = "updated_at,desc";
-		$this->global_privilege = false;
-		$this->button_table_action = true;
-		$this->button_bulk_action = true;
-		$this->button_action_style = "button_icon";
-		$this->button_add = true;
-		$this->button_edit = true;
-		$this->button_delete = true;
-		$this->button_detail = true;
-		$this->button_show = true;
-		$this->button_filter = true;
-		$this->button_import = false;
-		$this->button_export = false;
-		$this->table = "transactions";
-		# END CONFIGURATION DO NOT REMOVE THIS LINE
+			# START COLUMNS DO NOT REMOVE THIS LINE
+			$this->col = [];
+			$this->col[] = ["label"=>"Judul","name"=>"judul"];
+			$this->col[] = ["label"=>"Url","name"=>"url"];
+			$this->col[] = ["label"=>"Gambar","name"=>"gambar","image"=>true];
+			# END COLUMNS DO NOT REMOVE THIS LINE
 
-		# START COLUMNS DO NOT REMOVE THIS LINE
-		$this->col = [];
-		$this->col[] = ["label" => "Nama User", "name" => "user_id", "join" => "users,username"];
-		$this->col[] = ["label" => "Nama Petugas", "name" => "admin_id", "join" => "cms_users,name"];
-		$this->col[] = ["label" => "Jenis Sampah", "name" => "sampah_id", "join" => "sampah,name"];
-		$this->col[] = ["label" => "Total Berat", "name" => "total_weight"];
-		$this->col[] = ["label" => "Total Pendapatan", "name" => "total_income"];
-		$this->col[] = ["label" => "Poin Didapat", "name" => "point_received"];
-		$this->col[] = ["label" => "Bukti Foto", "name" => "photo_evidence", "image"=>true];
-		# END COLUMNS DO NOT REMOVE THIS LINE
+			# START FORM DO NOT REMOVE THIS LINE
+			$this->form = [];
+			$this->form[] = ['label'=>'Judul','name'=>'judul','type'=>'text','validation'=>'required|string|min:3|max:355','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
+			$this->form[] = ['label'=>'Url','name'=>'url','type'=>'textarea','validation'=>'required|string|min:5|max:5000','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Gambar','name'=>'gambar','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
+			# END FORM DO NOT REMOVE THIS LINE
 
-		# START FORM DO NOT REMOVE THIS LINE
-		$this->form = [];
-		$this->form[] = ['label' => 'Nama User', 'name' => 'user_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'users,username'];
-		$this->form[] = ['label' => 'Nama Petugas', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name'];
-		$this->form[] = ['label' => 'Jenis Sampah', 'name' => 'sampah_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'sampah,name', 'datatable_format' => 'name,\'. Harga per Kg =  \',price_per_kg'];
-		$this->form[] = ['label' => 'Total Berat(kg)', 'name' => 'total_weight', 'type' => 'text', 'validation' => 'required|min:0|numeric', 'width' => 'col-sm-10'];
-		$this->form[] = ['label' => 'Total Pendapatan', 'name' => 'total_income', 'type' => 'number', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'readonly' => 'true'];
-		$this->form[] = ['label' => 'Poin Didapat', 'name' => 'point_received', 'type' => 'number', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'readonly' => 'true'];
-		$this->form[] = ['label' => 'Bukti Foto', 'name' => 'photo_evidence', 'type' => 'upload', 'validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-		# END FORM DO NOT REMOVE THIS LINE
+			# OLD START FORM
+			//$this->form = [];
+			//$this->form[] = ["label"=>"Judul","name"=>"judul","type"=>"text","required"=>TRUE,"validation"=>"required|string|min:3|max:70","placeholder"=>"You can only enter the letter only"];
+			//$this->form[] = ["label"=>"Url","name"=>"url","type"=>"textarea","required"=>TRUE,"validation"=>"required|string|min:5|max:5000"];
+			//$this->form[] = ["label"=>"Gambar","name"=>"gambar","type"=>"upload","required"=>TRUE,"validation"=>"required|image|max:3000","help"=>"File types support : JPG, JPEG, PNG, GIF, BMP"];
+			# OLD END FORM
 
-		# OLD START FORM
-		//$this->form = [];
-		//$this->form[] = ['label'=>'Nama User','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,username'];
-		//$this->form[] = ['label'=>'Nama Admin','name'=>'admin_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name'];
-		//$this->form[] = ['label'=>'Jenis Sampah','name'=>'sampah_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'sampah,name','datatable_format'=>'name,\'. Harga per Kg =  \',price_per_kg'];
-		//$this->form[] = ['label'=>'Total Berat','name'=>'total_weight','type'=>'number','validation'=>'required|min:0','width'=>'col-sm-10'];
-		//$this->form[] = ['label'=>'Total Pendapatan','name'=>'total_income','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','readonly'=>'true'];
-		//$this->form[] = ['label'=>'Poin Didapat','name'=>'point_received','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','readonly'=>'true'];
-		# OLD END FORM
-
-		/* 
+			/* 
 	        | ---------------------------------------------------------------------- 
 	        | Sub Module
 	        | ----------------------------------------------------------------------     
@@ -77,10 +61,10 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 			| @parent_columns = Sparate with comma, e.g : name,created_at
 	        | 
 	        */
-		$this->sub_module = array();
+	        $this->sub_module = array();
 
 
-		/* 
+	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add More Action Button / Menu
 	        | ----------------------------------------------------------------------     
@@ -91,10 +75,10 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | @showIf 	   = If condition when action show. Use field alias. e.g : [id] == 1
 	        | 
 	        */
-		$this->addaction = array();
+	        $this->addaction = array();
 
 
-		/* 
+	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add More Button Selected
 	        | ----------------------------------------------------------------------     
@@ -104,10 +88,10 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | Then about the action, you should code at actionButtonSelected method 
 	        | 
 	        */
-		$this->button_selected = array();
+	        $this->button_selected = array();
 
-
-		/* 
+	                
+	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add alert message to this module at overheader
 	        | ----------------------------------------------------------------------     
@@ -115,11 +99,11 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | @type    = warning,success,danger,info        
 	        | 
 	        */
-		$this->alert        = array();
+	        $this->alert        = array();
+	                
 
-
-
-		/* 
+	        
+	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Add more button to header button 
 	        | ----------------------------------------------------------------------     
@@ -128,11 +112,11 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | @icon  = Icon from Awesome.
 	        | 
 	        */
-		$this->index_button = array();
+	        $this->index_button = array();
 
 
 
-		/* 
+	        /* 
 	        | ---------------------------------------------------------------------- 
 	        | Customize Table Row Color
 	        | ----------------------------------------------------------------------     
@@ -140,21 +124,21 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | @color = Default is none. You can use bootstrap success,info,warning,danger,primary.        
 	        | 
 	        */
-		$this->table_row_color = array();
+	        $this->table_row_color = array();     	          
 
-
-		/*
+	        
+	        /*
 	        | ---------------------------------------------------------------------- 
 	        | You may use this bellow array to add statistic at dashboard 
 	        | ---------------------------------------------------------------------- 
 	        | @label, @count, @icon, @color 
 	        |
 	        */
-		$this->index_statistic = array();
+	        $this->index_statistic = array();
 
 
 
-		/*
+	        /*
 	        | ---------------------------------------------------------------------- 
 	        | Add javascript at body 
 	        | ---------------------------------------------------------------------- 
@@ -162,30 +146,10 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | $this->script_js = "function() { ... }";
 	        |
 	        */
-		$this->script_js = "
-  				$(function() {
-					let income = document.getElementsByName('total_income')[0];
-					let pointReceived = document.getElementsByName('point_received')[0];
-					let totalWeight = document.getElementsByName('total_weight')[0];
-					
-					totalWeight.addEventListener('change', setIncomeAndPointValue);
-
-					function setIncomeAndPointValue(){
-						// Get Sampah Price and convert to string
-						var sampah = document.getElementsByClassName('select2-selection__rendered')[2].innerText;
-						var match = sampah.match(/\d+$/);
-						var price = match ? parseInt(match[0]) : null;
-						
-						// fill total income and total point received automatically
-						var weight = this.value;
-						income.value = price * weight;
-						pointReceived.value = Math.round(weight * 100);
-					}
-  				});
-			";
+	        $this->script_js = NULL;
 
 
-		/*
+            /*
 	        | ---------------------------------------------------------------------- 
 	        | Include HTML Code before index table 
 	        | ---------------------------------------------------------------------- 
@@ -193,11 +157,11 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | $this->pre_index_html = "<p>test</p>";
 	        |
 	        */
-		$this->pre_index_html = null;
-
-
-
-		/*
+	        $this->pre_index_html = null;
+	        
+	        
+	        
+	        /*
 	        | ---------------------------------------------------------------------- 
 	        | Include HTML Code after index table 
 	        | ---------------------------------------------------------------------- 
@@ -205,11 +169,11 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | $this->post_index_html = "<p>test</p>";
 	        |
 	        */
-		$this->post_index_html = null;
-
-
-
-		/*
+	        $this->post_index_html = null;
+	        
+	        
+	        
+	        /*
 	        | ---------------------------------------------------------------------- 
 	        | Include Javascript File 
 	        | ---------------------------------------------------------------------- 
@@ -217,11 +181,11 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | $this->load_js[] = asset("myfile.js");
 	        |
 	        */
-		$this->load_js = array();
-
-
-
-		/*
+	        $this->load_js = array();
+	        
+	        
+	        
+	        /*
 	        | ---------------------------------------------------------------------- 
 	        | Add css style at body 
 	        | ---------------------------------------------------------------------- 
@@ -229,11 +193,11 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | $this->style_css = ".style{....}";
 	        |
 	        */
-		$this->style_css = NULL;
-
-
-
-		/*
+	        $this->style_css = NULL;
+	        
+	        
+	        
+	        /*
 	        | ---------------------------------------------------------------------- 
 	        | Include css File 
 	        | ---------------------------------------------------------------------- 
@@ -241,11 +205,13 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | $this->load_css[] = asset("myfile.css");
 	        |
 	        */
-		$this->load_css = array();
-	}
+	        $this->load_css = array();
+	        
+	        
+	    }
 
 
-	/*
+	    /*
 	    | ---------------------------------------------------------------------- 
 	    | Hook for button selected
 	    | ---------------------------------------------------------------------- 
@@ -253,65 +219,59 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    | @button_name = the name of button
 	    |
 	    */
-	public function actionButtonSelected($id_selected, $button_name)
-	{
-	}
+	    public function actionButtonSelected($id_selected,$button_name) {
+	        //Your code here
+	            
+	    }
 
 
-	/*
+	    /*
 	    | ---------------------------------------------------------------------- 
 	    | Hook for manipulate query of index result 
 	    | ---------------------------------------------------------------------- 
 	    | @query = current sql query 
 	    |
 	    */
-	public function hook_query_index(&$query)
-	{
-		//Your code here
+	    public function hook_query_index(&$query) {
+	        //Your code here
+	            
+	    }
 
-	}
-
-	/*
+	    /*
 	    | ---------------------------------------------------------------------- 
 	    | Hook for manipulate row of index table html 
 	    | ---------------------------------------------------------------------- 
 	    |
-	    */
-	public function hook_row_index($column_index, &$column_value)
-	{
-		//Your code here
-	}
+	    */    
+	    public function hook_row_index($column_index,&$column_value) {	        
+	    	//Your code here
+	    }
 
-	/*
+	    /*
 	    | ---------------------------------------------------------------------- 
 	    | Hook for manipulate data input before add data is execute
 	    | ---------------------------------------------------------------------- 
 	    | @arr
 	    |
 	    */
-	public function hook_before_add(&$postdata)
-	{
-		//Your code here
+	    public function hook_before_add(&$postdata) {        
+	        //Your code here
 
-	}
+	    }
 
-	/* 
+	    /* 
 	    | ---------------------------------------------------------------------- 
 	    | Hook for execute command after add public static function called 
 	    | ---------------------------------------------------------------------- 
 	    | @id = last insert id
 	    | 
 	    */
-	public function hook_after_add($id)
-	{
-		$user_point = Point::where('user_id', $_REQUEST['user_id'])->first();
-		$point_received = $_REQUEST['point_received'];
-		$user_point->update(
-			['total_points' => $user_point['total_points'] + $point_received]
-		);
-	}
+	    public function hook_after_add($id) {        
+	        //Your code here
 
-	/* 
+	    }
+
+	    /* 
 	    | ---------------------------------------------------------------------- 
 	    | Hook for manipulate data input before update data is execute
 	    | ---------------------------------------------------------------------- 
@@ -319,54 +279,50 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    | @id       = current id 
 	    | 
 	    */
-	public function hook_before_edit(&$postdata, $id)
-	{
-		//Your code here
+	    public function hook_before_edit(&$postdata,$id) {        
+	        //Your code here
 
-	}
+	    }
 
-	/* 
+	    /* 
 	    | ---------------------------------------------------------------------- 
 	    | Hook for execute command after edit public static function called
 	    | ----------------------------------------------------------------------     
 	    | @id       = current id 
 	    | 
 	    */
-	public function hook_after_edit($id)
-	{
-		//Your code here 
+	    public function hook_after_edit($id) {
+	        //Your code here 
 
-	}
+	    }
 
-	/* 
+	    /* 
 	    | ---------------------------------------------------------------------- 
 	    | Hook for execute command before delete public static function called
 	    | ----------------------------------------------------------------------     
 	    | @id       = current id 
 	    | 
 	    */
-	public function hook_before_delete($id)
-	{
-		//Your code here
+	    public function hook_before_delete($id) {
+	        //Your code here
 
-	}
+	    }
 
-	/* 
+	    /* 
 	    | ---------------------------------------------------------------------- 
 	    | Hook for execute command after delete public static function called
 	    | ----------------------------------------------------------------------     
 	    | @id       = current id 
 	    | 
 	    */
-	public function hook_after_delete($id)
-	{
-		//Your code here
+	    public function hook_after_delete($id) {
+	        //Your code here
+
+	    }
+
+
+
+	    //By the way, you can still create your own method in here... :) 
+
 
 	}
-
-
-
-	//By the way, you can still create your own method in here... :) 
-
-
-}

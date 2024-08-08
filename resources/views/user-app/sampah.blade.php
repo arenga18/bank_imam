@@ -3,16 +3,15 @@
 @section('content')
 
 <header class="gradient-brand-toRight mx-auto rounded-bottom" style="max-width: 428px; width: 100%">
-    <a href="{{ url('dashboard') }}">
-        <i style="font-size: 1.3rem; color: black;" class="bi bi-arrow-left me-3"></i>
-    </a>
     {{-- Nav Header --}}
-    <div class="container text-center px-4 py-4">
-        <div class="row">
-            <div class="col py-4 text-center text-light">
-                <h4 class="mb-0 fw-bold" style="letter-spacing: 1px;">
-                    KATEGORI PEMILAHAN <br>
-                    SAMPAH
+    <div class="container position-relative text-center py-4">
+        <div class="d-flex align-items-center">
+            <a href="{{ url('dashboard') }}" class="d-inline-block position-absolute">
+                <i style="font-size: 2rem; color: rgb(31, 31, 31);" class="bi bi-arrow-left me-3"></i>
+            </a>
+            <div class="col text-center text-light">
+                <h4 class="text-black mb-0 fw-bold" style="letter-spacing: 1px;">
+                    KATALOG SAMPAH
                 </h4>
             </div>
         </div>
@@ -30,22 +29,22 @@
 
         <!-- Category Groups -->
         @foreach ($sampahByCategory as $categoryId => $sampah)
-            <div class="category-group" data-category="{{ $categoryId }}">
+            <div class="category-group px-3" data-category="{{ $categoryId }}">
                 <h5 class="fw-bold mb-3">{{ $categoryId }}</h5>
                 <!-- Items -->
                 <div class="row">
                     @forelse ($sampah as $item)
                         <div class="col-6 mb-3 item-card">
-                            <div class="card border border-primary" data-category="{{ $categoryId }}">
-                                <img style="height: 110px;" src="{{ $item->image }}" class="card-img-top min-w-100" alt="...">
-                                <div class="card-body text-center d-flex justify-content-between">
-                                    <div class="">
-                                        <h6 class="card-title my-0 fw-bold">
-                                            Rp.{{ $item->price_per_kg }} /Kg
-                                        </h6>
-                                        <p class="card-text font-sm mt-0">{{ $item->name }}</p>
+                            <div class="card border-0 shadow rounded" data-category="{{ $categoryId }}">
+                                <img style="height: 140px;" src="{{ $item->image }}" class="card-img-top min-w-100" alt="...">
+                                <div class="card-body text-left d-flex mb-2">
+                                    <div class="d-flex justify-content-center flex-column w-100">
+                                        <h6 class="card-title fw-bold m-0">{{ $item->name }}</h6>
+                                        <p class="card-text my-0 secondary-color">
+                                            <span class="fw-semibold">Rp.{{ $item->price_per_kg }}</span>/Kg
+                                        </p>
                                     </div>
-                                    <button class="btn btn-primary add-to-cart" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price_per_kg }}" data-image="{{ $item->image }}">+</button>
+                                    {{-- <button class="btn btn-primary-custom add-to-cart" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price_per_kg }}" data-image="{{ $item->image }}">+</button> --}}
                                 </div>
                             </div>
                         </div>

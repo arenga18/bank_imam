@@ -10,6 +10,7 @@ use App\Http\Controllers\UserApp\HistoryController;
 use App\Http\Controllers\UserApp\RegisterController;
 use App\Http\Controllers\UserApp\TukarPoinController;
 use App\Http\Controllers\UserApp\SalesController;
+use App\Http\Controllers\UserApp\EducationalNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,5 +59,9 @@ Route::middleware(['auth'])->group(function () {
     // Sale
     Route::post('/sales/store', [SalesController::class, 'store'])->name('sales.store');
     Route::get('/transaction-details', [SalesController::class, 'showTransactionDetails'])->name('transaction.details');
+
+    // Education
+    Route::resource('educational-news', 'EducationalNewsController');
+    Route::get('/edukasi', [EducationalNewsController::class, 'index'])->name('edukasi.index');
 
 });

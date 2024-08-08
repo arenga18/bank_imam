@@ -136,30 +136,37 @@
         </div>
     </div>
 </div>
+{{-- NAVIGATION MENU --}}
 <div class="navigation-menu">
     <div class="container d-flex justify-content-evenly">
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/dashboard">
-                <i class="bi bi-house" style="font-size: 1.5rem; color:#0575E6;"></i>
-                <p class="text-dark fw-bold font-sm p-0 m-0">Beranda</p>
+                <i class="bi bi-house primary-color" style="font-size: 1.5rem;"></i>
+                <p class="fw-bold font-sm p-0 m-0">Beranda</p>
+            </a>
+        </div>
+        <div>
+            <a class="btn btn-lg border-0 px-1 py-auto" href="/tukar-poin">
+                <i class="bi bi-gift primary-color" style="font-size: 1.5rem;"></i>
+                <p class="fw-bold font-sm p-0 m-0">Rewards</p>
             </a>
         </div>
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/kategori-sampah">
-                <i class="bi bi-trash" style="font-size: 1.5rem; color:#0575E6;"></i>
-                <p class="text-dark fw-bold font-sm p-0 m-0">Kategori</p>
+                <i class="bi bi-trash primary-color" style="font-size: 1.5rem;"></i>
+                <p class="fw-bold font-sm p-0 m-0">Jual Sampah</p>
             </a>
         </div>
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/profile">
-                <i class="bi bi-person" style="font-size: 1.5rem; color:#0575E6;"></i>
-                <p class="text-dark fw-bold font-sm p-0 m-0">Profil</p>
+                <i class="bi bi-book primary-color" style="font-size: 1.5rem;"></i>
+                <p class="fw-bold font-sm p-0 m-0">Edukasi</p>
             </a>
         </div>
         <div>
             <a class=" btn btn-lg border-0 px-1 py-auto" href="/settings" role="button">
-                <i class="bi bi-gear" style="font-size: 1.5rem; color:#0575E6;"></i>
-                <p class="text-dark fw-bold font-sm p-0 m-0">Pengaturan</p>
+                <i class="bi bi-person primary-color" style="font-size: 1.5rem;"></i>
+                <p class="fw-bold font-sm p-0 m-0">Profil</p>
             </a>
         </div>
     </div>

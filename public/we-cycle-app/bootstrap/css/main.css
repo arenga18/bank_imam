@@ -11,6 +11,22 @@ body {
     background-color: #f7f7f7;
 }
 
+.primary-color {
+    color: #e1e973;
+}
+
+.secondary-color {
+    color: #235789;
+}
+
+.btn-primary-custom {
+    background: #e1e973;
+}
+
+.btn-primary-custom:hover {
+    background: #ccd368 !important;
+}
+
 .bg-green-main {
     background-color: var(--primary-green);
 }
@@ -66,15 +82,15 @@ body {
 }
 
 .gradient-brand {
-    background: linear-gradient(89.8deg, #00f260 -18.28%, #0575e6 113.98%);
+    background: linear-gradient(89.8deg, #d7f4b1 -18.28%, #f1d302 113.98%);
 }
 
 .gradient-brand-toRight {
-    background: linear-gradient(90deg, #00f260 -56.01%, #0575e6 142.08%);
+    background: linear-gradient(90deg, #d7f4b1 -56.01%, #f1d302 142.08%);
 }
 
 .gradient-top-bottom {
-    background: linear-gradient(180deg, #00f260 -39%, #0575e6 141%);
+    background: linear-gradient(180deg, #d7f4b1 -0%, #f1d302 141%);
 }
 
 #home-page {
@@ -156,7 +172,7 @@ body {
     position: relative;
     height: 200px;
     top: -90px;
-    background: linear-gradient(180deg, #00f260 -4.03%, #0575e6 100%);
+    background: linear-gradient(180deg, #d7f4b1 -4.03%, #f1d302 100%);
     border-radius: 180px;
     z-index: 10;
     margin-bottom: -160px;
@@ -179,15 +195,33 @@ body {
     cursor: pointer;
     padding: 5px 10px;
     margin: 5px;
-    border: 1px solid #0575e6;
+    background-color: #e1e97378;
     border-radius: 20px;
-    color: #0575e6;
+    color: #000000;
 }
 .filter-tag.active {
-    background-color: #0575e6;
-    color: white;
+    background-color: #e1e973;
+    color: black;
 }
 
 .container-body {
     min-height: 100vh;
+}
+
+.news-img {
+    width: 100px;
+}
+
+.judul-news {
+    text-decoration: none;
+}
+
+.text-truncate-2-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 3em; /* Sesuaikan dengan tinggi baris */
+    line-height: 1.5em; /* Sesuaikan dengan tinggi baris */
 }

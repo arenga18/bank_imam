@@ -4,11 +4,10 @@
 
 @section('content')
 <header class="dashboard-header gradient-top-bottom">
-    <div class="header-user">
+    <div class="header-user py-5 px-3">
         <div class="container text-center px-4">
-            <img class="mt-2" src="{{ asset('images/logo-hero.png') }}" alt="we-cycle-logo" srcset="">
-            <div class="row mt-4 ">
-                <div class="col d-flex justify-content-between text-start text-light">
+            <div class="row mt-6">
+                <div class="col d-flex justify-content-between text-start ">
                     <div class="text">
                         <p style="font-weight: 600; letter-spacing: 1px;">
                             Hi,<br>
@@ -42,16 +41,14 @@
 </header>
 <main id="dashboard-page" class="main-container">
     <div class="container pt-4 px-5">
-        <a href="/tukar-poin" class="card rounded-4 mb-1 landing-card-shadow border-light"
-            style="background-color: #0575E6 ">
-            <div class="row g-0">
+        <a href="/tukar-poin" class="card rounded-4 mb-1 landing-card-shadow border-light" style="background-color: #0575E6">
+            <div class="row g-0 gradient-brand-toRight">
                 <div class="col-3 d-flex justify-content-center align-items-center text-center">
-                    <img class="max-w-100" src="{{ asset('images/icons/gift-light.png') }}"
-                        class="img-fluid rounded-start" alt="reward">
+                    <i class="bi bi-gift-fill secondary-color" style="font-size: 3rem;"></i>
                 </div>
-                <div class="col-9 d-flex align-items-center px-2 py-3">
+                <div class="col-9 d-flex align-items-center px-2 py-3 ">
                     <div class="card-body text-light">
-                        <h6 class="card-title fw-bold mb-0">
+                        <h6 class="card-title fw-bold text-black mb-0">
                             Tukar Poinmu Sekarang!
                         </h6>
                     </div>
@@ -120,26 +117,32 @@
         <div class="container d-flex justify-content-evenly">
             <div>
                 <a class="btn btn-lg border-0 px-1 py-auto" href="/dashboard">
-                    <i class="bi bi-house" style="font-size: 1.5rem; color:#0575E6;"></i>
-                    <p class="text-dark fw-bold font-sm p-0 m-0">Beranda</p>
+                    <i class="bi bi-house primary-color" style="font-size: 1.5rem;"></i>
+                    <p class="primary-color font-sm p-0 m-0">Beranda</p>
+                </a>
+            </div>
+            <div>
+                <a class="btn btn-lg border-0 px-1 py-auto" href="/tukar-poin">
+                    <i class="bi bi-gift primary-color" style="font-size: 1.5rem;"></i>
+                    <p class="primary-color font-sm p-0 m-0">Rewards</p>
                 </a>
             </div>
             <div>
                 <a class="btn btn-lg border-0 px-1 py-auto" href="/kategori-sampah">
-                    <i class="bi bi-trash" style="font-size: 1.5rem; color:#0575E6;"></i>
-                    <p class="text-dark fw-bold font-sm p-0 m-0">Jual Sampah</p>
+                    <i class="bi bi-trash primary-color" style="font-size: 1.5rem;"></i>
+                    <p class="primary-color font-sm p-0 m-0">Jual Sampah</p>
                 </a>
             </div>
             <div>
-                <a class="btn btn-lg border-0 px-1 py-auto" href="/profile">
-                    <i class="bi bi-person" style="font-size: 1.5rem; color:#0575E6;"></i>
-                    <p class="text-dark fw-bold font-sm p-0 m-0">Edukasi</p>
+                <a class="btn btn-lg border-0 px-1 py-auto" href="/edukasi">
+                    <i class="bi bi-book primary-color" style="font-size: 1.5rem;"></i>
+                    <p class="primary-color font-sm p-0 m-0">Edukasi</p>
                 </a>
             </div>
             <div>
                 <a class=" btn btn-lg border-0 px-1 py-auto" href="/settings" role="button">
-                    <i class="bi bi-gear" style="font-size: 1.5rem; color:#0575E6;"></i>
-                    <p class="text-dark fw-bold font-sm p-0 m-0">Profil</p>
+                    <i class="bi bi-person primary-color" style="font-size: 1.5rem;"></i>
+                    <p class="primary-color font-sm p-0 m-0">Profil</p>
                 </a>
             </div>
         </div>
