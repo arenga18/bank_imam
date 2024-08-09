@@ -27,9 +27,9 @@
                 </div>
                 <div class="col border-start border-end border-2">
                     <p class="m-0 fw-bold">
-                        {{ $transactions->sum('total_income') }}
+                        {{ $saldo->total_saldo }}
                     </p>
-                    <p class="m-0 font-sm">Profit</p>
+                    <p class="m-0 font-sm">Saldo</p>
                 </div>
                 <div class="col">
                     <p class="m-0 fw-bold">{{ $tukar_poin}}</p>

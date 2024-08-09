@@ -19,6 +19,45 @@
 </div>
 {{-- REWARD --}}
 <div class="container pb-5 mb-5">
+    {{-- Reward Kategori 3 --}}
+    <div class="row mt-4 mx-3">
+        <h5 class="fw-bold ps-0 mb-3">Uang</h5>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                @if (isset($uang) || !empty($uang ))
+                @forelse ($uang as $reward)
+                <div class="swiper-slide me-3 w-50">
+                    <a class="text-dark text-decoration-none" href="{{url("/tukar-saldo/reward/{$reward->id}")}}">
+                        <div class="card">
+                            <img style="height: 78px;" src="{{ $reward->image }}" class="card-img-top min-w-100"
+                                alt="{{ $reward->name }}">
+                            <div class="card-body">
+                                <h6 class="card-title my-0 fw-bold">
+                                    Rp.{{ $reward->price }}
+                                </h6>
+                                <p class="card-text reward-name font-sm mt-0">
+                                    {{ $reward->name }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @empty
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title my-0 fw-bold">
+                            Belum Ada Data!
+                        </h6>
+                        <p class="card-text reward-name font-sm mt-0">
+                            Input data terlebih dulu!
+                        </p>
+                    </div>
+                </div>
+                @endforelse
+                @endif
+            </div>
+        </div>
+    </div>
     <div class="row mt-5 mx-3">
         <h5 class="fw-bold ps-0 mb-3">Hiasan</h5>
         <div class="swiper mySwiper">
@@ -32,7 +71,7 @@
                                 alt="{{ $reward->name }}">
                             <div class="card-body">
                                 <h6 class="card-title my-0 fw-bold">
-                                    {{ $reward->price }}
+                                    {{ $reward->price }} Poin 
                                 </h6>
                                 <p class="card-text reward-name font-sm mt-0">
                                     {{ $reward->name }}
@@ -96,45 +135,7 @@
             </div>
         </div>
     </div>
-    {{-- Reward Kategori 3 --}}
-    <div class="row mt-4 mx-3">
-        <h5 class="fw-bold ps-0 mb-3">Perlengkapan</h5>
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                @if (isset($perlengkapan) || !empty($perlengkapan ))
-                @forelse ($perlengkapan as $reward)
-                <div class="swiper-slide me-3 w-50">
-                    <a class="text-dark text-decoration-none" href="{{url("/tukar-poin/reward/{$reward->id}")}}">
-                        <div class="card">
-                            <img style="height: 78px;" src="{{ $reward->image }}" class="card-img-top min-w-100"
-                                alt="{{ $reward->name }}">
-                            <div class="card-body">
-                                <h6 class="card-title my-0 fw-bold">
-                                    {{ $reward->price }}
-                                </h6>
-                                <p class="card-text reward-name font-sm mt-0">
-                                    {{ $reward->name }}
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                @empty
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title my-0 fw-bold">
-                            Belum Ada Data!
-                        </h6>
-                        <p class="card-text reward-name font-sm mt-0">
-                            Input data terlebih dulu!
-                        </p>
-                    </div>
-                </div>
-                @endforelse
-                @endif
-            </div>
-        </div>
-    </div>
+    
 </div>
 {{-- NAVIGATION MENU --}}
 <div class="navigation-menu">
@@ -142,31 +143,31 @@
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/dashboard">
                 <i class="bi bi-house primary-color" style="font-size: 1.5rem;"></i>
-                <p class="fw-bold font-sm p-0 m-0">Beranda</p>
+                <p class="primary-color font-sm p-0 m-0">Beranda</p>
             </a>
         </div>
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/tukar-poin">
                 <i class="bi bi-gift primary-color" style="font-size: 1.5rem;"></i>
-                <p class="fw-bold font-sm p-0 m-0">Rewards</p>
+                <p class="primary-color font-sm p-0 m-0">Rewards</p>
             </a>
         </div>
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/kategori-sampah">
                 <i class="bi bi-trash primary-color" style="font-size: 1.5rem;"></i>
-                <p class="fw-bold font-sm p-0 m-0">Jual Sampah</p>
+                <p class="primary-color font-sm p-0 m-0">Jual Sampah</p>
             </a>
         </div>
         <div>
-            <a class="btn btn-lg border-0 px-1 py-auto" href="/profile">
+            <a class="btn btn-lg border-0 px-1 py-auto" href="/edukasi">
                 <i class="bi bi-book primary-color" style="font-size: 1.5rem;"></i>
-                <p class="fw-bold font-sm p-0 m-0">Edukasi</p>
+                <p class="primary-color font-sm p-0 m-0">Edukasi</p>
             </a>
         </div>
         <div>
             <a class=" btn btn-lg border-0 px-1 py-auto" href="/settings" role="button">
                 <i class="bi bi-person primary-color" style="font-size: 1.5rem;"></i>
-                <p class="fw-bold font-sm p-0 m-0">Profil</p>
+                <p class="primary-color font-sm p-0 m-0">Profil</p>
             </a>
         </div>
     </div>

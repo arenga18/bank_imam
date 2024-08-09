@@ -11,6 +11,10 @@ body {
     background-color: #f7f7f7;
 }
 
+main {
+    min-height: 100vh;
+}
+
 .primary-color {
     color: #e1e973;
 }
@@ -224,4 +228,9 @@ body {
     text-overflow: ellipsis;
     height: 3em; /* Sesuaikan dengan tinggi baris */
     line-height: 1.5em; /* Sesuaikan dengan tinggi baris */
+}
+
+.nominal-option.active {
+    border: 2px solid #52c41a;
+    background-color: #f0f0f0;
 }

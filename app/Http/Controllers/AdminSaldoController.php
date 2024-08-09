@@ -5,14 +5,14 @@
 	use DB;
 	use CRUDBooster;
 
-	class AdminRewardsController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class AdminSaldoController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "name";
+			$this->title_field = "id";
 			$this->limit = "20";
-			$this->orderby = "updated_at,desc";
+			$this->orderby = "user_id,desc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
 			$this->button_bulk_action = true;
@@ -25,38 +25,25 @@
 			$this->button_filter = true;
 			$this->button_import = false;
 			$this->button_export = false;
-			$this->table = "rewards";
+			$this->table = "saldo";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Nama","name"=>"name"];
-			$this->col[] = ["label"=>"Kategori","name"=>"category"];
-			$this->col[] = ["label"=>"Deskripsi","name"=>"description"];
-			$this->col[] = ["label"=>"Harga(Poin)","name"=>"price"];
-			$this->col[] = ["label"=>"Foto","name"=>"image","image"=>true];
-			$this->col[] = ["label"=>"Jumlah Stok","name"=>"stock"];
+			$this->col[] = ["label"=>"User Id","name"=>"user_id","join"=>"users,id"];
+			$this->col[] = ["label"=>"Total Saldo","name"=>"total_saldo"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			$this->form[] = ['label'=>'Kategori','name'=>'category','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','help'=>'Mohon Masukan Kategori hanya ke dalam salah satu dari 3 kategori berikut: hiasan, peralatan, atau perlengkapan.'];
-			$this->form[] = ['label'=>'Deskripsi','name'=>'description','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Harga(Poin)','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10', 'help'=>'Isi jika dapat ditukarkan dengan poin'];
-			$this->form[] = ['label'=>'Jumlah Stok','name'=>'stock','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-			$this->form[] = ['label'=>'Foto','name'=>'image','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Harga(Saldo)','validation'=>'required','width'=>'col-sm-9'];
+			$this->form[] = ['label'=>'User Id','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,id'];
+			$this->form[] = ['label'=>'Total Saldo','name'=>'total_saldo','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			//$this->form[] = ['label'=>'Kategori','name'=>'category','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','help'=>'Mohon Masukan Kategori hanya ke dalam salah satu dari 3 kategori berikut: hiasan, peralatan, atau perlengkapan.'];
-			//$this->form[] = ['label'=>'Deskripsi','name'=>'description','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Harga','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Foto','name'=>'image','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-			//$this->form[] = ['label'=>'Jumlah Stok','name'=>'stock','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'User Id','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'user,id'];
+			//$this->form[] = ['label'=>'Total Saldo','name'=>'total_saldo','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			# OLD END FORM
 
 			/* 

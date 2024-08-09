@@ -5,14 +5,14 @@
 	use DB;
 	use CRUDBooster;
 
-	class AdminRewardsController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class AdminTukarSaldoController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "name";
+			$this->title_field = "id";
 			$this->limit = "20";
-			$this->orderby = "updated_at,desc";
+			$this->orderby = "id,desc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
 			$this->button_bulk_action = true;
@@ -25,38 +25,37 @@
 			$this->button_filter = true;
 			$this->button_import = false;
 			$this->button_export = false;
-			$this->table = "rewards";
+			$this->table = "tukar_saldo";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Nama","name"=>"name"];
-			$this->col[] = ["label"=>"Kategori","name"=>"category"];
-			$this->col[] = ["label"=>"Deskripsi","name"=>"description"];
-			$this->col[] = ["label"=>"Harga(Poin)","name"=>"price"];
-			$this->col[] = ["label"=>"Foto","name"=>"image","image"=>true];
-			$this->col[] = ["label"=>"Jumlah Stok","name"=>"stock"];
+			$this->col[] = ["label"=>"User","name"=>"id_user","join"=>"users,id"];
+			$this->col[] = ["label"=>"Admin Id","name"=>"admin_id","join"=>"cms_users,id"];
+			$this->col[] = ["label"=>"Reward","name"=>"reward_id","join"=>"rewards,name"];
+			$this->col[] = ["label"=>"Quantity","name"=>"quantity"];
+			$this->col[] = ["label"=>"Total Price","name"=>"total_price"];
+			$this->col[] = ["label"=>"Status","name"=>"status"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			$this->form[] = ['label'=>'Kategori','name'=>'category','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','help'=>'Mohon Masukan Kategori hanya ke dalam salah satu dari 3 kategori berikut: hiasan, peralatan, atau perlengkapan.'];
-			$this->form[] = ['label'=>'Deskripsi','name'=>'description','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Harga(Poin)','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10', 'help'=>'Isi jika dapat ditukarkan dengan poin'];
-			$this->form[] = ['label'=>'Jumlah Stok','name'=>'stock','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-			$this->form[] = ['label'=>'Foto','name'=>'image','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Harga(Saldo)','validation'=>'required','width'=>'col-sm-9'];
+			$this->form[] = ['label'=>'User','name'=>'id_user','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,id'];
+			$this->form[] = ['label' => 'Nama Petugas', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name'];
+			$this->form[] = ['label'=>'Reward','name'=>'reward_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'rewards,name','datatable_where'=>'stock>0'];
+			$this->form[] = ['label'=>'Quantity','name'=>'quantity','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Total Price','name'=>'total_price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			//$this->form[] = ['label'=>'Kategori','name'=>'category','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','help'=>'Mohon Masukan Kategori hanya ke dalam salah satu dari 3 kategori berikut: hiasan, peralatan, atau perlengkapan.'];
-			//$this->form[] = ['label'=>'Deskripsi','name'=>'description','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Harga','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Foto','name'=>'image','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-			//$this->form[] = ['label'=>'Jumlah Stok','name'=>'stock','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'User','name'=>'id_user','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'user,id'];
+			//$this->form[] = ['label'=>'Admin Id','name'=>'admin_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'admin,id'];
+			//$this->form[] = ['label'=>'Reward Id','name'=>'reward_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'reward,id'];
+			//$this->form[] = ['label'=>'Quantity','name'=>'quantity','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Total Price','name'=>'total_price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Status','name'=>'status','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			# OLD END FORM
 
 			/* 

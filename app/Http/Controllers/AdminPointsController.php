@@ -32,7 +32,7 @@
 			$this->col = [];
 			$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
 			$this->col[] = ["label"=>"Jumlah Poin","name"=>"total_points"];
-			# END COLUMNS DO NOT REMOVE THIS LINE
+			# END COLUMNS DO NOT REMOVE THIS LINE 
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];

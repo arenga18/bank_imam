@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserApp;
 
 use App\Models\Point;
+use App\Models\Saldo;
 use App\Models\TukarPoin;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -27,12 +28,14 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $point = Point::where('user_id', $user->id)->first();
+            $saldo = Saldo::where('user_id', $user->id)->first();
             $transactions = Transaction::where('user_id', $user->id)->latest()->limit(3)->get();
             $tukar_poin = TukarPoin::where('user_id', $user->id)->count();
 
             return redirect()->intended('dashboard')->with([
                 'user' => $user,
                 'point' => $point,
+                'saldo' => $saldo,
                 'transactions' => $transactions,
                 'tukar_poin' => $tukar_poin
             ]);
@@ -45,12 +48,14 @@ class LoginController extends Controller
     {
         $user = Auth::user();
         $point = Point::where('user_id', $user->id)->first();
+        $saldo = Saldo::where('user_id', $user->id)->first();
         $transactions = Transaction::where('user_id', $user->id)->latest()->limit(3)->get();
         $tukar_poin = TukarPoin::where('user_id', $user->id)->count();
 
         return view('user-app/dashboard')->with([
             'user' => $user,
             'point' => $point,
+            'saldo' => $saldo,
             'transactions' => $transactions,
             'tukar_poin' => $tukar_poin
         ]);

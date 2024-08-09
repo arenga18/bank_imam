@@ -9,6 +9,7 @@ use App\Http\Controllers\UserApp\SampahController;
 use App\Http\Controllers\UserApp\HistoryController;
 use App\Http\Controllers\UserApp\RegisterController;
 use App\Http\Controllers\UserApp\TukarPoinController;
+use App\Http\Controllers\UserApp\TukarSaldoController;
 use App\Http\Controllers\UserApp\SalesController;
 use App\Http\Controllers\UserApp\EducationalNewsController;
 
@@ -48,6 +49,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tukar-poin', [TukarPoinController::class, 'index'])->name('indexTukarPoin');
     Route::get('/tukar-poin/reward/{id}', [TukarPoinController::class, 'show'])->name('showReward');
     Route::get('/tukar-poin/reward/{id}/konfirmasi', [TukarPoinController::class, 'confirm'])->name('confirmReward');
+    
+    // Tukar Saldo -> Transaction
+    Route::get('/tukar-saldo', [TukarSaldoController::class, 'index'])->name('indexTukarSaldo');
+    Route::get('/tukar-saldo/reward/{id}', [TukarSaldoController::class, 'show'])->name('showReward');
+    // Route::get('/tukar-saldo/reward/{id}/konfirmasi', [TukarSaldoController::class, 'confirm'])->name('confirmReward');
+    Route::post('/tukar-saldo/reward/{id}/konfirmasi', [TukarSaldoController::class, 'confirm'])->name('confirmReward');
 
     // Transaction
     Route::get('/transaction/{id}/detail', [HistoryController::class, 'show'])->name('transactionDetail');

@@ -41,7 +41,7 @@
                                 <h6 class="card-title text-truncate-2-lines">
                                     <a href="{{ $news->url }}" class="text-black judul-news">{{ $news->judul }}</a>
                                 </h6>
-                                {{-- <p class="card-text"><small class="text-muted">sumber: {{ $news->url }}</small></p> --}}
+                                <p class="card-text m-0"><small class="text-muted">sumber: {{ $news->domain }}</small></p>
                                 <p class="card-text"><small class="text-muted">1 jam yang lalu</small></p>
                             </div>
                         </div>
@@ -51,40 +51,40 @@
             </div>
         </div>
         {{-- NAVIGATION MENU --}}
-        <div class="navigation-menu">
-            <div class="container d-flex justify-content-evenly">
-                <div>
-                    <a class="btn btn-lg border-0 px-1 py-auto" href="/dashboard">
-                        <i class="bi bi-house primary-color" style="font-size: 1.5rem;"></i>
-                        <p class=" font-sm p-0 m-0">Beranda</p>
-                    </a>
-                </div>
-                <div>
-                    <a class="btn btn-lg border-0 px-1 py-auto" href="/tukar-poin">
-                        <i class="bi bi-gift primary-color" style="font-size: 1.5rem;"></i>
-                        <p class=" font-sm p-0 m-0">Rewards</p>
-                    </a>
-                </div>
-                <div>
-                    <a class="btn btn-lg border-0 px-1 py-auto" href="/kategori-sampah">
-                        <i class="bi bi-trash primary-color" style="font-size: 1.5rem;"></i>
-                        <p class=" font-sm p-0 m-0">Jual Sampah</p>
-                    </a>
-                </div>
-                <div>
-                    <a class="btn btn-lg border-0 px-1 py-auto" href="/edukasi">
-                        <i class="bi bi-book primary-color" style="font-size: 1.5rem;"></i>
-                        <p class=" font-sm p-0 m-0">Edukasi</p>
-                    </a>
-                </div>
-                <div>
-                    <a class=" btn btn-lg border-0 px-1 py-auto" href="/settings" role="button">
-                        <i class="bi bi-person primary-color" style="font-size: 1.5rem;"></i>
-                        <p class=" font-sm p-0 m-0">Profil</p>
-                    </a>
-                </div>
+    <div class="navigation-menu">
+        <div class="container d-flex justify-content-evenly">
+            <div>
+                <a class="btn btn-lg border-0 px-1 py-auto" href="/dashboard">
+                    <i class="bi bi-house primary-color" style="font-size: 1.5rem;"></i>
+                    <p class="primary-color font-sm p-0 m-0">Beranda</p>
+                </a>
+            </div>
+            <div>
+                <a class="btn btn-lg border-0 px-1 py-auto" href="/tukar-poin">
+                    <i class="bi bi-gift primary-color" style="font-size: 1.5rem;"></i>
+                    <p class="primary-color font-sm p-0 m-0">Rewards</p>
+                </a>
+            </div>
+            <div>
+                <a class="btn btn-lg border-0 px-1 py-auto" href="/kategori-sampah">
+                    <i class="bi bi-trash primary-color" style="font-size: 1.5rem;"></i>
+                    <p class="primary-color font-sm p-0 m-0">Jual Sampah</p>
+                </a>
+            </div>
+            <div>
+                <a class="btn btn-lg border-0 px-1 py-auto" href="/edukasi">
+                    <i class="bi bi-book primary-color" style="font-size: 1.5rem;"></i>
+                    <p class="primary-color font-sm p-0 m-0">Edukasi</p>
+                </a>
+            </div>
+            <div>
+                <a class=" btn btn-lg border-0 px-1 py-auto" href="/settings" role="button">
+                    <i class="bi bi-person primary-color" style="font-size: 1.5rem;"></i>
+                    <p class="primary-color font-sm p-0 m-0">Profil</p>
+                </a>
             </div>
         </div>
-    @endsection
+    </div>
 </main>
-
+    
+@endsection

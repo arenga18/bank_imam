@@ -42,7 +42,7 @@
 			$this->form = [];
 			$this->form[] = ['label'=>'Nama User','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,username'];
 			$this->form[] = ['label' => 'Nama Petugas', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name'];
-			$this->form[] = ['label'=>'Reward Id','name'=>'reward_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'rewards,name','datatable_where'=>'stock>0'];
+			$this->form[] = ['label'=>'Reward','name'=>'reward_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'rewards,name','datatable_where'=>'stock>0'];
 			$this->form[] = ['label'=>'Quantity','name'=>'quantity','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Total Price','name'=>'total_price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Pending;On Proses;Diterima'];

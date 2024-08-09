@@ -7,6 +7,7 @@ use Request;
 use Session;
 use CRUDBooster;
 use App\Models\Point;
+use App\Models\Saldo;
 
 class AdminTransactionsController extends \crocodicstudio\crudbooster\controllers\CBController
 {
@@ -302,14 +303,40 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    | @id = last insert id
 	    | 
 	    */
-	public function hook_after_add($id)
-	{
-		$user_point = Point::where('user_id', $_REQUEST['user_id'])->first();
-		$point_received = $_REQUEST['point_received'];
-		$user_point->update(
-			['total_points' => $user_point['total_points'] + $point_received]
-		);
-	}
+		public function hook_after_add($id)
+		{
+			// Mengupdate atau menambahkan total points
+			$user_point = Point::where('user_id', $_REQUEST['user_id'])->first();
+			$point_received = $_REQUEST['point_received'];
+
+			if ($user_point) {
+				$user_point->update([
+					'total_points' => $user_point['total_points'] + $point_received
+				]);
+			} else {
+				Point::create([
+					'user_id' => $_REQUEST['user_id'],
+					'total_points' => $point_received
+				]);
+			}
+
+			// Mengupdate atau menambahkan total saldo
+			$user_saldo = Saldo::where('user_id', $_REQUEST['user_id'])->first();
+			$total_income = $_REQUEST['total_income'];
+
+			if ($user_saldo) {
+				$user_saldo->update([
+					'total_saldo' => $user_saldo['total_saldo'] + $total_income
+				]);
+			} else {
+				Saldo::create([
+					'user_id' => $_REQUEST['user_id'],
+					'total_saldo' => $total_income
+				]);
+			}
+		}
+
+		
 
 	/* 
 	    | ---------------------------------------------------------------------- 
