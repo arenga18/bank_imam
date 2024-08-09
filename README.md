@@ -1,7 +1,3 @@
-
-
-![logo-ijo](https://github.com/sdmalfian/we-cycle/assets/53588747/9ae0ab1d-0637-40a7-8ba9-f27d58cc6df5)
-<br>
 ![Laravel](https://img.shields.io/badge/Built%20with-Laravel-red)
 <h1>BANK IMAM</h1>
 
