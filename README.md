@@ -72,13 +72,3 @@ Berikut adalah langkah-langkah untuk menginstall aplikasi ini:
 ## Project Preview <a name = "preview"></a>
 
 Link Figma : https://www.figma.com/design/BVMMtqQaNs6ri9iclUMQXT/BANK-SAMPAH?node-id=67-1324&t=9W7Xt8GJ1sHwIvYz-0
-
-### Home Page
-
-
-
-## Warning
-Beberapa asset gambar dan logo yang ada pada project ini terinspirasi dari gambar-gambar yang dapat dicari di Google. Kami tidak berniat untuk melakukan plagiasi dalam bentuk apapun karena project ini hanya ditujukan untuk tugas kuliah.
-
-## Lisensi
-Anda bebas menggunakan aplikasi untuk keperluan apapun sebagaimana yang tertera pada [Lisensi MIT.](https://opensource.org/license/mit)
