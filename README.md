@@ -1,24 +1,11 @@
-
-
-![logo-ijo](https://github.com/sdmalfian/we-cycle/assets/53588747/9ae0ab1d-0637-40a7-8ba9-f27d58cc6df5)
-<br>
 ![Laravel](https://img.shields.io/badge/Built%20with-Laravel-red)
-<h1>We-Cycle</h1>
+<h1>BANK IMAM</h1>
 
 ## Table of Contents
 + [About](#about)
 + [Features](#features)
 + [Installation](#installation)
 + [Preview](#preview)
-
-## About <a name = "about"></a>
-**Welcome to We-Cycle!**
-<br>
-We-Cycle adalah sebuah project Sistem Informasi Manajemen Bank Sampah berbasis Website. Aplikasi ini adalah hasil akhir dari project untuk memenuhi tugas mata kuliah Manajemen Proyek Sistem Informasi - SI UIN Jakarta angkatan 2020 kelas B. Aplikasi ini dibuat dengan Laravel, MySql, dan Library CrudBooster versi 5.6.
-
-Tujuan dari pembuatan sistem informasi ini adalah memberikan solusi pengelolaan limbah pada bank sampah RW 16 Cimanggis Depok agar dapat terkelola dengan lebih baik yaitu dengan meningkatkan kualitas layanan yang telah ada secara manual menjadi online. 
-
-Aplikasi ini terbagi menjadi 2 bagian, yaitu tampilan user (nasabah) dan tampilan admin.
 
 ## Requirements
 - PHP 7.4
@@ -81,21 +68,7 @@ Berikut adalah langkah-langkah untuk menginstall aplikasi ini:
  12. Jalankan perintah `php artisan serve`
  13. Buka link http://localhost:8000/. Jika tampilan web sudah terlihat maka anda sudah berhasil menginstall aplikasi we-cycle!
 
-### PANDUAN PENGGUNAAN:
-Panduan Penggunaan aplikasi we-cycle dapat dilihat [disini](https://github.com/sdmalfian/we-cycle/blob/main/User-Guide.md)
-
 
 ## Project Preview <a name = "preview"></a>
 
-Link Figma : https://www.figma.com/file/lgv3E3qDyCVh4AmVuoxqQn/Kelompok-PMSI?node-id=1-3&t=twFvL6vcIeQAVFVN-0
-
-### Home Page
-
-![screencapture-127-0-0-1-8000-dashboard-2023-08-31-13_18_34](https://github.com/sdmalfian/we-cycle/assets/53588747/2ed6a308-b693-4300-abdf-fdbc8cb5195a)
-
-
-## Warning
-Beberapa asset gambar dan logo yang ada pada project ini terinspirasi dari gambar-gambar yang dapat dicari di Google. Kami tidak berniat untuk melakukan plagiasi dalam bentuk apapun karena project ini hanya ditujukan untuk tugas kuliah.
-
-## Lisensi
-Anda bebas menggunakan aplikasi untuk keperluan apapun sebagaimana yang tertera pada [Lisensi MIT.](https://opensource.org/license/mit)
+Link Figma : https://www.figma.com/design/BVMMtqQaNs6ri9iclUMQXT/BANK-SAMPAH?node-id=67-1324&t=9W7Xt8GJ1sHwIvYz-0
