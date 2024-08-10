@@ -68,7 +68,7 @@
                 </div>
                 <div class="col text-end">
                     <p class="mb-0 fw-bold">
-                        {{ $selected_nominal }} Rupiah
+                        {{ number_format($selected_nominal, 0, ',', '.') }} Rupiah
                     </p>
                 </div>
             </div>
@@ -77,7 +77,6 @@
             </h5>
             <div class="row">
                 <div class="col">
-
                     <p class="mb-0 fw-bold">
                         <i class="bi bi-cash-coin"></i>
                         Saldo Saya
@@ -85,50 +84,54 @@
                 </div>
                 <div class="col text-end">
                     <p class="mb-0 fw-bold text-secondary">
-                        {{ $saldo->total_saldo }} Poin
+                        {{ number_format($saldo->total_saldo, 0, ',', '.') }} Rupiah
                     </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <p class="mb-0 fw-bold">
-                        Sisa Poin
+                        Sisa Saldo
                     </p>
                 </div>
                 <div class="col text-end">
-                    @if ($saldo_left < $selected_nominal)
+                    @if ($saldo_left < 0)
                         <p class="mb-0 fw-bold text-danger">
-                            {{ ($saldo->total_saldo - $selected_nominal) }} Poin
+                            {{ number_format($saldo_left, 0, ',', '.') }} Rupiah
                         </p>
-                        @elseif ($reward->stock < 1) <div class="row mt-5 mx-4">
+                    @elseif ($reward->stock < 1)
+                        <div class="row mt-5 mx-4">
                             <a class="btn btn-danger disabled rounded-pill fw-bold my-2 px-4 py-2" href="#">
                                 Stok tidak tersedia <i class="bi bi-chevron-right"></i>
                             </a>
+                        </div>
+                    @else
+                        <p class="mb-0 fw-bold text-secondary">
+                            {{ number_format($saldo_left, 0, ',', '.') }} Rupiah
+                        </p>
+                    @endif
                 </div>
-                @else
-                <p class="mb-0 fw-bold text-secondary">
-                    {{ ($saldo->total_saldo - $selected_nominal) }} Poin
-                </p>
-                @endif
             </div>
-    </div>
-    </section>
-    @if ($saldo->total_saldo < $selected_nominal)
-        <div class="row mt-5 mx-4">
-            <a class="btn btn-danger disabled rounded-pill fw-bold my-2 px-4 py-2" href="#">
-                Poin tidak cukup <i class="bi bi-chevron-right"></i>
-            </a>
-        </div>
+        </section>
+        @if ($saldo->total_saldo < $selected_nominal)
+            <div class="row mt-5 mx-4">
+                <a class="btn btn-danger disabled rounded-pill fw-bold my-2 px-4 py-2" href="#">
+                    Poin tidak cukup <i class="bi bi-chevron-right"></i>
+                </a>
+            </div>
         @else
-        <div div class="row mt-5 mx-4">
-            <form action="{{ url('/tukar-poin/reward/'.$reward->id) }}" method="post">
-                @csrf
-                <button class="btn btn-primary rounded-pill fw-bold my-2 px-4 w-100" href="/tukar-poin/success">
-                    Konfirmasi <i class="bi bi-chevron-right"></i>
-                </button>
-            </form>
-        </div>
+            <div class="row mt-5 mx-4">
+                <form action="{{ url('/tukar-saldo/reward/'.$reward->id) }}" method="post">
+                    @csrf
+                    <!-- Input Hidden untuk Mengirimkan selected_nominal -->
+                    <input type="hidden" name="selected_nominal" id="selected_nominal" value="{{ $selected_nominal }}">
+                    
+                    <button class="btn btn-primary rounded-pill fw-bold my-2 px-4 w-100">
+                        Konfirmasi <i class="bi bi-chevron-right"></i>
+                    </button>
+                </form>
+            </div>
         @endif
-        </div>
+    </div>
 </main>
 @endsection

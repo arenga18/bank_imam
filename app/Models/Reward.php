@@ -16,4 +16,8 @@ class Reward extends Model
     {
         return $this->hasMany(TukarPoin::class);
     }
+    public function tukar_saldo()
+    {
+        return $this->hasMany(TukarSaldo::class);
+    }
 }

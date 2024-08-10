@@ -22,9 +22,6 @@
                 <!-- Tabs for Article and News -->
                 <ul class="nav nav-tabs mb-3" id="edukasiTabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link" id="artikel-tab" data-toggle="tab" href="#artikel" role="tab" aria-controls="artikel" aria-selected="false">Artikel</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link active" id="berita-tab" data-toggle="tab" href="#berita" role="tab" aria-controls="berita" aria-selected="true">Berita</a>
                     </li>
                 </ul>

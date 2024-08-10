@@ -4,6 +4,7 @@ namespace App\Http\Controllers\UserApp;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -15,6 +16,6 @@ class HomeController extends Controller
 
     public function settings()
     {
-        return view('user-app/pengaturan');
+        return view('user-app/pengaturan', ['user' => Auth::user()]);
     }
 }

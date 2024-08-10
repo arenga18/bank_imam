@@ -53,7 +53,6 @@ Route::middleware(['auth'])->group(function () {
     // Tukar Saldo -> Transaction
     Route::get('/tukar-saldo', [TukarSaldoController::class, 'index'])->name('indexTukarSaldo');
     Route::get('/tukar-saldo/reward/{id}', [TukarSaldoController::class, 'show'])->name('showReward');
-    // Route::get('/tukar-saldo/reward/{id}/konfirmasi', [TukarSaldoController::class, 'confirm'])->name('confirmReward');
     Route::post('/tukar-saldo/reward/{id}/konfirmasi', [TukarSaldoController::class, 'confirm'])->name('confirmReward');
 
     // Transaction
@@ -62,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/history/points', [HistoryController::class, 'pointHistory'])->name('pointHistory');
     Route::get('/history/tukar-poin', [HistoryController::class, 'tukarPointHistory'])->name('tukarPointHistory');
     route::post('/tukar-poin/reward/{id}', [TukarPoinController::class, 'store'])->name('storeTukarPoin');
+    route::post('/tukar-saldo/reward/{id}', [TukarSaldoController::class, 'store'])->name('storeTukarSaldo');
 
     // Sale
     Route::post('/sales/store', [SalesController::class, 'store'])->name('sales.store');

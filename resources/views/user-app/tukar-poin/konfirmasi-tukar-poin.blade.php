@@ -100,16 +100,13 @@
                         <p class="mb-0 fw-bold text-danger">
                             {{ ($point->total_points - $reward->price) }} Poin
                         </p>
-                        @elseif ($reward->stock < 1) <div class="row mt-5 mx-4">
-                            <a class="btn btn-danger disabled rounded-pill fw-bold my-2 px-4 py-2" href="#">
-                                Stok tidak tersedia <i class="bi bi-chevron-right"></i>
-                            </a>
-                </div>
-                @else
-                <p class="mb-0 fw-bold text-secondary">
-                    {{ ($point->total_points - $reward->price) }} Poin
-                </p>
-                @endif
+                        @elseif ($reward->stock < 1)
+                            <p class="mb-0 fw-bold text-danger"> Stok tidak tersedia! </p>
+                        @else
+                        <p class="mb-0 fw-bold text-secondary">
+                            {{ ($point->total_points - $reward->price) }} Poin
+                        </p>
+                        @endif
             </div>
     </div>
     </section>
@@ -117,6 +114,12 @@
         <div class="row mt-5 mx-4">
             <a class="btn btn-danger disabled rounded-pill fw-bold my-2 px-4 py-2" href="#">
                 Poin tidak cukup <i class="bi bi-chevron-right"></i>
+            </a>
+        </div>
+        @elseif ($reward->stock < 1)
+        <div class="row mt-5 mx-4">
+            <a class="btn btn-danger disabled rounded-pill fw-bold my-2 px-4 py-2" href="#">
+                Stock tidak tersedia <i class="bi bi-chevron-right"></i>
             </a>
         </div>
         @else

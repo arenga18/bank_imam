@@ -7,6 +7,7 @@ use App\Models\Point;
 use App\Models\Saldo;
 use App\Models\Reward;
 use App\Models\TukarPoin;
+use App\Models\TukarSaldo;
 use Illuminate\Http\Request;
 
 class TukarSaldoController extends Controller
@@ -46,7 +47,11 @@ class TukarSaldoController extends Controller
         $reward = Reward::findOrFail($id);
         $saldo = Saldo::where('user_id', auth()->user()->id)->first();
 
-        // Mendapatkan nominal yang dipilih dari request
+        // Validasi input 'selected_nominal'
+        $request->validate([
+            'selected_nominal' => 'required|numeric|min:1',
+        ]);
+
         $selected_nominal = $request->input('selected_nominal');
         $time = date("Y-m-d");
         $saldo_left = $saldo->total_saldo - $selected_nominal;
@@ -60,50 +65,42 @@ class TukarSaldoController extends Controller
         ]);
     }
 
+
     public function store(Request $request, $id)
     {
-        $reward = Reward::findOrFail($id);
-        $point = Point::where('user_id', auth()->user()->id)->first();
-        $saldo = Saldo::where('user_id', auth()->user()->id)->first();
-        
-        // Mendapatkan nominal yang dipilih dari request
-        $selected_nominal = $request->input('selected_nominal');
 
-        // Validasi apakah point mencukupi dan reward masih tersedia
-        if ($point->total_points >= $reward->price && $reward->stock >= 1) {
-            TukarPoin::create([
+        // Mendapatkan data reward, saldo, dan nominal yang dipilih
+        $reward = Reward::findOrFail($id);
+        $saldo = Saldo::where('user_id', auth()->user()->id)->firstOrFail();
+        $selected_nominal = $request->input('selected_nominal');
+    
+        // Validasi apakah saldo mencukupi dan reward masih tersedia
+        if ($saldo->total_saldo >= $selected_nominal && $reward->stock >= 1) {
+            // Buat entri TukarSaldo
+            TukarSaldo::create([
                 'user_id' => auth()->user()->id,
                 'reward_id' => $reward->id,
                 'quantity' => 1,
-                'total_price' => $reward->price,
+                'total_price' => $selected_nominal,
                 'status' => 'Pending'
             ]);
-
+    
             // Update stok reward
             $reward->update([
-                'stock' => ($reward->stock - 1)
+                'stock' => $reward->stock - 1
             ]);
-
-            // Update point user
-            $point->update([
-                'total_points' => ($point->total_points - $reward->price)
+    
+            // Update saldo user
+            $saldo->update([
+                'total_saldo' => $saldo->total_saldo - $selected_nominal
             ]);
-
-            // Update saldo user berdasarkan nominal yang dipilih
-            if ($saldo) {
-                $saldo->update([
-                    'total_saldo' => ($saldo->total_saldo + $selected_nominal)
-                ]);
-            } else {
-                Saldo::create([
-                    'user_id' => auth()->user()->id,
-                    'total_saldo' => $selected_nominal
-                ]);
-            }
-
-            return view('user-app/tukar-poin/success');
+    
+            // Redirect ke halaman sukses
+            return view('user-app/tukar-saldo/success');
         }
-
-        return view('user-app/tukar-poin/failed');
+    
+        // Redirect ke halaman gagal jika kondisi tidak terpenuhi
+        return view('user-app/tukar-saldo/failed');
     }
+    
 }

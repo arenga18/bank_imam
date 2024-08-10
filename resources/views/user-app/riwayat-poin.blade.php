@@ -1,8 +1,8 @@
 @extends('layout.header-transaksi')
-@section('title', 'Riwayat Poin')
+@section('title', 'Riwayat Transaksi')
 
 @section('transaction-content')
-@section('transaction-title', 'RIWAYAT POIN')
+@section('transaction-title', 'RIWAYAT TRANSAKSI')
 <main class="main-container" style="min-height: calc(100vh - 64px);">
     <div class=" pt-3 mx-3">
         @if (isset($transactions) || !empty($transactions))
@@ -20,7 +20,10 @@
                     </div>
                     <div class="col-5 text-end">
                         <p class="mb-0 pe-3 fw-bold text-main">
-                            + {{ $transaction->point_received }}
+                            + Rp.{{ number_format($transaction->total_income, 0, ',', '.') }} 
+                        </p>
+                        <p class="mb-0 pe-3 fw-bold text-main">
+                            + {{ $transaction->point_received }} Poin
                         </p>
                     </div>
                 </div>

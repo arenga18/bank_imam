@@ -32,9 +32,6 @@
                             <img style="height: 78px;" src="{{ $reward->image }}" class="card-img-top min-w-100"
                                 alt="{{ $reward->name }}">
                             <div class="card-body">
-                                <h6 class="card-title my-0 fw-bold">
-                                    Rp.{{ $reward->price }}
-                                </h6>
                                 <p class="card-text reward-name font-sm mt-0">
                                     {{ $reward->name }}
                                 </p>

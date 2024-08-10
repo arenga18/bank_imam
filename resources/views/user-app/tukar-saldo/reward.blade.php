@@ -86,28 +86,37 @@
 
 @section('scripts')
 <script>
-    // Event listener to handle button clicks
+   document.addEventListener('DOMContentLoaded', function () {
+    // Event listener untuk setiap tombol nominal
     document.querySelectorAll('.nominal-button').forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from other buttons
+        button.addEventListener('click', function () {
+            // Hapus kelas 'active' dari semua tombol
             document.querySelectorAll('.nominal-button').forEach(btn => btn.classList.remove('active'));
 
-            // Add active class to the clicked button
+            // Tambahkan kelas 'active' pada tombol yang diklik
             this.classList.add('active');
 
-            // Set the hidden input value to the selected nominal
+            // Set nilai dari input hidden
             document.getElementById('selected_nominal').value = this.getAttribute('data-nominal');
+            console.log('Selected Nominal:', this.getAttribute('data-nominal')); // Debugging
         });
     });
 
-    // Deselect the button if clicked outside the buttons
-    document.addEventListener('click', function(event) {
-        const isClickInside = event.target.closest('.nominal-button');
-
-        if (!isClickInside) {
-            document.querySelectorAll('.nominal-button').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('selected_nominal').value = '';
+    // Event listener untuk form submit
+    document.getElementById('nominalForm').addEventListener('submit', function (event) {
+        // Ambil nilai dari input hidden
+        const selectedNominal = document.getElementById('selected_nominal').value;
+        
+        // Cek apakah nominal sudah dipilih
+        if (!selectedNominal) {
+            event.preventDefault(); // Cegah pengiriman form
+            alert('Silakan pilih nominal terlebih dahulu.');
+            console.log('Form tidak dikirim: Nominal belum dipilih.'); // Debugging
+        } else {
+            console.log('Form dikirim dengan nominal:', selectedNominal); // Debugging
         }
     });
+});
+
 </script>
 @endsection

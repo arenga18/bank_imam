@@ -6,11 +6,11 @@ use App\Models\Reward;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TukarPoin extends Model
+class TukarSaldo extends Model
 {
     use HasFactory;
 
-    protected $table = 'tukar_poins';
+    protected $table = 'tukar_saldo';
     protected $guarded = [];
 
     public function reward()

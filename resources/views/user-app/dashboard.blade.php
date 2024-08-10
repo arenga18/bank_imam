@@ -32,7 +32,7 @@
                     <p class="m-0 font-sm">Saldo</p>
                 </div>
                 <div class="col">
-                    <p class="m-0 fw-bold">{{ $tukar_poin}}</p>
+                    <p class="m-0 fw-bold">{{ $total_reward_count}}</p>
                     <p class="m-0 font-sm">Reward</p>
                 </div>
             </div>
