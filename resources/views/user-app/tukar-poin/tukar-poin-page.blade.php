@@ -1,17 +1,17 @@
 @extends('layout.header-tukar-poin')
-@section('title', 'Tukar Poin | We-Cycle')
+@section('title', 'Tukar Reward | Bank Imam')
 
 @section('tukar-point-content')
 <div class="container">
     {{-- MENU --}}
-    <div class="row mx-3 mt-3">
-        <div class="col p-0 d-flex justify-content-between">
-            <a class=" btn btn-light text-dark rounded-4 py-2 px-3 shadow fw-bold mt-1" href="/history/points">
-                <i style="color: #0575E6" class="bi bi-file-earmark-text-fill pe-1"></i>
+    <div class="mx-3 mt-3">
+        <div class="row justify-content-between">
+            <a class="col-6 shadow-sm p-2 rounded m-auto text-decoration-none text-black" href="/history/points" style="width: max-content;"> 
+                <i class="bi bi-file-earmark-text-fill pe-1 text-primary"></i>
                 <span>Riwayat Poin</span>
             </a>
-            <a class="btn btn-light text-dark rounded-4 py-2 px-3 shadow fw-bold mt-1" href="/history/tukar-poin">
-                <i style="color: #0575E6" class="bi bi-bag-dash-fill pe-1"></i>
+            <a class="col-6 shadow-sm p-2 rounded m-auto text-decoration-none text-black" href="/history/tukar-poin" style="width: max-content;">
+                <i class="bi bi-bag-dash-fill pe-1 text-primary"></i>
                 <span>Pesanan Saya</span>
             </a>
         </div>
@@ -26,12 +26,12 @@
             <div class="swiper-wrapper">
                 @if (isset($uang) || !empty($uang ))
                 @forelse ($uang as $reward)
-                <div class="swiper-slide me-3 w-50">
+                <div class="swiper-slide w-50">
                     <a class="text-dark text-decoration-none" href="{{url("/tukar-saldo/reward/{$reward->id}")}}">
-                        <div class="card">
-                            <img style="height: 78px;" src="{{ $reward->image }}" class="card-img-top min-w-100"
+                        <div class="card border-0 shadow rounded">
+                            <img style="height: 140px;" src="{{ $reward->image }}" class="card-img-top min-w-100"
                                 alt="{{ $reward->name }}">
-                            <div class="card-body">
+                            <div class="card-body text-left d-flex mb-2">
                                 <p class="card-text reward-name font-sm mt-0">
                                     {{ $reward->name }}
                                 </p>
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    <div class="row mt-5 mx-3">
+    <div class="row mt-3 mx-3">
         <h5 class="fw-bold ps-0 mb-3">Hiasan</h5>
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
@@ -63,10 +63,10 @@
                 @forelse ($hiasan as $reward)
                 <div class="swiper-slide me-3 w-50">
                     <a class="text-dark text-decoration-none" href="{{url("/tukar-poin/reward/{$reward->id}")}}">
-                        <div class="card">
-                            <img style="height: 78px;" src="{{ $reward->image }}" class="card-img-top min-w-100"
+                        <div class="card border-0 shadow rounded">
+                            <img style="height: 140px;" src="{{ $reward->image }}" class="card-img-top min-w-100"
                                 alt="{{ $reward->name }}">
-                            <div class="card-body">
+                            <div class="card-body text-left d-flex flex-column mb-2">
                                 <h6 class="card-title my-0 fw-bold">
                                     {{ $reward->price }} Poin 
                                 </h6>
@@ -93,82 +93,10 @@
             </div>
         </div>
     </div>
-    {{-- Reward Kategori 2 --}}
-    <div class="row mt-4 mx-3">
-        <h5 class="fw-bold ps-0 mb-3">Peralatan</h5>
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                @if (isset($peralatan) || !empty($peralatan ))
-                @forelse ($peralatan as $reward)
-                <div class="swiper-slide me-3 w-50">
-                    <a class="text-dark text-decoration-none" href="{{url("/tukar-poin/reward/{$reward->id}")}}">
-                        <div class="card">
-                            <img style="height: 78px;" src="{{ $reward->image }}" class="card-img-top min-w-100"
-                                alt="{{ $reward->name }}">
-                            <div class="card-body">
-                                <h6 class="card-title my-0 fw-bold">
-                                    {{ $reward->price }}
-                                </h6>
-                                <p class="card-text reward-name font-sm mt-0">
-                                    {{ $reward->name }}
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                @empty
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title my-0 fw-bold">
-                            Belum Ada Data!
-                        </h6>
-                        <p class="card-text reward-name font-sm mt-0">
-                            Input data terlebih dulu!
-                        </p>
-                    </div>
-                </div>
-                @endforelse
-                @endif
-            </div>
-        </div>
-    </div>
     
 </div>
-{{-- NAVIGATION MENU --}}
-<div class="navigation-menu">
-    <div class="container d-flex justify-content-evenly">
-        <div>
-            <a class="btn btn-lg border-0 px-1 py-auto" href="/dashboard">
-                <i class="bi bi-house primary-color" style="font-size: 1.5rem;"></i>
-                <p class="primary-color font-sm p-0 m-0">Beranda</p>
-            </a>
-        </div>
-        <div>
-            <a class="btn btn-lg border-0 px-1 py-auto" href="/tukar-poin">
-                <i class="bi bi-gift primary-color" style="font-size: 1.5rem;"></i>
-                <p class="primary-color font-sm p-0 m-0">Rewards</p>
-            </a>
-        </div>
-        <div>
-            <a class="btn btn-lg border-0 px-1 py-auto" href="/kategori-sampah">
-                <i class="bi bi-trash primary-color" style="font-size: 1.5rem;"></i>
-                <p class="primary-color font-sm p-0 m-0">Jual Sampah</p>
-            </a>
-        </div>
-        <div>
-            <a class="btn btn-lg border-0 px-1 py-auto" href="/edukasi">
-                <i class="bi bi-book primary-color" style="font-size: 1.5rem;"></i>
-                <p class="primary-color font-sm p-0 m-0">Edukasi</p>
-            </a>
-        </div>
-        <div>
-            <a class=" btn btn-lg border-0 px-1 py-auto" href="/settings" role="button">
-                <i class="bi bi-person primary-color" style="font-size: 1.5rem;"></i>
-                <p class="primary-color font-sm p-0 m-0">Profil</p>
-            </a>
-        </div>
-    </div>
-</div>
+ {{-- NAVIGATION MENU --}}
+ @include('layout.navigation')
 @endsection
 
 @section('scripts')

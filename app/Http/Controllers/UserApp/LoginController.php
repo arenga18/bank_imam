@@ -42,33 +42,38 @@ class LoginController extends Controller
             ]);
         }
 
-        return back()->with('loginError', 'Invalid credentials.');
+        return back()->with('loginError', 'Gmail Atau Password Salah.');
     }
 
     public function login()
-    {
-        $user = Auth::user();
-        $point = Point::where('user_id', $user->id)->first();
-        $saldo = Saldo::where('user_id', $user->id)->first();
-        $transactions = Transaction::where('user_id', $user->id)->latest()->limit(3)->get();
+{
+    $user = Auth::user();
+    $point = Point::where('user_id', $user->id)->first();
+    $saldo = Saldo::where('user_id', $user->id)->first();
+    $transactions = Transaction::where('user_id', $user->id)->latest()->limit(3)->get();
 
-        // Menghitung jumlah entri dari TukarPoin
-        $total_tukar_poin_count = TukarPoin::where('user_id', $user->id)->count();
+    // Menghitung jumlah entri dari TukarPoin
+    $total_tukar_poin_count = TukarPoin::where('user_id', $user->id)->count();
 
-        // Menghitung jumlah entri dari TukarSaldo
-        $total_tukar_saldo_count = TukarSaldo::where('user_id', $user->id)->count();
+    // Menghitung jumlah entri dari TukarSaldo
+    $total_tukar_saldo_count = TukarSaldo::where('user_id', $user->id)->count();
 
-        // Menggabungkan total jumlah entri
-        $total_reward_count = $total_tukar_poin_count + $total_tukar_saldo_count;
+    // Menggabungkan total jumlah entri
+    $total_reward_count = $total_tukar_poin_count + $total_tukar_saldo_count;
 
-        return view('user-app/dashboard')->with([
-            'user' => $user,
-            'point' => $point,
-            'saldo' => $saldo,
-            'transactions' => $transactions,
-            'total_reward_count' => $total_reward_count, // Mengirimkan total count reward
-        ]);
-    }
+    // Menghitung total kilogram yang telah ditransaksikan oleh user
+    $total_weight = Transaction::where('user_id', $user->id)->sum('total_weight');
+
+    return view('user-app/dashboard')->with([
+        'user' => $user,
+        'point' => $point,
+        'saldo' => $saldo,
+        'transactions' => $transactions,
+        'total_reward_count' => $total_reward_count, // Mengirimkan total count reward
+        'total_weight' => $total_weight, // Mengirimkan total kilogram yang telah ditransaksikan
+    ]);
+}
+
 
 
     public function logout(Request $request)

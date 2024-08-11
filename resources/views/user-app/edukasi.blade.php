@@ -32,16 +32,16 @@
                     </div>
                     <div class="tab-pane fade show active" id="berita" role="tabpanel" aria-labelledby="berita-tab">
                         @foreach($educationalNews as $news)
-                        <div class="d-flex mb-2 w-100 shadow p-3 rounded-2 gap-3">
-                            <img src="{{ $news->gambar }}" class="news-img rounded" alt="News Image">
-                            <div class="card-body">
-                                <h6 class="card-title text-truncate-2-lines">
-                                    <a href="{{ $news->url }}" class="text-black judul-news">{{ $news->judul }}</a>
-                                </h6>
-                                <p class="card-text m-0"><small class="text-muted">sumber: {{ $news->domain }}</small></p>
-                                <p class="card-text"><small class="text-muted">1 jam yang lalu</small></p>
+                            <div class="d-flex mb-2 w-100 shadow p-3 rounded-2 gap-3">
+                                <img src="{{ $news->gambar }}" class="news-img rounded" alt="News Image">
+                                <div class="card-body">
+                                    <h6 class="card-title text-truncate-2-lines">
+                                        <a href="{{ $news->url }}" class="text-black judul-news">{{ $news->judul }}</a>
+                                    </h6>
+                                    <p class="card-text m-0"><small class="text-muted">sumber: {{ $news->domain }}</small></p>
+                                    <p class="card-text"><small class="text-muted">{{ $news->time_elapsed }}</small></p>
+                                </div>
                             </div>
-                        </div>
                         @endforeach
                     </div>
                 </div>

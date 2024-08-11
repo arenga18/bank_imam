@@ -4,14 +4,13 @@
 
 @section('content')
 <header class="dashboard-header gradient-top-bottom">
-    <div class="header-user py-5 px-3">
-        <div class="container text-center px-4">
+    <div class="header-user py-3 px-3">
+        <div class="container text-center">
             <div class="row mt-6">
-                <div class="col d-flex justify-content-between text-start ">
+                <div class="col d-flex justify-content-between align-items-center text-start ">
                     <div class="text">
-                        <p style="font-weight: 600; letter-spacing: 1px;">
-                            Hi,<br>
-                            {{ $user->username }}
+                        <p class="m-0" style="font-weight: 600; letter-spacing: 1px;">
+                            Hello, {{ $user->username }}
                         </p>
                     </div>
                     <div class="profile">
@@ -20,29 +19,36 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-4 mx-3 py-2 rounded-pill bg-light">
-                <div class="col">
-                    <p class="m-0 fw-bold">{{ $point->total_points }}</p>
-                    <p class="m-0 font-sm">Points</p>
-                </div>
-                <div class="col border-start border-end border-2">
-                    <p class="m-0 fw-bold">
-                        {{ $saldo->total_saldo }}
-                    </p>
-                    <p class="m-0 font-sm">Saldo</p>
-                </div>
-                <div class="col">
-                    <p class="m-0 fw-bold">{{ $total_reward_count}}</p>
-                    <p class="m-0 font-sm">Reward</p>
-                </div>
-            </div>
+           
         </div>
     </div>
 </header>
+<div class="row mt-4 mx-3 py-3 rounded-4 bg-light text-center">
+    <div class="col">
+        <p class="m-0 fw-bold mb-1">{{ $point->total_points }}</p>
+        <p class="m-0 font-sm">
+            <i class="fa-solid fa-coins"></i> Points
+        </p>
+    </div>
+    <div class="col border-start border-end border-2">
+        <p class="m-0 fw-bold mb-1">
+            Rp{{ number_format($saldo->total_saldo, 0, ',', '.') }}
+        </p>
+        <p class="m-0 font-sm">
+            <i class="fa-solid fa-wallet"></i> Saldo
+        </p>
+    </div>
+    <div class="col">
+        <p class="m-0 fw-bold mb-1">{{ $total_weight}} kg</p>
+        <p class="m-0 font-sm">
+            <i class="fa-solid fa-trash"></i> Sampah
+        </p>
+    </div>
+</div>
 <main id="dashboard-page" class="main-container">
     <div class="container pt-4 px-5">
-        <a href="/tukar-poin" class="card rounded-4 mb-1 landing-card-shadow border-light" style="background-color: #0575E6">
-            <div class="row g-0 gradient-brand-toRight">
+        <a href="/tukar-poin" class="card rounded-4 mb-1 landing-card-shadow border-light" style="text-decoration: none;">
+            <div class="row g-0 gradient-brand-toRight rounded-4 ps-4">
                 <div class="col-3 d-flex justify-content-center align-items-center text-center">
                     <i class="bi bi-gift-fill secondary-color" style="font-size: 3rem;"></i>
                 </div>
@@ -74,13 +80,11 @@
                         <div class="col-7 text-start">
                             <p class="mb-0 fw-bold">
                                 Setoran Sampah
-                                <span class="rounded-pill text-light bg-green-main px-2 fw-bold">
-                                    {{ $transaction->point_received }}
-                                </span>
+                                
                             </p>
                             <p class="mb-0">
                                 Total:
-                                <span class="fw-bold" style="color: #0575E6">
+                                <span class="fw-bold text-primary">
                                     {{ $transaction->total_weight }} Kg
                                 </span>
                             </p>
@@ -93,7 +97,12 @@
                                 Pendapatan
                             </p>
                             <p class="mb-0 pe-3 text-secondary fw-bold">
-                                Rp. {{$transaction->total_income}}
+                                Rp{{ number_format($transaction->total_income, 0, ',', '.') }}
+                            </p>
+                            <p class="mb-0 ">
+                                <span class="rounded-pill text-light bg-green-main px-2 fw-bold">
+                                    {{ $transaction->point_received }} Poin
+                                </span>
                             </p>
                         </div>
                     </div>
@@ -113,39 +122,6 @@
 
     </section>
     {{-- NAVIGATION MENU --}}
-    <div class="navigation-menu">
-        <div class="container d-flex justify-content-evenly">
-            <div>
-                <a class="btn btn-lg border-0 px-1 py-auto" href="/dashboard">
-                    <i class="bi bi-house primary-color" style="font-size: 1.5rem;"></i>
-                    <p class="primary-color font-sm p-0 m-0">Beranda</p>
-                </a>
-            </div>
-            <div>
-                <a class="btn btn-lg border-0 px-1 py-auto" href="/tukar-poin">
-                    <i class="bi bi-gift primary-color" style="font-size: 1.5rem;"></i>
-                    <p class="primary-color font-sm p-0 m-0">Rewards</p>
-                </a>
-            </div>
-            <div>
-                <a class="btn btn-lg border-0 px-1 py-auto" href="/kategori-sampah">
-                    <i class="bi bi-trash primary-color" style="font-size: 1.5rem;"></i>
-                    <p class="primary-color font-sm p-0 m-0">Jual Sampah</p>
-                </a>
-            </div>
-            <div>
-                <a class="btn btn-lg border-0 px-1 py-auto" href="/edukasi">
-                    <i class="bi bi-book primary-color" style="font-size: 1.5rem;"></i>
-                    <p class="primary-color font-sm p-0 m-0">Edukasi</p>
-                </a>
-            </div>
-            <div>
-                <a class=" btn btn-lg border-0 px-1 py-auto" href="/settings" role="button">
-                    <i class="bi bi-person primary-color" style="font-size: 1.5rem;"></i>
-                    <p class="primary-color font-sm p-0 m-0">Profil</p>
-                </a>
-            </div>
-        </div>
-    </div>
+    @include('layout.navigation')
 </main>
 @endsection

@@ -14,13 +14,10 @@
                         <div class="col-7 text-start">
                             <p class="mb-0 fw-bold">
                                 Setoran Sampah
-                                <span class="rounded-pill text-light bg-green-main px-2 fw-bold">
-                                    {{ $transaction->point_received }}
-                                </span>
                             </p>
                             <p class="mb-0">
                                 Total:
-                                <span class="fw-bold" style="color: #0575E6">
+                                <span class="fw-bold text-primary">
                                     {{ $transaction->total_weight }} Kg
                                 </span>
                             </p>
@@ -34,6 +31,11 @@
                             </p>
                             <p class="mb-0 pe-3 text-secondary fw-bold">
                                 Rp. {{$transaction->total_income}}
+                            </p>
+                            <p class="mb-0 ">
+                                <span class="rounded-pill text-light bg-green-main px-2 fw-bold">
+                                    {{ $transaction->point_received }} Poin
+                                </span>
                             </p>
                         </div>
                     </div>

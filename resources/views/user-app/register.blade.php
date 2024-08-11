@@ -1,81 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.main')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>
-        Register | We-Cycle
-    </title>
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
-    {{-- Favicon --}}
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon/apple-touch-icon.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon/favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon/favicon-16x16.png')}}">
-    <link rel="manifest" href="{{ asset('images/favicon//site.webmanifest') }}">
-    {{-- Typography --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
-        rel="stylesheet">
-    {{-- Template Stylesheet --}}
-    <link href="{{ asset('we-cycle-app/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('we-cycle-app/bootstrap/css/by-silmy/register.css') }}" rel="stylesheet" />
-    <!-- Font awesome Icon CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+@section('title', 'Bank Imam | Login Page')
 
-<body>
+@section('content')
     <main class="loginscreen">
-        <div class="bulatgradasi">
-        </div>
-        <div class="boxlogin">
-            <img class="logodark" src="{{ asset('images/logo-dark.png') }}" alt="logodark">
-            <div class="ikonkon">
+        <img src="{{ asset('images/favicon/Element.png') }}" alt="decoration" style="margin-top: -1rem; margin-left: -1rem;">
+        <div class="form-wrapper text-center mt-3">
+            <div class="title-section mb-4">
+                <h1 class="fw-bold pb-2">Daftar</h1>
+                <h6>Membuat Akun Pengguna Baru</h6>
+            </div>
+            <div class="form-login">
                 <form action="/register" method="post" style="max-width:327px;margin:auto">
                     @csrf
                     @if($errors->any())
                     {!! implode('', $errors->all('<div class="mx-1 font-sm text-danger">:message</div>')) !!}
                     @endif
-                    <div class="input-icons">
-                        <i class="fa fa-user icon">
-                        </i>
-                        <input class="input-field" id="username" name="username" type="text required"
+                    <div class="input-group shadow-sm mb-3">
+                        <span class="input-group-text">
+                            <i class="fa fa-user icon "></i>
+                        </span>
+                        <input class="form-control form-control py-2" id="username" name="username" type="text required"
                             placeholder="Username">
                     </div>
-                    <div class="input-icons">
-                        <i class="fa fa-envelope icon">
-                        </i>
-                        <input class="input-field" id="email" name="email" type="email" placeholder="Email" required>
+                    <div class="input-group shadow-sm mb-3">
+                        <span class="input-group-text">
+                            <i class="fa fa-envelope icon "></i>
+                        </span>
+                        <input class="form-control form-control py-2" id="email" name="email" type="email" placeholder="Email" required>
                     </div>
-                    <div class="input-icons">
-                        <i class="fa fa-key icon">
-                        </i>
-                        <input class="input-field" id="password" name="password" type="password" placeholder="Password"
+                    <div class="input-group shadow-sm mb-3">
+                        <span class="input-group-text">
+                            <i class="fa fa-key icon">
+                            </i>
+                        </span>
+                        <input class="form-control form-control py-2" id="password" name="password" type="password" placeholder="Password"
                             required>
                     </div>
-                    <div class="input-icons">
-                        <i class="fa fa-key icon">
-                        </i>
-                        <input class="input-field" id="password_confirmation" name="password_confirmation" required
+                    <div class="input-group shadow-sm mb-3">
+                        <span class="input-group-text">
+                            <i class="fa fa-key icon">
+                            </i>
+                        </span>
+                        <input class="form-control form-control py-2" id="password_confirmation" name="password_confirmation" required
                             type="password" placeholder="Konfirmasi Password">
                     </div>
-                    <div class="tombol">
-                        <button type="submit" class="btn1">DAFTAR</button>
+                    <div class="tombol mt-5">
+                        <button type="submit" class="btn btn-primary-custom  btn-lg" style="padding: 0.5rem 6rem;">Daftar</button>
                     </div>
                 </form>
             </div>
-        </div>
-        <div class="loakun">
-            <p>Sudah Punya Akun?
-                <a href="/login" class="linkregis">Masuk Disini</a>
-            </p>
+            <div class="login mt-5">
+                <p>Sudah Punya Akun?
+                    <a href="/login" class="linkregis">Masuk Disini</a>
+                </p>
+            </div>
         </div>
 
     </main>
-</body>
 
-</html>
+@endsection

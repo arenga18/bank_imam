@@ -1,34 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.main')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>
-        Login We-Cycle
-    </title>
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
-    {{-- Typography --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
-        rel="stylesheet">
-    {{-- Template Stylesheet --}}
-    <link href="{{ asset('we-cycle-app/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('we-cycle-app/bootstrap/css/by-silmy/login.css') }}" rel="stylesheet" />
-    <!-- Font awesome Icon CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+@section('title', 'Bank Imam | Login Page')
 
-
-<body>
+@section('content')
     <main class="loginscreen">
-        <div class="bulatgradasi">
-        </div>
-        <div class="boxlogin">
+        <img src="{{ asset('images/favicon/Element.png') }}" alt="decoration" style="margin-top: -1rem; margin-left: -1rem;">
+        <div class="form-wrapper text-center mt-4">
             @if(session()->has('success'))
             <div class="alert alert-success m-2" role="alert">
                 {{ session('success') }}
@@ -40,40 +17,45 @@
             </div>
             @endif
 
-            <img class="logodark" src="{{ asset('images/logo-dark.png') }}" alt="logodark">
-            <div class="ikonkon">
-                <form action="/login" method="post" style="max-width:327px;margin:auto">
+            <div class="title-section mb-4">
+                <h1 class="fw-bold pb-2">Selamat Datang</h1>
+                <h6>Masuk menggunakan akun</h6>
+            </div>
+            <div class="form-login">
+                <form action="/login" method="post">
                     @csrf
-                    <div class="input-icons">
-                        <i class="fa fa-user icon">
-                        </i>
-                        <input class="input-field" id="email" name="email" type="email"
-                            placeholder="we_cycle@gmail.com">
+                    <div class="input-group shadow-sm mb-3">
+                        <span class="input-group-text">
+                            <i class="fa fa-user icon "></i>
+                        </span>
+                        <input class="form-control form-control py-2" id="email" name="email" type="email"
+                            placeholder="Masukan Email Anda">
                     </div>
-                    <div class="input-icons">
-                        <i class="fa fa-key icon">
-                        </i>
-                        <input class="input-field" id="password" name="password" type="password" placeholder="Password">
+                    <div class="input-group shadow-sm mb-3">
+                        <span class="input-group-text">
+                            <i class="fa fa-key icon">
+                            </i>
+                        </span>
+                        <input class="form-control form-control py-2" id="password" name="password" type="password" placeholder="Masukan Password Anda">
                     </div>
-                    <div class="tombol">
-                        <button type="submit" class="btn1">MASUK</button>
-                        {{-- <h6 class="ps-4">Atau</h6>
-                        <button type="submit" class="btn2">Lanjutkan dengan Google</button> --}}
+                    <div class="ingat d-flex justify-content-between align-items-center">
+                        <div class="form-input d-flex gap-2">
+                            <input type="checkbox" id="checkbox" style="width:30px">
+                            <label for="checkbox" class="d-block">Ingat saya</label>
+                        </div>
+                        <a href="#">Lupa Password?</a>
+                    </div>
+                    <div class="tombol mt-5">
+                        <button type="submit" class="btn btn-primary-custom  btn-lg " style="padding: 0.5rem 6rem;">Login</button>
                     </div>
                 </form>
             </div>
-            <div class="ingat">
-                <input type="checkbox" id="checkbox">
-                <label for="checkbox">Ingat saya</label>
-                <a href="#">Lupa Password?</a>
+            <div class="register mt-5">
+                <p>Belum Punya Akun?
+                    <a href="/register" class="linkregis">Daftar Disini</a>
+                </p>
             </div>
         </div>
-        <div class="loregister">
-            <p>Belum Punya Akun?
-                <a href="/register" class="linkregis">Daftar Disini</a>
-            </p>
-        </div>
     </main>
-</body>
 
-</html>
+@endsection
