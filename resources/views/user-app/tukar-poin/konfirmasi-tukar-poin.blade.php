@@ -1,5 +1,5 @@
 @extends('layout.header-transaksi')
-@section('title', 'Konfirmasi Tukar Poin | We-Cycle')
+@section('title', 'Konfirmasi Tukar Poin | Bank Imam')
 
 @section('transaction-content')
 @section('transaction-title', 'KONFIRMASI')
@@ -126,7 +126,7 @@
         <div div class="row mt-5 mx-4">
             <form action="{{ url('/tukar-poin/reward/'.$reward->id) }}" method="post">
                 @csrf
-                <button class="btn btn-primary rounded-pill fw-bold my-2 px-4 w-100" href="/tukar-poin/success">
+                <button class="btn btn-primary-custom rounded-pill fw-bold my-2 px-4 w-100" href="/tukar-poin/success">
                     Konfirmasi <i class="bi bi-chevron-right"></i>
                 </button>
             </form>

@@ -9,7 +9,7 @@
                 TRANSAKSI <br>
                 BERHASIL
             </h2>
-            <img class="mx-auto" style="max-height: 276px; max-width: 276px;" src="{{ asset('images/success.png') }}"
+            <img class="mx-auto" style="max-height: 276px; max-width: 276px;" src="{{ asset('images/success.jpg') }}"
                 alt="Sucess">
             <p class="text-center m-0">
                 Terima Kasih
@@ -18,7 +18,7 @@
                 Transaksi Kamu Akan Segera Diproses!
             </p>
             <div class="row mt-5 mx-4">
-                <a class="btn btn-primary rounded-pill fw-bold my-2 px-4 py-2" href="/dashboard">
+                <a class="btn btn-primary-custom rounded-pill fw-bold my-2 px-4 py-2" href="/dashboard">
                     Beranda
                 </a>
             </div>

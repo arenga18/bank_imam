@@ -4,7 +4,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Poppins", sans-serif;
+    font-family: "Hanken Grotesk", sans-serif;
 }
 
 body {
@@ -17,12 +17,16 @@ main {
     min-height: 100vh;
 }
 
+.bg-primary-custom {
+    background-color: #00a056;
+}
+
 .primary-color {
     color: #f6e96b;
 }
 
 .text-primary {
-    color: #387f39 !important;
+    color: #00a056 !important;
 }
 
 .secondary-color {
@@ -30,22 +34,60 @@ main {
 }
 
 .btn-primary-custom {
-    background: linear-gradient(90deg, #d7f4b1 -50.01%, #f6e96b 142.08%);
+    background: linear-gradient(-90deg, #00aa5b -30.01%, #016d3b 170%);
+    color: white !important;
     font-weight: bold;
 }
 
 .btn-primary-custom:hover {
-    background: linear-gradient(90deg, #afc98d -50.01%, #f6e96b 142.08%);
+    background: linear-gradient(-90deg, #00aa5b -30.01%, #016d3b 170%);
+    color: white !important;
+}
+
+.btn-secondary-custom,
+.btn-secondary-custom:focus,
+.btn-secondary-custom:active,
+.btn-secondary-custom:not(:focus):not(:active) {
+    background-color: #235789 !important;
+    border: 1px solid #000000;
+    font-weight: bold;
+    color: white !important;
+}
+
+.btn-secondary-custom:hover {
+    background-color: #1d4163;
+    border: 1px solid #000000;
+    color: white;
 }
 
 .btn-outline-custom {
-    border: 1px solid #d7f4b1;
-    color: #5f7c3b;
+    border: 1px solid #387f39;
+    color: #235789;
+    background: transparent;
+    transition: background 0.3s, border-color 0.3s;
 }
 
 .btn-outline-custom:hover {
+    border: 1px solid #387f39;
+    color: #143b5e;
+}
+
+.btn-outline-custom:focus,
+.btn-outline-custom:active {
     border: 1px solid #a2ca71;
-    background: linear-gradient(90deg, #a2ca71 -50.01%, #f6e96b 142.08%);
+    background: linear-gradient(-90deg, #00aa5b -30.01%, #016d3b 170%);
+    outline: none;
+    color: white !important;
+}
+
+.btn-outline-custom:not(:focus):not(:active) {
+    border: 1px solid #387f39;
+    color: #235789;
+    background: transparent;
+}
+
+.border-custom {
+    border: 1px solid #235789 !important;
 }
 
 .bg-green-main {
@@ -91,6 +133,11 @@ main {
     margin-right: auto !important;
 }
 
+.list-group-item {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
 .header-container {
     position: fixed;
     margin: 0 auto;
@@ -123,7 +170,8 @@ main {
 }
 
 .gradient-brand-toRight {
-    background: linear-gradient(90deg, #d7f4b1 -56.01%, #f1d302 142.08%);
+    background: linear-gradient(-90deg, #00aa5b -30.01%, #016d3b 170%);
+    color: white !important;
 }
 
 .gradient-top-bottom {
@@ -187,12 +235,6 @@ main {
     width: 100%;
 }
 
-/* TUKAR POIN PAGE */
-#tukar-poin-page {
-    max-width: 428px;
-    min-height: calc(100vh - 96px);
-}
-
 .card-img-top {
     width: 100%;
     object-fit: cover;
@@ -201,6 +243,13 @@ main {
 .reward-name {
     overflow: hidden;
     max-width: 75ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-limit {
+    overflow: hidden;
+    max-width: 20ch;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -228,17 +277,33 @@ main {
     z-index: 1000;
 }
 
-.filter-tag {
-    cursor: pointer;
-    padding: 5px 10px;
-    margin: 5px;
-    background-color: #e1e97378;
-    border-radius: 20px;
-    color: #000000;
+.filter-tags-wrapper {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap; /* Prevent line breaks */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
 }
+
+.filter-tags-wrapper::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+.filter-tag {
+    flex-shrink: 0;
+    cursor: pointer;
+    padding: 5px 15px;
+    margin: 5px;
+    border: 1px solid #016d3b;
+    background-color: transparent;
+    border-radius: 20px;
+    color: #191919;
+    white-space: nowrap;
+}
+
 .filter-tag.active {
-    background-color: #e1e973;
-    color: black;
+    background-color: #016d3b;
+    color: rgb(255, 255, 255);
 }
 
 .container-body {

@@ -4,6 +4,7 @@
 	use Request;
 	use DB;
 	use CRUDBooster;
+	use App\Models\Reward;
 
 	class AdminTukarPoinsController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -276,9 +277,8 @@
 	    | 
 	    */
 	    public function hook_after_add($id) {        
-	        //Your code here
-
-	    }
+			
+		}
 
 	    /* 
 	    | ---------------------------------------------------------------------- 
@@ -301,8 +301,18 @@
 	    | 
 	    */
 	    public function hook_after_edit($id) {
-	        //Your code here 
-
+	       // Ambil data reward berdasarkan ID menggunakan where
+			$reward = Reward::where('id', $_REQUEST['reward_id'])->first();
+		
+			// Cek apakah statusnya "Diterima"
+			if ($_REQUEST['status'] == 'Diterima') {
+				// Jika statusnya "Diterima", update stok reward
+				if ($reward) {
+					$reward->update([
+						'stock' => ($reward->stock - 1)
+					]);
+				}
+			}
 	    }
 
 	    /* 

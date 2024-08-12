@@ -6,16 +6,10 @@
     <div class="container px-4 border-bottom">
         <div class="row">
             <div class="col py-3 d-flex align-items-center text-start text-dark">
-                @if($reward->category == 'uang')
-                <a href="{{ url("/tukar-saldo/reward/{$reward->id}") }}">
+                <a href="{{ url("/dashboard") }}">
                     <i style="font-size: 1.3rem; color: black;" class="bi bi-arrow-left me-3"></i>
                 </a>
-                @else
-                    <a href="{{ url("/tukar-poin/reward/{$reward->id}") }}">
-                        <i style="font-size: 1.3rem; color: black;" class="bi bi-arrow-left me-3"></i>
-                    </a>
-                @endif
-                    <h6 class="fw-bold m-0" style="letter-spacing: 1px;">
+                <h6 class="fw-bold m-0" style="letter-spacing: 1px;">
                 @yield('transaction-title')
             </h6>
             </div>

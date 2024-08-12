@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Filter categories
             categoryGroups.forEach((group) => {
                 if (filter === "all" || group.dataset.category === filter) {
-                    group.style.display = "block";
+                    group.style.display = "flex";
                 } else {
                     group.style.display = "none";
                 }

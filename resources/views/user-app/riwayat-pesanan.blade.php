@@ -1,5 +1,5 @@
-@extends('layout.header-transaksi')
-@section('title', 'Riwayat Tukar Poin')
+@extends('layout.header-rewards')
+@section('title', 'Riwayat Tukar Rewards')
 
 @section('transaction-content')
 @section('transaction-title', 'RIWAYAT PENUKARAN')
@@ -10,7 +10,7 @@
             <h5>Barang</h5>
         </div>
         @forelse($tukarPoin_history as $tukar_poin)
-        <div class="card border-0 rounded-3 shadow mb-2">
+        <div class="card border rounded-3 shadow-sm mb-2">
             <div class="card-body">
                 <div class="row d-flex align-items-center">
                     <div class="col-2">
@@ -48,7 +48,7 @@
             </div>
         </div>
         @empty
-        <div class="card border-0 shadow mb-2">
+        <div class="card border shadow-sm mb-2">
             <div class="card-body">
                 <div class="row d-flex align-items-center">
                     <div class="col text-center text-danger">
@@ -62,11 +62,11 @@
         @endforelse
         @endif
         @if (isset($tukarSaldo_history) || !empty($tukarSaldo_history))
-        <div class="uang-section">
+        <div class="uang-section mt-4">
             <h5>Uang</h5>
         </div>
         @forelse($tukarSaldo_history as $tukar_saldo)
-        <div class="card border-0 rounded-3 shadow mb-2">
+        <div class="card border rounded-3 shadow-sm mb-2">
             <div class="card-body">
                 <div class="row d-flex align-items-center">
                     <div class="col-2">
@@ -104,7 +104,7 @@
             </div>
         </div>
         @empty
-        <div class="card border-0 shadow mb-2">
+        <div class="card border shadow-sm mb-2">
             <div class="card-body">
                 <div class="row d-flex align-items-center">
                     <div class="col text-center text-danger">

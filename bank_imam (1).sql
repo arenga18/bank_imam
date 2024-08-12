@@ -647,7 +647,7 @@ CREATE TABLE `cms_privileges` (
 --
 
 INSERT INTO `cms_privileges` (`id`, `name`, `is_superadmin`, `theme_color`, `created_at`, `updated_at`) VALUES
-(1, 'Super Administrator', 1, 'skin-red', '2023-03-24 10:56:41', NULL),
+(1, 'Super Administrator', 1, 'skin-green', '2023-03-24 10:56:41', NULL),
 (2, 'Admin', 0, 'skin-green', NULL, NULL),
 (3, 'Nasabah', 0, 'skin-green-light', NULL, NULL);
 

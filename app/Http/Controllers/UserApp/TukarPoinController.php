@@ -68,10 +68,6 @@ class TukarPoinController extends Controller
                 'status' => 'Pending'
             ]);
 
-            $reward->update([
-                'stock' => ($reward->stock - 1)
-            ]);
-
             $point->update([
                 'total_points' => ($point->total_points - $reward->price)
             ]);

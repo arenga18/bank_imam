@@ -44,9 +44,6 @@
     border-top-style: solid;
     border-top-color: rgb(222, 222, 222);
     margin: 0px;
-    background-color: #235789;
-    box-shadow: 0px -8px 16px -7px rgba(0, 0, 0, 0.35);
-    -webkit-box-shadow: 0px -8px 16px -7px rgba(0, 0, 0, 0.35);
-    -moz-box-shadow: 0px -8px 16px -7px rgba(0, 0, 0, 0.35);
+    background-color: #fff;
     border-radius: 10px;
 }

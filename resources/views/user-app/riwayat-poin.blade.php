@@ -1,4 +1,4 @@
-@extends('layout.header-transaksi')
+@extends('layout.header-rewards')
 @section('title', 'Riwayat Transaksi')
 
 @section('transaction-content')
@@ -7,7 +7,7 @@
     <div class=" pt-3 mx-3">
         @if (isset($transactions) || !empty($transactions))
         @forelse ($transactions as $transaction)
-        <div class="card border-0 shadow mb-2">
+        <div class="card border shadow-sm mb-2">
             <div class="card-body">
                 <div class="row d-flex align-items-center">
                     <div class="col-7 text-start">
@@ -19,11 +19,11 @@
                         </p>
                     </div>
                     <div class="col-5 text-end">
-                        <p class="mb-0 pe-3 fw-bold text-main">
-                            + Rp.{{ number_format($transaction->total_income, 0, ',', '.') }} 
+                        <p class="mb-0 pe-3 fw-bold">
+                            <span class="text-primary">+</span> Rp{{ number_format($transaction->total_income, 0, ',', '.') }} 
                         </p>
-                        <p class="mb-0 pe-3 fw-bold text-main">
-                            + {{ $transaction->point_received }} Poin
+                        <p class="mb-0 pe-3 fw-bold ">
+                            <span class="text-primary">+</span> {{ $transaction->point_received }} Poin
                         </p>
                     </div>
                 </div>

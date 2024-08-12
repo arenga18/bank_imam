@@ -1,4 +1,4 @@
-@extends('layout.header-transaksi')
+@extends('layout.header-to-dashboard')
 @section('title', 'Riwayat Transaksi')
 
 @section('transaction-content')
@@ -8,7 +8,7 @@
     @forelse ($transactions as $transaction)
     <div class="pt-3 mx-3">
         <a href="{{ url('/transaction/'.$transaction->id.'/detail') }}" class="text-decoration-none text-dark">
-            <div class="card border-0 shadow mb-2">
+            <div class="card border shadow-sm mb-2">
                 <div class="card-body">
                     <div class="row d-flex align-items-center">
                         <div class="col-7 text-start">
@@ -29,11 +29,11 @@
                             <p class="mb-0 fw-bold">
                                 Pendapatan
                             </p>
-                            <p class="mb-0 pe-3 text-secondary fw-bold">
+                            <p class="mb-0 text-secondary fw-bold">
                                 Rp. {{$transaction->total_income}}
                             </p>
                             <p class="mb-0 ">
-                                <span class="rounded-pill text-light bg-green-main px-2 fw-bold">
+                                <span class="text-light text-primary fw-bold">
                                     {{ $transaction->point_received }} Poin
                                 </span>
                             </p>

@@ -18,7 +18,7 @@
                 Transaksi Kamu Akan Segera Diproses!
             </p>
             <div class="row mt-5 mx-4">
-                <a class="btn btn-primary rounded-pill fw-bold my-2 px-4 py-2" href="/dashboard">
+                <a class="btn btn-primary-custom rounded-pill fw-bold my-2 px-4 py-2" href="/dashboard">
                     Beranda
                 </a>
             </div>
