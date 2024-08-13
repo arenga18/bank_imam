@@ -4,6 +4,8 @@ namespace App\Http\Controllers\UserApp;
 
 use App\Models\User;
 use App\Models\Point;
+use App\Models\BSU;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +14,11 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        return view('user-app/register');
+          // Ambil seluruh data dari tabel cms_users
+          $users = BSU::all();
+
+          // Kirimkan data pengguna ke tampilan register
+          return view('user-app.register', compact('users'));
     }
 
     public function store(Request $request)
@@ -20,16 +26,27 @@ class RegisterController extends Controller
         $validatedData = $request->validate([
             'username' => 'required|max:255|unique:users',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6|max:255'
+            'password' => 'required|confirmed|min:6|max:255',
+            'cms_user_id' => 'required|exists:cms_users,id'
         ]);
         $validatedData['password'] = Hash::make($validatedData['password']);
+        
+        // Ambil ID pengguna dari dropdown
+        $selectedBsuId = $request->input('cms_user_id');
 
+        // Buat pengguna baru
         $user = User::create($validatedData);
+
+        // Tambahkan entry Point untuk pengguna baru
         Point::create([
             'user_id' => $user->id,
-            'total_points' => 0
+            'total_points' => 0,
         ]);
 
-        return redirect('/login')->with('success', 'Registration Succesful! Please Login.');
+        // Jika diperlukan, proses tambahan terkait pengguna terpilih dari dropdown
+        $selectedBsu = BSU::find($selectedBsuId);
+        // Lakukan proses lain jika diperlukan
+
+        return redirect('/login')->with('success', 'Registration Successful! Please Login.');
     }
 }
