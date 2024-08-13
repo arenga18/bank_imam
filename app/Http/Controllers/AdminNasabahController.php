@@ -215,7 +215,7 @@
 	        | $this->load_css[] = asset("myfile.css");
 	        |
 	        */
-	        $this->load_css = array();
+	        $this->load_css[] =  asset('we-cycle-app/bootstrap/css/admin.css');
 	        
 	        
 	    }
@@ -243,8 +243,7 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	        //Your code here
-	            
+	        $query->where('cms_user_id', CRUDBooster::myId());   
 	    }
 
 	    /*

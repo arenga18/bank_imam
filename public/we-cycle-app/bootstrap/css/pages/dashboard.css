@@ -34,12 +34,13 @@
     text-decoration: none;
     width: 100%;
     max-width: 428px;
+    min-height: 68px;
+    max-height: 68px;
     position: fixed;
     bottom: 0px;
     left: 50%;
     transform: translate(-50%);
     z-index: 2;
-    padding: 0 10px;
     font-size: 1em;
     border-top-style: solid;
     border-top-color: rgb(222, 222, 222);

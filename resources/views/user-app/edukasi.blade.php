@@ -11,7 +11,7 @@
     </div>
     <div class="banner py-4 px-3 text-black rounded-3 gradient-brand-toRight">
         <div class="d-flex align-items-center position-relative">
-            <h4 class="mb-0 text-light">Ikuti Kegiatan Sosial di Sekitarmu!</h4>
+            <h4 class="mb-0 text-light" style="max-width: 90%;">Ikuti Kegiatan Sosial di Sekitarmu!</h4>
             <img src="{{ asset('images/banner-edu.png') }}" alt="Banner Image" style="width: 80px;" class="position-absolute top-50 end-0 translate-middle-y">
         </div>
     </div>

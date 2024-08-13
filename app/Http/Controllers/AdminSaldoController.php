@@ -12,7 +12,7 @@
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
 			$this->title_field = "id";
 			$this->limit = "20";
-			$this->orderby = "user_id,desc";
+			$this->orderby = "updated_at,desc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
 			$this->button_bulk_action = true;
@@ -30,13 +30,13 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"User Id","name"=>"user_id","join"=>"users,id"];
+			$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
 			$this->col[] = ["label"=>"Total Saldo","name"=>"total_saldo"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'User Id','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,id'];
+			$this->form[] = ['label'=>'Nama User','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,username'];
 			$this->form[] = ['label'=>'Total Saldo','name'=>'total_saldo','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
@@ -190,8 +190,6 @@
 	        | $this->style_css = ".style{....}";
 	        |
 	        */
-	        $this->style_css = NULL;
-	        
 	        
 	        
 	        /*
@@ -202,7 +200,7 @@
 	        | $this->load_css[] = asset("myfile.css");
 	        |
 	        */
-	        $this->load_css = array();
+	        $this->load_css[] =  asset('we-cycle-app/bootstrap/css/admin.css');
 	        
 	        
 	    }
@@ -230,8 +228,7 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	        //Your code here
-	            
+	        $query->where('cms_user_id', CRUDBooster::myId());
 	    }
 
 	    /*

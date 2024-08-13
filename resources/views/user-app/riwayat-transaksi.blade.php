@@ -3,10 +3,10 @@
 
 @section('transaction-content')
 @section('transaction-title', 'RIWAYAT TRANSAKSI')
-<main class="main-container" style="min-height: calc(100vh - 64px);">
+<main class="main-container">
     @if (isset($transactions) || !empty($transactions))
     @forelse ($transactions as $transaction)
-    <div class="pt-3 mx-3">
+    <div class="mx-3">
         <a href="{{ url('/transaction/'.$transaction->id.'/detail') }}" class="text-decoration-none text-dark">
             <div class="card border shadow-sm mb-2">
                 <div class="card-body">

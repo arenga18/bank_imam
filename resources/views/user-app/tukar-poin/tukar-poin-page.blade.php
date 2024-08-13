@@ -37,7 +37,7 @@
                             alt="{{ $reward->name }}" 
                             style="height: 110px; object-fit: cover; object-position: center;"
                         >
-                        <div class="card-body text-left p-3 pe-2 col-8">
+                        <div class="card-body p-3 pe-2 col-8 d-flex flex-column justify-content-center">
                             <p class="card-text reward-name fw-bold m-0">
                                 {{ $reward->name }}
                             </p>

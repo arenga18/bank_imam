@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Detail Transaksi | We-Cycle')
+@section('title', 'Detail Transaksi | Bank Imam')
 @section('content')
 
 <header class="gradient-brand-toRight mx-auto rounded-bottom" style="max-width: 428px; width: 100%">

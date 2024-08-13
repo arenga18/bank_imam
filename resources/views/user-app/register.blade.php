@@ -4,7 +4,7 @@
 
 @section('content')
     <main class="loginscreen">
-        <img src="{{ asset('images/favicon/Element.png') }}" alt="decoration" style="margin-top: -1rem; margin-left: -1rem;">
+        <img src="{{ asset('images/favicon/Element.png') }}" alt="decoration" style="margin-top: -1rem;">
         <div class="form-wrapper text-center mt-3">
             <div class="title-section mb-4">
                 <h1 class="fw-bold pb-2">Daftar</h1>

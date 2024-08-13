@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Kategori Sampah | We-Cycle')
+@section('title', 'Kategori Sampah | Bank Imam')
 @section('content')
 
 <header class="gradient-brand-toRight mx-auto rounded-bottom">

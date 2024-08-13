@@ -36,7 +36,7 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 
 		# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
-		$this->col[] = ["label" => "Nama User", "name" => "user_id", "join" => "users,username"];
+		$this->col[] = ["label" => "Nama User", "name" => "user_id", "join" => "users,username"]; 	
 		$this->col[] = ["label" => "Nama Petugas", "name" => "admin_id", "join" => "cms_users,name"];
 		$this->col[] = ["label" => "Jenis Sampah", "name" => "sampah_id", "join" => "sampah,name"];
 		$this->col[] = ["label" => "Total Berat", "name" => "total_weight"];
@@ -47,13 +47,15 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 
 		# START FORM DO NOT REMOVE THIS LINE
 		$this->form = [];
-		$this->form[] = ['label' => 'Nama User', 'name' => 'user_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'users,username'];
-		$this->form[] = ['label' => 'Nama Petugas', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name'];
+		$this->form[] = ['label' => 'Nama User', 'name' => 'user_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'users,username', 'datatable_where' => 'cms_user_id = '.CRUDBooster::myId()];
+		$this->form[] = ['label' => 'Nama Petugas', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
 		$this->form[] = ['label' => 'Jenis Sampah', 'name' => 'sampah_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'sampah,name', 'datatable_format' => 'name,\'. Harga per Kg =  \',price_per_kg'];
 		$this->form[] = ['label' => 'Total Berat(kg)', 'name' => 'total_weight', 'type' => 'text', 'validation' => 'required|min:0|numeric', 'width' => 'col-sm-10'];
 		$this->form[] = ['label' => 'Total Pendapatan', 'name' => 'total_income', 'type' => 'number', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'readonly' => 'true'];
 		$this->form[] = ['label' => 'Poin Didapat', 'name' => 'point_received', 'type' => 'number', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'readonly' => 'true'];
 		$this->form[] = ['label' => 'Bukti Foto', 'name' => 'photo_evidence', 'type' => 'upload', 'validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
+# END FORM DO NOT REMOVE THIS LINE
+
 		# END FORM DO NOT REMOVE THIS LINE
 
 		# OLD START FORM
@@ -242,7 +244,7 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | $this->load_css[] = asset("myfile.css");
 	        |
 	        */
-		$this->load_css = array();
+			$this->load_css[] =  asset('we-cycle-app/bootstrap/css/admin.css');
 	}
 
 
@@ -254,6 +256,8 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    | @button_name = the name of button
 	    |
 	    */
+		
+	
 	public function actionButtonSelected($id_selected, $button_name)
 	{
 	}
@@ -266,11 +270,10 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    | @query = current sql query 
 	    |
 	    */
-	public function hook_query_index(&$query)
-	{
-		//Your code here
-
-	}
+		public function hook_query_index(&$query)
+		{
+			$query->where('cms_user_id', CRUDBooster::myId());
+		}
 
 	/*
 	    | ---------------------------------------------------------------------- 

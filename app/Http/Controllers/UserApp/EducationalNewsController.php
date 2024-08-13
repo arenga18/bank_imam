@@ -12,23 +12,22 @@ class EducationalNewsController extends Controller
 {
     public function index()
     {
-        // Mengambil semua data berita edukasi
-        $educationalNews = EducationalNews::all();
+        // Mengambil semua data berita edukasi dan mengurutkannya berdasarkan waktu updated_at
+        $educationalNews = EducationalNews::orderBy('updated_at', 'desc')->get();
 
         // Proses untuk mengekstrak domain dan menghitung waktu yang telah berlalu
         $educationalNews->transform(function ($news) {
-        $news->domain = $this->getHostFromUrl($news->url); // Menambahkan properti 'domain' ke dalam objek berita
+            $news->domain = $this->getHostFromUrl($news->url); // Menambahkan properti 'domain' ke dalam objek berita
 
-        // Menghitung waktu yang telah berlalu
-        $news->time_elapsed = Carbon::parse($news->updated_at)->diffForHumans();
+            // Menghitung waktu yang telah berlalu
+            $news->time_elapsed = Carbon::parse($news->updated_at)->diffForHumans();
 
-        return $news;
-    });
+            return $news;
+        });
 
-    // Kirim data ke view
-    return view('user-app.edukasi', compact('educationalNews'));
+        // Kirim data ke view
+        return view('user-app.edukasi', compact('educationalNews'));
     }
-
     // Fungsi helper untuk mengambil domain utama dari URL
     private function getHostFromUrl($url)
     {

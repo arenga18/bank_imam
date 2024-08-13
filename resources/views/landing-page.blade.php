@@ -8,7 +8,7 @@
    <section class="hero text-center bg-image ">
       <div class="d-flex justify-content-center align-items-center h-100">
          <div class="text-white">
-            <img src="{{ asset('images/image 17.png') }}" alt="we-cycle-brand" width="250">
+            <img src="{{ asset('images/image 17.png') }}" alt="bank-imam-brand" width="250">
          </div>
       </div>
    </section>
@@ -58,8 +58,7 @@
                Halo!
             </h1>
             <h3 class="fs-4 fw-bold">
-               Selamat Datang di 
-               <br> Bank IMAM!
+               Selamat Datang di Bank IMAM!
             </h3>
             <p class="mt-4">
                Ayo Tukarkan Sampahmu Dan Dapatkan <br> Reward Menarik Sekarang Juga!
@@ -91,7 +90,7 @@
       </div>
       <div class="row">
          <div class="col">
-            <p class="text-justify" style="text-align: justify">Bank Imam merupakan aplikasi yang dikembangkan dengan tujuan untuk menyediakan <span class="text-primary">Layanan Bank Sampah</span>. <br>
+            <p style="text-align: justify">Bank Imam merupakan aplikasi yang dikembangkan dengan tujuan untuk menyediakan <span class="text-primary">Layanan Bank Sampah</span>. <br>
             Dilatar belakangi oleh keinginan untuk mengatasi permasalahan sampah yang ada di Kelurahan Meruya Selatan.</p>
          </div>   
       </div>
@@ -268,7 +267,7 @@
                </li>
             </ol>
          </div>
-         <h6 class="my-4 fw-bold text-center" class="text-primary">
+         <h6 class="my-4 fw-bold text-center text-primary">
             Mulailah mengelola sampah dengan kami!
          </h6>
       </div>

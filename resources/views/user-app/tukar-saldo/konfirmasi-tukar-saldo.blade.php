@@ -1,5 +1,5 @@
 @extends('layout.header-transaksi')
-@section('title', 'Konfirmasi Tukar Poin | We-Cycle')
+@section('title', 'Konfirmasi Tukar Poin | Bank Imam')
 
 @section('transaction-content')
 @section('transaction-title', 'KONFIRMASI')
@@ -126,7 +126,7 @@
                     <!-- Input Hidden untuk Mengirimkan selected_nominal -->
                     <input type="hidden" name="selected_nominal" id="selected_nominal" value="{{ $selected_nominal }}">
                     
-                    <button class="btn btn-primary rounded-pill fw-bold my-2 px-4 w-100">
+                    <button class="btn btn-primary-custom rounded-pill fw-bold my-2 px-4 w-100">
                         Konfirmasi <i class="bi bi-chevron-right"></i>
                     </button>
                 </form>

@@ -26,7 +26,7 @@
             <div class="col my-auto text-center text-light">
                 <p class="m-0 font-sm">Saldo Saat ini</p>
                 <p class="m-0 fw-bold fs-5">
-                    Rp.{{ $saldo->total_saldo }}
+                    Rp{{ number_format($saldo->total_saldo, 0, ',', '.') }}
                 </p>
                 <p class="m-0" style="font-size: 0.7rem">Berlaku Hingga</p>
                 <p class="m-0" style="font-size: 0.7rem">31-12-2023</p>

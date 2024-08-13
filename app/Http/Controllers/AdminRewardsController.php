@@ -215,7 +215,7 @@
 	        | $this->load_css[] = asset("myfile.css");
 	        |
 	        */
-	        $this->load_css = array();
+	        $this->load_css[] =  asset('we-cycle-app/bootstrap/css/admin.css');
 	        
 	        
 	    }

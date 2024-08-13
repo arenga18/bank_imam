@@ -1,5 +1,5 @@
 {{-- NAVIGATION MENU --}}
-<div class="navigation-menu">
+<div class="navigation-menu d-flex align-items-center">
     <div class="container p-0 d-flex justify-content-evenly">
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/dashboard">

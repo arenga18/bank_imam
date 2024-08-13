@@ -9,7 +9,7 @@
                 TRANSAKSI <br>
                 BERHASIL
             </h2>
-            <img class="mx-auto" style="max-height: 276px; max-width: 276px;" src="{{ asset('images/success.png') }}"
+            <img class="mx-auto" style="max-height: 276px; max-width: 276px;" src="{{ asset('images/success.jpg') }}"
                 alt="Sucess">
             <p class="text-center m-0">
                 Terima Kasih

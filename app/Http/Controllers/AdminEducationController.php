@@ -39,7 +39,8 @@
 			$this->form = [];
 			$this->form[] = ['label'=>'Judul','name'=>'judul','type'=>'text','validation'=>'required|string|min:3|max:355','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 			$this->form[] = ['label'=>'Url','name'=>'url','type'=>'textarea','validation'=>'required|string|min:5|max:5000','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Gambar','name'=>'gambar','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
+			$this->form[] = ['label'=>'Gambar','name'=>'gambar','type'=>'text','validation'=>'required|url|max:5000','width'=>'col-sm-10','help'=>'Masukkan URL gambar dari internet'];
+
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -193,7 +194,8 @@
 	        | $this->style_css = ".style{....}";
 	        |
 	        */
-	        $this->style_css = NULL;
+			
+	        
 	        
 	        
 	        
@@ -205,7 +207,7 @@
 	        | $this->load_css[] = asset("myfile.css");
 	        |
 	        */
-	        $this->load_css = array();
+			$this->load_css[] =  asset('we-cycle-app/bootstrap/css/admin.css');
 	        
 	        
 	    }
