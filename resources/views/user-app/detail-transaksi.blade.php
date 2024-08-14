@@ -1,11 +1,11 @@
-@extends('layout.header-transaksi')
+@extends('layout.header-to-dashboard')
 @section('title', 'Detail Transaksi')
 
 @section('transaction-content')
 @section('transaction-title', 'DETAIL TRANSAKSI')
 <main class="main-container" style="min-height: calc(100vh - 64px);">
     <div class="pt-3 mx-3">
-        <p class="btn btn-outline-primary rounded-pill text-dark">
+        <p class="btn btn-outline-custom rounded-pill text-dark">
             ID #{{ $transaction->id }}
         </p>
         <section>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col text-end">
                     <p class="mb-0 fw-bold">
-                        {{ $transaction->created_at->format('d-m-Y') }}
+                        {{ $transaction->created_at }}
                     </p>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="col text-end">
                     <p class="mb-0 fw-bold">
-                        {{ $transaction->created_at->format('d-m-Y') }}
+                        {{ $transaction->created_at }}
                     </p>
                 </div>
             </div>

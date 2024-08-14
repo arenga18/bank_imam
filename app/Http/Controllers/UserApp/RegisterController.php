@@ -15,10 +15,10 @@ class RegisterController extends Controller
     public function index()
     {
           // Ambil seluruh data dari tabel cms_users
-          $users = BSU::all();
+          $data_bsu = BSU::where('id', '!=', 1)->get();
 
           // Kirimkan data pengguna ke tampilan register
-          return view('user-app.register', compact('users'));
+          return view('user-app.register', compact('data_bsu'));
     }
 
     public function store(Request $request)

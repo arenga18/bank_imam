@@ -7,7 +7,7 @@
         <img src="{{ asset('images/favicon/Element.png') }}" alt="decoration" style="margin-top: -1rem;">
         <div class="form-wrapper text-center mt-4">
             @if(session()->has('success'))
-            <div class="alert alert-success m-2" role="alert">
+            <div class="alert alert-success m-2 mb-3" role="alert">
                 {{ session('success') }}
             </div>
             @endif

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserApp;
 
 use App\Models\User;
+use App\Models\BSU;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
@@ -13,7 +14,14 @@ class ProfileController extends Controller
 {
     public function show()
     {
-        return view('user-app/profile', ['user' => Auth::user()]);
+        $user = Auth::user();
+        $list_bsu = BSU::all();
+        $bsuName = $user->bsu ? $user->bsu->name : null;
+        return view('user-app/profile',  [
+            'user' => $user,
+            'list_bsu' => $list_bsu,
+            'bsu_name' => $bsuName
+        ]);
     }
 
     public function update(Request $request)
@@ -24,6 +32,8 @@ class ProfileController extends Controller
         $user->email = $request->input('email') ?? $user->email;
         $user->address = $request->input('address') ?? $user->address;
         $user->phone_number = $request->input('phone_number') ?? $user->phone_number;
+        // $user->cms_user_id = $request->input('bsu_id');
+        // $user->cms_user_id;
 
         // Handle the uploaded image
         if ($request->hasFile('picture')) {

@@ -23,8 +23,8 @@
                         </span>
                         <select class="form-select form-control py-2" name="cms_user_id" required>
                             <option value="" disabled selected>Pilih Bank Unit</option>
-                            @foreach($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @foreach($data_bsu as $bsu)
+                                <option value="{{ $bsu->id }}">{{ $bsu->name }}</option>
                             @endforeach
                         </select>
                     </div>

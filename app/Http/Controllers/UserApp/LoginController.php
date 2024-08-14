@@ -7,6 +7,8 @@ use App\Models\Saldo;
 use App\Models\TukarPoin;
 use App\Models\TukarSaldo;
 use App\Models\Transaction;
+use App\Models\BSU;
+use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -31,14 +33,14 @@ class LoginController extends Controller
             $point = Point::where('user_id', $user->id)->first();
             $saldo = Saldo::where('user_id', $user->id)->first();
             $transactions = Transaction::where('user_id', $user->id)->latest()->limit(3)->get();
-            $tukar_poin = TukarPoin::where('user_id', $user->id)->count();
+            $tukar_poin = TukarPoin::where('user_id', $user->id)->count();      
 
             return redirect()->intended('dashboard')->with([
                 'user' => $user,
                 'point' => $point,
                 'saldo' => $saldo,
                 'transactions' => $transactions,
-                'tukar_poin' => $tukar_poin
+                'tukar_poin' => $tukar_poin,
             ]);
         }
 
@@ -46,33 +48,37 @@ class LoginController extends Controller
     }
 
     public function login()
-{
-    $user = Auth::user();
-    $point = Point::where('user_id', $user->id)->first();
-    $saldo = Saldo::where('user_id', $user->id)->first();
-    $transactions = Transaction::where('user_id', $user->id)->latest()->limit(3)->get();
+    {
+        $user = Auth::user();
+        $point = Point::where('user_id', $user->id)->first();
+        $saldo = Saldo::where('user_id', $user->id)->first();
+        $transactions = Transaction::where('user_id', $user->id)->latest()->limit(3)->get();
 
-    // Menghitung jumlah entri dari TukarPoin
-    $total_tukar_poin_count = TukarPoin::where('user_id', $user->id)->count();
+        $total_tukar_poin_count = TukarPoin::where('user_id', $user->id)->count();
 
-    // Menghitung jumlah entri dari TukarSaldo
-    $total_tukar_saldo_count = TukarSaldo::where('user_id', $user->id)->count();
+        $total_tukar_saldo_count = TukarSaldo::where('user_id', $user->id)->count();
 
-    // Menggabungkan total jumlah entri
-    $total_reward_count = $total_tukar_poin_count + $total_tukar_saldo_count;
+        $total_reward_count = $total_tukar_poin_count + $total_tukar_saldo_count;
 
-    // Menghitung total kilogram yang telah ditransaksikan oleh user
-    $total_weight = Transaction::where('user_id', $user->id)->sum('total_weight');
+        $total_weight = Transaction::where('user_id', $user->id)->sum('total_weight');
 
-    return view('user-app/dashboard')->with([
-        'user' => $user,
-        'point' => $point,
-        'saldo' => $saldo,
-        'transactions' => $transactions,
-        'total_reward_count' => $total_reward_count, // Mengirimkan total count reward
-        'total_weight' => $total_weight, // Mengirimkan total kilogram yang telah ditransaksikan
-    ]);
-}
+        $bsuName = $user->bsu ? $user->bsu->name : null;
+
+        $pengumuman = Pengumuman::where('admin_id', $user->cms_user_id)
+        ->where('status', 'On Proses')
+        ->first();
+
+        return view('user-app/dashboard')->with([
+            'user' => $user,
+            'point' => $point,
+            'saldo' => $saldo,
+            'transactions' => $transactions,
+            'total_reward_count' => $total_reward_count,
+            'total_weight' => $total_weight, 
+            'bsu_name' => $bsuName,
+            'pengumuman' => $pengumuman,
+        ]);
+    }
 
 
 

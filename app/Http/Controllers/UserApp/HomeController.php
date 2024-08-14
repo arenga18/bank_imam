@@ -16,6 +16,12 @@ class HomeController extends Controller
 
     public function settings()
     {
-        return view('user-app/pengaturan', ['user' => Auth::user()]);
+        $user = Auth::user();
+        $bsuName = $user->bsu ? $user->bsu->name : null;
+
+        return view('user-app/pengaturan', [
+            'user' => $user,
+            'bsu_name' => $bsuName
+        ]);
     }
 }

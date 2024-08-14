@@ -15,7 +15,7 @@
                     </div>
                     <div class="profile">
                         <img src="{{ $user->picture ?? asset('images/profile3.png') }}" alt="profile"
-                            style="width: 48px; height:48px;" class="rounded-circle bg-light border-custom">
+                        style="width: 48px; height:48px;" class="rounded-circle bg-light border-custom">
                     </div>
                 </div>
             </div>
@@ -23,6 +23,17 @@
         </div>
     </div>
 </header>
+<div class="bsu-profile p-4 pb-0 text-center border-bottom">
+    @if($pengumuman)
+        <h5 class="fw-bold secondary-color">Pengumuman:</h5>
+        <p class="text-danger">{{ $pengumuman->deskripsi }}</p>
+    @else
+        <p class="text-danger">Belum ada jadwal penukaran sampah</p>
+    @endif
+</div>
+<div class="bsu-profile p-4 pb-0">
+    <h6 class="secondary-color">Bank Sampah Unit: {{ $bsu_name }}</h6>
+</div>
 <div class="row border mt-4 mx-3 py-3 rounded-4 bg-light text-center">
     <div class="col">
         <p class="m-0 fw-bold mb-1">{{ $point->total_points }}</p>

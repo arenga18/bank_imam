@@ -14,7 +14,8 @@
             <h4 id="username" name="username" class="text-center font-md fw-bold m-0">
                 {{ $user->username ?? 'Anonim' }}
             </h4>
-            <p class="text-body-tertiary text-center font-sm">{{ $user->email ?? 'abc@gmail.com' }}</p>
+            <p class="text-body-tertiary text-center font-sm m-0">{{ $user->email ?? 'abc@gmail.com' }}</p>
+            <p class="text-body-tertiary text-center text-danger fw-bold font-sm">{{ $bsu_name ?? 'bank sampah unit' }}</p>
         </div>
     </div>
 </header>
