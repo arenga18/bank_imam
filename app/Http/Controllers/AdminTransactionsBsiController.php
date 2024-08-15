@@ -32,17 +32,22 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Admin Id","name"=>"admin_id","join"=>"cms_users,id"];
+			$this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
 			$this->col[] = ["label"=>"Berat Total","name"=>"total_weight"];
 			$this->col[] = ["label"=>"Total Harga Jual","name"=>"total_price"];
 			$this->col[] = ["label"=>"Profit","name"=>"profit"];
+			$this->col[] = ["label" => "Tanggal & Waktu", "name" => "created_at", "callback" => function($row) {
+				return date('d/m/Y H:i:s', strtotime($row->created_at)); // Format alternatif
+			}];
+			$this->col[] = ["label"=>"Periode","name"=>"periode"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Admin Id','name'=>'admin_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,id'];
+			$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
 			$this->form[] = ['label'=>'Total Weight','name'=>'total_weight','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Total Price','name'=>'total_price','type'=>'money','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label' => 'Periode', 'name' => 'periode', 'type' => 'text', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -238,8 +243,12 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	        //Your code here
-	            
+			$currentUserId = CRUDBooster::myId(); 
+			if ($currentUserId == 1) {
+
+			}else {
+				$query->where('admin_id', $currentUserId);
+			}
 	    }
 
 	    /*
@@ -271,24 +280,23 @@
 	    | @id = last insert id
 	    | 
 	    */
-	    public function hook_after_add($id)
+		public function hook_after_add($id)
 		{
-			// Ambil transaksi bsi yang baru saja ditambahkan
 			$transaction_bsi = TransactionsBsi::find($id);
-			
-			// Ambil total_pembelian terbaru dari tabel transactions
-			$previous_total_pembelian = Transaction::where('admin_id', $transaction_bsi->admin_id)
-				->orderBy('created_at', 'desc')
-				->value('total_pembelian');
-			
-			// Kurangkan total_pembelian dari total_price yang diinputkan
-			$final_price = $transaction_bsi->total_price - $previous_total_pembelian;
-			
-			// Update transaksi_bsi dengan final_price
+			$periode_bsi = $transaction_bsi->periode;
+
+			$total_income_sum = Transaction::where('periode', $periode_bsi)
+				->where('admin_id', $transaction_bsi->admin_id)
+				->sum('total_income');
+
+			$final_profit = $transaction_bsi->total_price - $total_income_sum;
+
 			$transaction_bsi->update([
-				'profit' => $final_price
+				'profit' => $final_profit
 			]);
 		}
+
+
 
 
 	    /* 
@@ -312,9 +320,24 @@
 	    | 
 	    */
 	    public function hook_after_edit($id) {
-	        //Your code here 
+			// Ambil transaksi bsi yang baru saja diedit
+			$transaction_bsi = TransactionsBsi::find($id);
+		
+			// Ambil total_income dari tabel transactions berdasarkan periode yang sama
+			$sum_total_income = Transaction::where('admin_id', $transaction_bsi->admin_id)
+				->where('periode', $transaction_bsi->periode) // mencocokkan periode
+				->sum('total_income');
+		
+			// Hitung profit baru
+			$final_price = $transaction_bsi->total_price - $sum_total_income;
+		
+			// Update profit di tabel transactions_bsi
+			$transaction_bsi->update([
+				'profit' => $final_price
+			]);
+		}
+		
 
-	    }
 
 	    /* 
 	    | ---------------------------------------------------------------------- 

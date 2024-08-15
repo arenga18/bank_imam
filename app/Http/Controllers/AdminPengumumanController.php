@@ -32,7 +32,9 @@
 			$this->col = [];
 			$this->col[] = ["label"=>"Nama","name"=>"nama"];
 			$this->col[] = ["label"=>"Deskripsi","name"=>"deskripsi"];
-			$this->col[] = ["label"=>"Dibuat Pada","name"=>"updated_at"];
+			$this->col[] = ["label" => "Tanggal & Waktu", "name" => "updated_at", "callback" => function($row) {
+				return date('d/m/Y H:i:s', strtotime($row->updated_at));
+			}];
 			$this->col[] = ["label"=>"Status","name"=>"status"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
@@ -234,7 +236,12 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	        $query->where('admin_id', CRUDBooster::myId());
+	        $currentUserId = CRUDBooster::myId(); 
+			if ($currentUserId == 1) {
+
+			}else {
+				$query->where('admin_id', $currentUserId);
+			}
 	    }
 
 	    /*

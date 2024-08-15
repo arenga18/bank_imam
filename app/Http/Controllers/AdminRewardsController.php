@@ -41,12 +41,24 @@
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			$this->form[] = ['label'=>'Kategori','name'=>'category','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','help'=>'Mohon Masukan Kategori hanya ke dalam salah satu dari 3 kategori berikut: hiasan, peralatan, atau perlengkapan.'];
+			$this->form[] = [
+				'label' => 'Kategori',
+				'name' => 'category',
+				'type' => 'select2',
+				'validation' => 'required|in:uang,barang',
+				'width' => 'col-sm-10',
+				'help' => 'Mohon pilih kategori dari salah satu dari dua pilihan berikut: uang atau barang.',
+				'dataenum' => [
+					'uang' => 'uang',
+					'barang' => 'barang'
+				]
+			];
 			$this->form[] = ['label'=>'Deskripsi','name'=>'description','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Harga(Poin)','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10', 'help'=>'Isi jika dapat ditukarkan dengan poin'];
+			$this->form[] = ['label'=>'Harga(Poin)','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','help'=>'Isi jika dapat ditukarkan dengan poin'];
 			$this->form[] = ['label'=>'Jumlah Stok','name'=>'stock','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
 			$this->form[] = ['label'=>'Foto','name'=>'image','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Harga(Saldo)','validation'=>'required','width'=>'col-sm-9'];
+			$this->form[] = ['label'=>'Harga(Saldo)','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
+			$this->form[] = ['label' => 'Nama Petugas', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -54,9 +66,10 @@
 			//$this->form[] = ['label'=>'Nama','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 			//$this->form[] = ['label'=>'Kategori','name'=>'category','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','help'=>'Mohon Masukan Kategori hanya ke dalam salah satu dari 3 kategori berikut: hiasan, peralatan, atau perlengkapan.'];
 			//$this->form[] = ['label'=>'Deskripsi','name'=>'description','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Harga','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Foto','name'=>'image','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-			//$this->form[] = ['label'=>'Jumlah Stok','name'=>'stock','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Harga(Poin)','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10', 'help'=>'Isi jika dapat ditukarkan dengan poin'];
+			//$this->form[] = ['label'=>'Jumlah Stok','name'=>'stock','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
+			//$this->form[] = ['label'=>'Foto','name'=>'image','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Harga(Saldo)','validation'=>'required','width'=>'col-sm-9'];
 			# OLD END FORM
 
 			/* 
@@ -243,8 +256,12 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	        //Your code here
-	            
+	        $currentUserId = CRUDBooster::myId(); 
+			if ($currentUserId == 1) {
+
+			}else {
+				$query->where('admin_id', $currentUserId);
+			}
 	    }
 
 	    /*

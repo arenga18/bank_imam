@@ -32,18 +32,29 @@
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
 			$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
-			$this->col[] = ["label" => "Nama Petugas", "name" => "admin_id", "join" => "cms_users,name"];
+			$this->col[] = ["label" => "Nama BSU", "name" => "admin_id", "join" => "cms_users,name"];
 			$this->col[] = ["label"=>"Reward","name"=>"reward_id","join"=>"rewards,name"];
 			$this->col[] = ["label"=>"Jumlah","name"=>"quantity"];
 			$this->col[] = ["label"=>"Total Harga","name"=>"total_price"];
+			$this->col[] = ["label" => "Tanggal & Waktu", "name" => "created_at", "callback" => function($row) {
+				return date('d/m/Y H:i:s', strtotime($row->created_at)); // Format alternatif
+			}];
 			$this->col[] = ["label"=>"Status","name"=>"status"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'Nama User','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,username'];
-			$this->form[] = ['label' => 'Nama Petugas', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name'];
-			$this->form[] = ['label'=>'Reward','name'=>'reward_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'rewards,name','datatable_where'=>'stock>0'];
+			$this->form[] = ['label'=>'Nama BSU','name'=>'admin_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id = '.CRUDBooster::myId()];
+			$this->form[] = [
+				'label' => 'Reward',
+				'name' => 'reward_id',
+				'type' => 'select2',
+				'validation' => 'required',
+				'width' => 'col-sm-10',
+				'datatable' => 'rewards,name',
+				'datatable_where' => 'admin_id = ' . CRUDBooster::myId() . ' AND stock >= 0'
+			];
 			$this->form[] = ['label'=>'Quantity','name'=>'quantity','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Total Price','name'=>'total_price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Pending;On Proses;Diterima'];
@@ -52,11 +63,11 @@
 			# OLD START FORM
 			//$this->form = [];
 			//$this->form[] = ['label'=>'Nama User','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,username'];
-			//$this->form[] = ['label'=>'Nama Admin','name'=>'admin_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id_cms_privileges=2'];
-			//$this->form[] = ['label'=>'Reward Id','name'=>'reward_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'rewards,name','datatable_where'=>'stock>0'];
+			//$this->form[] = ['label' => 'Nama Petugas', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
+			//$this->form[] = ['label'=>'Reward','name'=>'reward_id','type'=>'select2','validation'=>'required','width'=>'col-sm-10','datatable'=>'rewards,name','datatable_where'=>'stock>=0', 'readonly' => 'true'];
 			//$this->form[] = ['label'=>'Quantity','name'=>'quantity','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'Total Price','name'=>'total_price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Pending;Sukses'];
+			//$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Pending;On Proses;Diterima'];
 			# OLD END FORM
 
 			/* 
@@ -243,7 +254,12 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	        $query->where('cms_user_id', CRUDBooster::myId());
+	        $currentUserId = CRUDBooster::myId(); 
+			if ($currentUserId == 1) {
+
+			}else {
+				$query->where('cms_user_id', $currentUserId);
+			}
 	    }
 
 	    /*
@@ -300,19 +316,8 @@
 	    | 
 	    */
 	    public function hook_after_edit($id) {
-	       // Ambil data reward berdasarkan ID menggunakan where
-			$reward = Reward::where('id', $_REQUEST['reward_id'])->first();
+		}
 		
-			// Cek apakah statusnya "Diterima"
-			if ($_REQUEST['status'] == 'Diterima') {
-				// Jika statusnya "Diterima", update stok reward
-				if ($reward) {
-					$reward->update([
-						'stock' => ($reward->stock - 1)
-					]);
-				}
-			}
-	    }
 
 	    /* 
 	    | ---------------------------------------------------------------------- 

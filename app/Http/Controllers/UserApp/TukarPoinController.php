@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace App\Http\Controllers\UserApp;
 
 use App\Http\Controllers\Controller;
@@ -12,16 +11,23 @@ class TukarPoinController extends Controller
 {
     public function index()
     {
-        $hiasan = Reward::where('category', 'hiasan')->get()->all();
-        $peralatan = Reward::where('category', 'peralatan')->get()->all();
-        $uang = Reward::where('category', 'uang')->get()->all();
-        $point = Point::where('user_id', auth()->user()->id)->first();
-        $saldo = Saldo::where('user_id', auth()->user()->id)->first();
-        
+        $userId = auth()->user()->id;
+        $cmsUserId = auth()->user()->cms_user_id; // Mengambil cms_user_id dari user yang login
+
+        $barang = Reward::where('category', 'barang')
+            ->where('admin_id', $cmsUserId)
+            ->get()
+            ->all();
+        $uang = Reward::where('category', 'uang')
+            ->where('admin_id', $cmsUserId)
+            ->get()
+            ->all();
+
+        $point = Point::where('user_id', $userId)->first();
+        $saldo = Saldo::where('user_id', $userId)->first();
 
         return view('user-app.tukar-poin.tukar-poin-page')->with([
-            'hiasan' => $hiasan,
-            'peralatan' => $peralatan,
+            'barang' => $barang,
             'uang' => $uang,
             'point' => $point,
             'saldo' => $saldo,
@@ -30,9 +36,16 @@ class TukarPoinController extends Controller
 
     public function show($id)
     {
-        $reward = Reward::findOrFail($id);
-        $point = Point::where('user_id', auth()->user()->id)->first();
-        $saldo = Saldo::where('user_id', auth()->user()->id)->first();
+        $userId = auth()->user()->id;
+        $cmsUserId = auth()->user()->cms_user_id;
+
+        $reward = Reward::where('id', $id)
+            ->where('admin_id', $cmsUserId)
+            ->firstOrFail();
+
+        $point = Point::where('user_id', $userId)->first();
+        $saldo = Saldo::where('user_id', $userId)->first();
+
         return view('user-app/tukar-poin/reward')->with([
             'reward' => $reward, 
             'point' => $point,
@@ -42,10 +55,16 @@ class TukarPoinController extends Controller
 
     public function confirm($id)
     {
-        $reward = Reward::findOrFail($id);
-        $point = Point::where('user_id', auth()->user()->id)->first();
+        $userId = auth()->user()->id;
+        $cmsUserId = auth()->user()->cms_user_id;
+
+        $reward = Reward::where('id', $id)
+            ->where('admin_id', $cmsUserId)
+            ->firstOrFail();
+        $point = Point::where('user_id', $userId)->first();
         $time = date("Y-m-d");
         $point_left = $point->total_points - $reward->price;
+
         return view('user-app/tukar-poin/konfirmasi-tukar-poin')->with([
             'reward' => $reward,
             'point' => $point,
@@ -56,16 +75,25 @@ class TukarPoinController extends Controller
 
     public function store($id)
     {
-        $reward = Reward::findOrFail($id);
-        $point = Point::where('user_id', auth()->user()->id)->first();
+        $userId = auth()->user()->id;
+        $cmsUserId = auth()->user()->cms_user_id;
+
+        $reward = Reward::where('id', $id)
+            ->where('admin_id', $cmsUserId)
+            ->firstOrFail();
+        $point = Point::where('user_id', $userId)->first();
 
         if ($point->total_points >= $reward->price && $reward->stock >= 1) {
             TukarPoin::create([
-                'user_id' => auth()->user()->id,
+                'user_id' => $userId,
                 'reward_id' => $reward->id,
                 'quantity' => 1,
                 'total_price' => $reward->price,
                 'status' => 'Pending'
+            ]);
+
+            $reward->update([
+                'stock' => ($reward->stock - 1)
             ]);
 
             $point->update([
@@ -78,3 +106,5 @@ class TukarPoinController extends Controller
         return view('user-app/tukar-poin/failed');
     }
 }
+
+?>

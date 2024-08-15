@@ -52,8 +52,8 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-6 mb-3">
-                            <div class="card border border-primary">
+                        <div class="col-6 p-1 px-2 mb-3">
+                            <div class="card border shadow-sm rounded">
                                 <div class="card-body text-center">
                                     <h6 class="card-title my-0 fw-bold">Belum ada data pada kategori ini.</h6>
                                 </div>

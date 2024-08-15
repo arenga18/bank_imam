@@ -47,13 +47,13 @@
                 </a>
             </div>
             @empty
-            <div class="card">
-                <div class="card-body">
+            <div class="card border-0 px-3">
+                <div class="card-body border rounded shadow-sm">
                     <h6 class="card-title my-0 fw-bold">
-                        Belum Ada Data!
+                        Reward belum tersedia
                     </h6>
                     <p class="card-text reward-name font-sm mt-0">
-                        Input data terlebih dulu!
+                        Mohon tunggu update selanjutnya
                     </p>
                 </div>
             </div>
@@ -62,10 +62,10 @@
         </div>
     </div>
     <div class="row mt-3 justify-content-center">
-        <h5 class="fw-bold ps-3 mb-2">Hiasan</h5>
+        <h5 class="fw-bold ps-3 mb-2">Barang</h5>
         <div class="row px-3">
-            @if (isset($hiasan) || !empty($hiasan))
-            @forelse ($hiasan as $reward)
+            @if (isset($barang) || !empty($barang))
+            @forelse ($barang as $reward)
             <div class="col-6 p-1 item-card">
                 <a class="text-dark text-decoration-none" href="{{url("/tukar-poin/reward/{$reward->id}")}}">
                     <div class="card border shadow-sm rounded">
@@ -82,13 +82,13 @@
                 </a>
             </div>
             @empty
-            <div class="card">
-                <div class="card-body">
+            <div class="card border-0 px-3">
+                <div class="card-body border rounded shadow-sm">
                     <h6 class="card-title my-0 fw-bold">
-                        Belum Ada Data!
+                        Reward belum tersedia
                     </h6>
                     <p class="card-text reward-name font-sm mt-0">
-                        Input data terlebih dulu!
+                        Mohon tunggu update selanjutnya
                     </p>
                 </div>
             </div>

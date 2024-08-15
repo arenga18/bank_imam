@@ -15,6 +15,6 @@ class TukarPoin extends Model
 
     public function reward()
     {
-        return $this->belongsTo(Reward::class);
+        return $this->belongsTo(Reward::class, 'reward_id');
     }
 }

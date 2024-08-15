@@ -236,8 +236,7 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	        //Your code here
-	            
+	       
 	    }
 
 	    /*

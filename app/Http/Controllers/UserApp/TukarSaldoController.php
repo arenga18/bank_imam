@@ -14,15 +14,21 @@ class TukarSaldoController extends Controller
 {
     public function index()
     {
-        $hiasan = Reward::where('category', 'hiasan')->get();
-        $peralatan = Reward::where('category', 'peralatan')->get();
-        $uang = Reward::where('category', 'uang')->get();
+        $cmsUserId = auth()->user()->cms_user_id; // Mengambil cms_user_id dari user yang login
+
+        // Filter rewards berdasarkan admin_id
+        $barang = Reward::where('category', 'barang')
+            ->where('admin_id', $cmsUserId)
+            ->get();
+        $uang = Reward::where('category', 'uang')
+            ->where('admin_id', $cmsUserId)
+            ->get();
+
         $point = Point::where('user_id', auth()->user()->id)->first();
         $saldo = Saldo::where('user_id', auth()->user()->id)->first();
         
         return view('user-app.tukar-poin.tukar-poin-page')->with([
-            'hiasan' => $hiasan,
-            'peralatan' => $peralatan,
+            'barang' => $barang,
             'uang' => $uang,
             'point' => $point,
             'saldo' => $saldo,
@@ -31,7 +37,12 @@ class TukarSaldoController extends Controller
 
     public function show($id)
     {
-        $reward = Reward::findOrFail($id);
+        $cmsUserId = auth()->user()->cms_user_id; // Mengambil cms_user_id dari user yang login
+
+        // Pastikan reward yang ditampilkan memiliki admin_id yang sesuai
+        $reward = Reward::where('id', $id)
+            ->where('admin_id', $cmsUserId)
+            ->firstOrFail();
         $point = Point::where('user_id', auth()->user()->id)->first();
         $saldo = Saldo::where('user_id', auth()->user()->id)->first();
 
@@ -44,7 +55,12 @@ class TukarSaldoController extends Controller
 
     public function confirm(Request $request, $id)
     {
-        $reward = Reward::findOrFail($id);
+        $cmsUserId = auth()->user()->cms_user_id; // Mengambil cms_user_id dari user yang login
+
+        // Pastikan reward yang dikonfirmasi memiliki admin_id yang sesuai
+        $reward = Reward::where('id', $id)
+            ->where('admin_id', $cmsUserId)
+            ->firstOrFail();
         $saldo = Saldo::where('user_id', auth()->user()->id)->first();
 
         // Validasi input 'selected_nominal'
@@ -65,18 +81,18 @@ class TukarSaldoController extends Controller
         ]);
     }
 
-
     public function store(Request $request, $id)
     {
+        $cmsUserId = auth()->user()->cms_user_id; 
 
-        // Mendapatkan data reward, saldo, dan nominal yang dipilih
-        $reward = Reward::findOrFail($id);
+        $reward = Reward::where('id', $id)
+            ->where('admin_id', $cmsUserId)
+            ->firstOrFail();
         $saldo = Saldo::where('user_id', auth()->user()->id)->firstOrFail();
         $selected_nominal = $request->input('selected_nominal');
-    
-        // Validasi apakah saldo mencukupi dan reward masih tersedia
+
+        
         if ($saldo->total_saldo >= $selected_nominal && $reward->stock >= 1) {
-            // Buat entri TukarSaldo
             TukarSaldo::create([
                 'user_id' => auth()->user()->id,
                 'reward_id' => $reward->id,
@@ -84,23 +100,17 @@ class TukarSaldoController extends Controller
                 'total_price' => $selected_nominal,
                 'status' => 'Pending'
             ]);
-    
-            // Update stok reward
+
             $reward->update([
                 'stock' => $reward->stock - 1
             ]);
-    
-            // Update saldo user
             $saldo->update([
                 'total_saldo' => $saldo->total_saldo - $selected_nominal
             ]);
-    
-            // Redirect ke halaman sukses
+
             return view('user-app/tukar-saldo/success');
         }
-    
-        // Redirect ke halaman gagal jika kondisi tidak terpenuhi
+
         return view('user-app/tukar-saldo/failed');
     }
-    
 }

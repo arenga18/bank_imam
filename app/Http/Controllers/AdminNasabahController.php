@@ -241,7 +241,12 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	        $query->where('cms_user_id', CRUDBooster::myId());   
+	        $currentUserId = CRUDBooster::myId(); 
+			if ($currentUserId == 1) {
+
+			}else {
+				$query->where('cms_user_id', $currentUserId);
+			}  
 	    }
 
 	    /*
