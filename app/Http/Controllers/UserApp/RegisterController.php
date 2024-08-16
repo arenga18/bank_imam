@@ -47,6 +47,6 @@ class RegisterController extends Controller
         $selectedBsu = BSU::find($selectedBsuId);
         // Lakukan proses lain jika diperlukan
 
-        return redirect('/login')->with('success', 'Registration Successful! Please Login.');
+        return redirect('/login')->with('success', 'Registrasi Berhasil! Silahkan Login.');
     }
 }

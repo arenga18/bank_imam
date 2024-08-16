@@ -14,7 +14,7 @@
                 <i class="bi bi-file-earmark-text-fill pe-1 secondary-color"></i>
                 <span>Riwayat Poin</span>
             </a>
-            <a class="col-6 shadow-sm py-2 px-4 rounded m-auto text-decoration-none text-black" href="/history/tukar-poin" style="width: max-content;">
+            <a class="col-6 shadow-sm py-2 px-3 rounded m-auto text-decoration-none text-black" href="/history/tukar-poin" style="width: max-content;">
                 <i class="bi bi-bag-dash-fill pe-1 secondary-color"></i>
                 <span>Pesanan Saya</span>
             </a>
@@ -22,7 +22,7 @@
     </div>
 </div>
 {{-- REWARD --}}
-<div class="container pb-5 mb-5">
+<div class="container mb-5" style="padding-bottom: 4rem !important;">
     {{-- Reward Kategori 3 --}}
     <div class="row mt-4 justify-content-center">
         <h5 class="fw-bold ps-3 mb-3">Uang</h5>
@@ -82,7 +82,7 @@
                 </a>
             </div>
             @empty
-            <div class="card border-0 px-3">
+            <div class="card border-0 p-0">
                 <div class="card-body border rounded shadow-sm">
                     <h6 class="card-title my-0 fw-bold">
                         Reward belum tersedia

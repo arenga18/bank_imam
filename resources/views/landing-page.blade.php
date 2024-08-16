@@ -202,9 +202,9 @@
                <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
                   <div class="ms-2 me-auto fw-normal">
                      <div class="fw-bold">
-                        Sampah yang telah dipilah diantarkan ke bank sampah RW 16.
+                        Sampah yang telah dipilah diantarkan ke bank sampah RW/RT terdekat.
                      </div>
-                     <ul class="list-group border-light">
+                     {{-- <ul class="list-group border-light">
                         <li class="list-group-item border-0">
                            <i class="bi-geo-alt-fill text-primary" style="font-size: 25px"></i>
                            Bank Sampah Meruya Selatan Jl. Yos Sudarso No.KM. 8, Umban Sari, Kec. Rumbai, Kota Pekanbaru, Riau 28266.
@@ -215,7 +215,7 @@
                            Minggu/Tanggal Merah
                            <span class="fw-bold" style="color: red"> LIBUR</span>
                         </li>
-                     </ul>
+                     </ul> --}}
                   </div>
                </li>
                <li class="list-group-item d-flex border-0 justify-content-between align-items-start">

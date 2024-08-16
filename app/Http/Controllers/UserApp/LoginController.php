@@ -44,7 +44,7 @@ class LoginController extends Controller
             ]);
         }
 
-        return back()->with('loginError', 'Gmail Atau Password Salah.');
+        return back()->with('loginError', 'Email Atau Password Salah.');
     }
 
     public function login()

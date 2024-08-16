@@ -45,6 +45,11 @@ th:last-child {
     font-size: 20px !important;
 }
 
+.panel-default > .panel-heading {
+    background-color: #337ab7 !important;
+    color: white;
+}
+
 .panel .panel-body {
     padding: 1rem 2rem !important;
 }

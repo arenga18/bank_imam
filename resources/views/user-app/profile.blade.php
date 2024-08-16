@@ -59,7 +59,7 @@
                         value="{{ $user->email ?? 'abc@gmail.com' }}" disabled>
                 </div>
                 <div class="col-12">
-                    <label for="phone-number" class="form-label fw-bold mt-2 mb-1">No. Handphone</label>
+                    <label for="phone-number" class="form-label fw-bold mt-2 mb-1">No. Handphone / WhatsApp</label>
                     <input type="text" id="phone_number" inputmode="numeric" name="phone_number" class="form-control"
                         value="{{ $user->phone_number ?? '112233122' }}">
                 </div>

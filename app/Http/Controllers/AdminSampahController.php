@@ -39,9 +39,10 @@
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'Nama Sampah','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Kategori Sampah','name'=>'category_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'sampah_categories,name'];
+			$this->form[] = ['label'=>'Kategori Sampah','name'=>'category_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'sampah_categories,name', 'datatable_where' => 'admin_id = '.CRUDBooster::myId()];
 			$this->form[] = ['label'=>'Image','name'=>'image','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
 			$this->form[] = ['label'=>'Price Per Kg','name'=>'price_per_kg','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'hidden', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'value' => CRUDBooster::myId()];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -236,7 +237,12 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	       
+			$currentUserId = CRUDBooster::myId(); 
+			if ($currentUserId == 1) {
+
+			}else {
+				$query->where('sampah.admin_id', $currentUserId);
+			}
 	    }
 
 	    /*

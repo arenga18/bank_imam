@@ -20,50 +20,57 @@
 <main class="main-container">
     <div class="container container-body pt-4 pb-5">
         <!-- Filter Tags -->
-        <div class="d-flex justify-content-center mb-4">
-            <div class="filter-tags-wrapper">
-                <div class="filter-tag active" data-filter="all">Umum</div>
-                @foreach ($sampahByCategory as $categoryId => $sampah)
-                    <div class="filter-tag" data-filter="{{ $categoryId }}">{{ $categoryId }}</div>
-                @endforeach
-            </div>
-        </div>
-        
-
-        <!-- Category Groups -->
-        @foreach ($sampahByCategory as $categoryId => $sampah)
-            <div class="row mt-3 justify-content-center category-group" data-category="{{ $categoryId }}">
-                <h5 class="fw-bold ps-3 mb-2">{{ $categoryId }}</h5>
-                <!-- Items -->
-                <div class="row px-2">
-                    @forelse ($sampah as $item)
-                        <div class="col-6 p-1 item-card">
-                            <div class="card border shadow-sm rounded" data-category="{{ $categoryId }}">
-                                <img
-                                src="{{ $item->image }}" class="card-img-top min-w-100" alt="..." 
-                                style="height: 150px; width: 100%; object-fit: cover; object-position: bottom;">
-                                <div class="card-body border-top text-left d-flex flex-column">
-                                    <h6 class="card-title fw-bold m-0">{{ $item->name }}</h6>
-                                    <p class="card-text my-0 secondary-color">
-                                        <span class="fw-semibold">Rp.{{ $item->price_per_kg }}</span>/Kg
-                                    </p>
-                                    {{-- <button class="btn btn-primary-custom add-to-cart" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price_per_kg }}" data-image="{{ $item->image }}">+</button> --}}
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-6 p-1 px-2 mb-3">
-                            <div class="card border shadow-sm rounded">
-                                <div class="card-body text-center">
-                                    <h6 class="card-title my-0 fw-bold">Belum ada data pada kategori ini.</h6>
-                                </div>
-                            </div>
-                        </div>
-                    @endforelse
+        @if (isset($barang) || !empty($sampahByCategory))
+            <div class="d-flex justify-content-center mb-4">
+                <div class="filter-tags-wrapper">
+                    <div class="filter-tag active" data-filter="all">Semua</div>
+                    @foreach ($sampahByCategory as $categoryId => $sampah)
+                        <div class="filter-tag" data-filter="{{ $categoryId }}">{{ $categoryId }}</div>
+                    @endforeach
                 </div>
             </div>
+        
+
+            <!-- Category Groups -->
+            @foreach ($sampahByCategory as $categoryId => $sampah)
+                <div class="row mt-3 justify-content-center category-group" data-category="{{ $categoryId }}">
+                    <h5 class="fw-bold ps-3 mb-2">{{ $categoryId }}</h5>
+                    <!-- Items -->
+                    <div class="row px-2">
+                        @forelse ($sampah as $item)
+                            <div class="col-6 p-1 item-card">
+                                <div class="card border shadow-sm rounded" data-category="{{ $categoryId }}">
+                                    <img
+                                    src="{{ $item->image }}" class="card-img-top min-w-100" alt="..." 
+                                    style="height: 150px; width: 100%; object-fit: cover;">
+                                    <div class="card-body border-top text-left d-flex flex-column">
+                                        <h6 class="card-title fw-bold m-0">{{ $item->name }}</h6>
+                                        <p class="card-text my-0 secondary-color">
+                                            <span class="fw-semibold">Rp.{{ $item->price_per_kg }}</span>/Kg
+                                        </p>
+                                        {{-- <button class="btn btn-primary-custom add-to-cart" data-id="{{ $item->id }}" data-name="{{ $item->name }}" data-price="{{ $item->price_per_kg }}" data-image="{{ $item->image }}">+</button> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="col-6 p-1 px-2 mb-3">
+                                <div class="card border shadow-sm rounded">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title my-0 fw-bold">Belum ada data pada kategori ini.</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
             @endforeach
-        </div>
+            @else
+            <h5 class="text-danger text-center">
+                Katalog sampah belum tersedia! <br> 
+                Tunggu update selanjutnya
+            </h5>
+        @endif
+        
     </div>
 
     {{-- Div Sticky Keranjang --}}
