@@ -70,7 +70,7 @@
             <div class="card-body">
                 <div class="row d-flex align-items-center">
                     <div class="col-2">
-                        <img class="min-w-100" style="height: 36px;" src="{{ url($tukar_saldo->reward->image) }}"
+                        <img class="" style="width:36px; height: 36px;" src="{{ url($tukar_saldo->reward->image) }}"
                             alt="reward">
                     </div>
                     <div class="col-6 text-start">

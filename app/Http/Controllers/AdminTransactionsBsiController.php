@@ -34,8 +34,8 @@
 			$this->col = [];
 			$this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
 			$this->col[] = ["label"=>"Berat Total","name"=>"total_weight"];
-			$this->col[] = ["label"=>"Total Harga Jual","name"=>"total_price"];
-			$this->col[] = ["label"=>"Profit","name"=>"profit"];
+			$this->col[] = ["label"=>"Total Harga Jual","name"=>"total_price", 'callback_php' => '"Rp. ".number_format($row->total_price)'];
+			$this->col[] = ["label"=>"Profit","name"=>"profit", 'callback_php' => '"Rp. ".number_format($row->profit)'];
 			$this->col[] = ["label" => "Tanggal & Waktu", "name" => "created_at", "callback" => function($row) {
 				return date('d/m/Y H:i:s', strtotime($row->created_at)); // Format alternatif
 			}];
@@ -143,7 +143,22 @@
 	        | @label, @count, @icon, @color 
 	        |
 	        */
-	        $this->index_statistic = array();
+			$this->index_statistic = array();
+			$profitSum = DB::table('transactions_bsi')
+							->where('admin_id', CRUDBooster::myId())
+							->sum('profit');
+
+			if ($profitSum == 0) {
+				$profitSum = DB::table('transactions_bsi')->sum('profit');
+			}
+
+			$this->index_statistic[] = [
+				'label'=> 'Total Profit',
+				'count' => 'Rp. ' . number_format($profitSum, 0, ',', ','),
+				'icon'=> 'fa fa-check',
+				'color'=>'success'
+			];
+
 
 
 
@@ -243,11 +258,14 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-			$currentUserId = CRUDBooster::myId(); 
+	        $currentUserId = CRUDBooster::myId(); 
 			if ($currentUserId == 1) {
 
-			}else {
-				$query->where('admin_id', $currentUserId);
+			}elseif($currentUserId == 10) {
+				
+			}
+			else {
+				$query->where('cms_user_id', $currentUserId);
 			}
 	    }
 

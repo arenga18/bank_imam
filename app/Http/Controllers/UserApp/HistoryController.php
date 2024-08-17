@@ -38,13 +38,10 @@ class HistoryController extends Controller
 
     public function tukarPointHistory()
     {
-        // Mengambil riwayat penukaran poin
         $tukarPoin_history = TukarPoin::where('user_id', auth()->user()->id)->latest()->get();
     
-        // Mengambil riwayat penukaran saldo
         $tukarSaldo_history = TukarSaldo::where('user_id', auth()->user()->id)->latest()->get();
     
-        // Mengirimkan kedua data ke view
         return view('user-app/riwayat-pesanan')->with([
             'tukarPoin_history' => $tukarPoin_history,
             'tukarSaldo_history' => $tukarSaldo_history,

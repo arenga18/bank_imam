@@ -1,16 +1,16 @@
 @extends('layout.main')
 
-@section('title', 'Bank Imam | Login Page')
+@section('title', 'Bank Imam | Register Page')
 
 @section('content')
-    <main class="loginscreen">
+    <main class="registerscreen">
         <img src="{{ asset('images/favicon/Element.png') }}" alt="decoration" style="margin-top: -1rem;">
-        <div class="form-wrapper text-center mt-3">
+        <div class="form-wrapper text-center mt-3 pb-5">
             <div class="title-section mb-4">
                 <h1 class="fw-bold pb-2">Daftar</h1>
                 <h6>Membuat Akun Pengguna Baru</h6>
             </div>
-            <div class="form-login">
+            <div class="form-register">
                 <form action="/register" method="post" style="max-width:327px;margin:auto">
                     @csrf
                     @if($errors->any())

@@ -259,8 +259,11 @@
 	        $currentUserId = CRUDBooster::myId(); 
 			if ($currentUserId == 1) {
 
-			}else {
-				$query->where('admin_id', $currentUserId);
+			}elseif($currentUserId == 10) {
+				
+			}
+			else {
+				$query->where('cms_user_id', $currentUserId);
 			}
 	    }
 

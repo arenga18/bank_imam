@@ -29,7 +29,7 @@
                     Rp{{ number_format($saldo->total_saldo, 0, ',', '.') }}
                 </p>
                 <p class="m-0" style="font-size: 0.7rem">Berlaku Hingga</p>
-                <p class="m-0" style="font-size: 0.7rem">31-12-2023</p>
+                <p class="m-0" style="font-size: 0.7rem">31-12-2024</p>
             </div>
             <div class="col border-start border-2 text-light" style="border-color:rgb(222, 222, 222) !important;">
                 <p class="m-0 font-sm">Poin Saat ini</p>
@@ -37,7 +37,7 @@
                     {{ $point->total_points }}
                 </p>
                 <p class="m-0" style="font-size: 0.7rem">Berlaku Hingga</p>
-                <p class="m-0" style="font-size: 0.7rem">31-12-2023</p>
+                <p class="m-0" style="font-size: 0.7rem">31-12-2024</p>
             </div>
         </div>
     </div>

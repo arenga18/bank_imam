@@ -32,8 +32,6 @@ class ProfileController extends Controller
         $user->email = $request->input('email') ?? $user->email;
         $user->address = $request->input('address') ?? $user->address;
         $user->phone_number = $request->input('phone_number') ?? $user->phone_number;
-        // $user->cms_user_id = $request->input('bsu_id');
-        // $user->cms_user_id;
 
         // Handle the uploaded image
         if ($request->hasFile('picture')) {

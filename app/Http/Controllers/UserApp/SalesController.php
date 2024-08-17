@@ -11,18 +11,17 @@ class SalesController extends Controller
 {
     public function store(Request $request)
     {
-        $items = json_decode($request->input('items'), true); // Menguraikan JSON
+        $items = json_decode($request->input('items'), true); 
         $totalWeight = $request->input('total_weight');
         $totalPrice = $request->input('total_price');
 
         $sale = Sale::create([
-            'items' => $items, // Laravel otomatis mengonversi array ke JSON
+            'items' => $items, 
             'total_weight' => $totalWeight,
             'total_price' => $totalPrice,
             'foto' => '',
         ]);
 
-        // Hapus data dari session storage setelah disimpan
         session()->forget('cartItems');
         session()->forget('totalWeight');
         session()->forget('totalPrice');
@@ -33,9 +32,8 @@ class SalesController extends Controller
     public function showTransactionDetails()
     {
         // Ambil data transaksi terbaru
-        $sale = Sale::latest()->first(); // Ambil transaksi terbaru
-
-        $items = $sale->items; // Laravel otomatis mengonversi JSON ke array
+        $sale = Sale::latest()->first(); 
+        $items = $sale->items; 
         $totalWeight = $sale->total_weight;
         $totalPrice = $sale->total_price;
 

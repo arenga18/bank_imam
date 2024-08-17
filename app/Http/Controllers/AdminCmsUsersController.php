@@ -66,4 +66,12 @@ class AdminCmsUsersController extends CBController {
 	public function hook_before_add(&$postdata) {      
 	    unset($postdata['password_confirmation']);
 	}
+	public function hook_query_index(&$query) {
+		$currentUserId = CRUDBooster::myId(); 
+		if ($currentUserId == 1) {
+
+		}elseif($currentUserId == 10) {
+			
+		}
+	}
 }

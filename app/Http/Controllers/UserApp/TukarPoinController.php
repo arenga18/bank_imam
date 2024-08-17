@@ -12,8 +12,8 @@ class TukarPoinController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
-        $cmsUserId = auth()->user()->cms_user_id; // Mengambil cms_user_id dari user yang login
-
+        $cmsUserId = auth()->user()->cms_user_id; 
+        
         $barang = Reward::where('category', 'barang')
             ->where('admin_id', $cmsUserId)
             ->get()

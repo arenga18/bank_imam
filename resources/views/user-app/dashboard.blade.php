@@ -74,7 +74,7 @@
         </a>
     </div>
     <section class="container mt-4 pb-4">
-        <div class="d-flex justify-content-between align-items-center mx-3">
+        <div class="d-flex justify-content-between align-items-center mx-2">
             <h6 class="fw-bold m-0">
                 Riwayat Transaksi
             </h6>

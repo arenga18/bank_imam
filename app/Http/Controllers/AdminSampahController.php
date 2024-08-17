@@ -33,7 +33,7 @@
 			$this->col[] = ["label"=>"Nama Sampah","name"=>"name"];
 			$this->col[] = ["label"=>"Kategori Sampah","name"=>"category_id","join"=>"sampah_categories,name"];
 			$this->col[] = ["label"=>"Gambar","name"=>"image","image"=>true];
-			$this->col[] = ["label"=>"Harga per Kg","name"=>"price_per_kg"];
+			$this->col[] = ["label"=>"Harga per Kg","name"=>"price_per_kg",'callback_php' => '"Rp. ".number_format($row->price_per_kg)'];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -237,11 +237,14 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-			$currentUserId = CRUDBooster::myId(); 
+	        $currentUserId = CRUDBooster::myId(); 
 			if ($currentUserId == 1) {
 
-			}else {
-				$query->where('sampah.admin_id', $currentUserId);
+			}elseif($currentUserId == 10) {
+				
+			}
+			else {
+				$query->where('cms_user_id', $currentUserId);
 			}
 	    }
 

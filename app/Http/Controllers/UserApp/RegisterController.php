@@ -14,11 +14,9 @@ class RegisterController extends Controller
 {
     public function index()
     {
-          // Ambil seluruh data dari tabel cms_users
-          $data_bsu = BSU::where('id', '!=', 1)->get();
+        $data_bsu = BSU::where('id', '!=', 1)->get();
 
-          // Kirimkan data pengguna ke tampilan register
-          return view('user-app.register', compact('data_bsu'));
+        return view('user-app.register', compact('data_bsu'));
     }
 
     public function store(Request $request)
@@ -29,23 +27,19 @@ class RegisterController extends Controller
             'password' => 'required|confirmed|min:6|max:255',
             'cms_user_id' => 'required|exists:cms_users,id'
         ]);
+
         $validatedData['password'] = Hash::make($validatedData['password']);
         
-        // Ambil ID pengguna dari dropdown
         $selectedBsuId = $request->input('cms_user_id');
 
-        // Buat pengguna baru
         $user = User::create($validatedData);
 
-        // Tambahkan entry Point untuk pengguna baru
         Point::create([
             'user_id' => $user->id,
             'total_points' => 0,
         ]);
 
-        // Jika diperlukan, proses tambahan terkait pengguna terpilih dari dropdown
         $selectedBsu = BSU::find($selectedBsuId);
-        // Lakukan proses lain jika diperlukan
 
         return redirect('/login')->with('success', 'Registrasi Berhasil! Silahkan Login.');
     }

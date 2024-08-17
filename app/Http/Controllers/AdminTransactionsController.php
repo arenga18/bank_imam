@@ -16,44 +16,43 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	public function cbInit()
 	{
 
-			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "id";
-			$this->limit = "20";
-			$this->orderby = "updated_at,desc";
-			$this->global_privilege = false;
-			$this->button_table_action = true;
-			$this->button_bulk_action = true;
-			$this->button_action_style = "button_icon";
-			$this->button_add = true;
-			$this->button_edit = true;
-			$this->button_delete = true;
-			$this->button_detail = true;
-			$this->button_show = true;
-			$this->button_filter = true;
-			$this->button_import = false;
-			$this->button_export = true;
-			$this->table = "transactions";
-			# END CONFIGURATION DO NOT REMOVE THIS LINE
+		# START CONFIGURATION DO NOT REMOVE THIS LINE
+		$this->title_field = "id";
+		$this->limit = "20";
+		$this->orderby = "created_at,desc";
+		$this->global_privilege = false;
+		$this->button_table_action = true;
+		$this->button_bulk_action = true;
+		$this->button_action_style = "button_icon";
+		$this->button_add = true;
+		$this->button_edit = true;
+		$this->button_delete = true;
+		$this->button_detail = true;
+		$this->button_show = true;
+		$this->button_filter = true;
+		$this->button_import = false;
+		$this->button_export = true;
+		$this->table = "transactions";
+		# END CONFIGURATION DO NOT REMOVE THIS LINE
 
-			# START COLUMNS DO NOT REMOVE THIS LINE
-			$this->col = [];
-			$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
-			$this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
-			$this->col[] = ["label"=>"Jenis Sampah","name"=>"sampah_id","join"=>"sampah,name"];
-			$this->col[] = ["label"=>"Total Berat","name"=>"total_weight"];
-			$this->col[] = ["label"=>"Saldo Didapat","name"=>"total_income"];
-			$this->col[] = ["label"=>"Poin Didapat","name"=>"point_received"];
-			$this->col[] = ["label"=>"Bukti Foto","name"=>"photo_evidence","image"=>true];
-			$this->col[] = [
-				"label" => "Tanggal & Waktu",
-				"name" => "created_at",
-				"callback" => function($row) {
-					// Mengonversi tanggal dan waktu ke format yang diinginkan
-					return date('d/m/Y H:i:s', strtotime($row->created_at));
-				}
-			];			
-			$this->col[] = ["label"=>"Periode","name"=>"periode"];
-			# END COLUMNS DO NOT REMOVE THIS LINE
+		# START COLUMNS DO NOT REMOVE THIS LINE
+		$this->col = [];
+		$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
+		$this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
+		$this->col[] = ["label"=>"Jenis Sampah","name"=>"sampah_id","join"=>"sampah,name"];
+		$this->col[] = ["label"=>"Total Berat","name"=>"total_weight"];
+		$this->col[] = ["label"=>"Saldo Didapat","name"=>"total_income",'callback_php' => '"Rp. ".number_format($row->total_income)'];
+		$this->col[] = ["label"=>"Poin Didapat","name"=>"point_received"];
+		$this->col[] = ["label"=>"Bukti Foto","name"=>"photo_evidence","image"=>true];
+		$this->col[] = [
+			"label" => "Tanggal & Waktu",
+			"name" => "created_at",
+			"callback" => function($row) {
+				return date('d/m/Y H:i:s', strtotime($row->created_at));
+			}
+		];			
+		$this->col[] = ["label"=>"Periode","name"=>"periode"];
+		# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 		$this->form = [];
@@ -177,25 +176,23 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 
 	        */
 			
-			$this->script_js = "
-				$(document).ready(function() {
-					let income = $('input[name=\"total_income\"]');
-					let pointReceived = $('input[name=\"point_received\"]');
-					let totalWeight = $('input[name=\"total_weight\"]');
-
-					totalWeight.on('change', function() {
-						// Get Sampah Price and convert to string
-						var sampah = $('.select2-selection__rendered').eq(2).text();
-						var match = sampah.match(/\\d+$/);
-						var price = match ? parseInt(match[0]) : null;
-
-						// fill total income and total point received automatically
-						var weight = this.value;
-						income.val(price * weight);
-						pointReceived.val(Math.round(weight * 100));
-					});
+		$this->script_js = "
+			$(document).ready(function() {
+				let income = $('input[name=\"total_income\"]');
+				let pointReceived = $('input[name=\"point_received\"]');
+				let totalWeight = $('input[name=\"total_weight\"]');
+				totalWeight.on('change', function() {
+					// Get Sampah Price and convert to string
+					var sampah = $('.select2-selection__rendered').eq(2).text();
+					var match = sampah.match(/\\d+$/);
+					var price = match ? parseInt(match[0]) : null;
+					// fill total income and total point received automatically
+					var weight = this.value;
+					income.val(price * weight);
+					pointReceived.val(Math.round(weight * 100));
 				});
-				";
+			});
+			";
 
 			/*
 	        | ---------------------------------------------------------------------- 
@@ -279,15 +276,17 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    | @query = current sql query 
 	    |
 	    */
-		public function hook_query_index(&$query)
-		{
-			$currentUserId = CRUDBooster::myId(); 
+		public function hook_query_index(&$query) {
+	        $currentUserId = CRUDBooster::myId(); 
 			if ($currentUserId == 1) {
 
-			}else {
+			}elseif($currentUserId == 10) {
+				
+			}
+			else {
 				$query->where('cms_user_id', $currentUserId);
 			}
-		}
+	    }
 		// public function hook_query_index(&$query)
 		// {
 		// 	$currentUserId = CRUDBooster::myId(); 

@@ -34,7 +34,7 @@
 			$this->col[] = ["label" => "Nama BSU", "name" => "admin_id", "join" => "cms_users,name"];
 			$this->col[] = ["label"=>"Reward","name"=>"reward_id","join"=>"rewards,name"];
 			$this->col[] = ["label"=>"Quantity","name"=>"quantity"];
-			$this->col[] = ["label"=>"Total Harga","name"=>"total_price"];
+			$this->col[] = ["label"=>"Total Harga","name"=>"total_price", 'callback_php' => '"Rp. ".number_format($row->total_price)'];
 			$this->col[] = ["label" => "Tanggal & Waktu", "name" => "created_at", "callback" => function($row) {
 				return date('d/m/Y H:i:s', strtotime($row->created_at)); // Format alternatif
 			}];
@@ -256,7 +256,10 @@
 	        $currentUserId = CRUDBooster::myId(); 
 			if ($currentUserId == 1) {
 
-			}else {
+			}elseif($currentUserId == 10) {
+				
+			}
+			else {
 				$query->where('cms_user_id', $currentUserId);
 			}
 	    }

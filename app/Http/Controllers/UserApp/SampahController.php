@@ -15,10 +15,6 @@ class SampahController extends Controller
         $user = Auth::user();
         $cms_user_id = $user->cms_user_id;
 
-        // Debugging: Cek nilai cms_user_id
-        // dd($cms_user_id);
-
-        // Mengambil kategori sampah yang admin_id-nya sesuai dengan cms_user_id user yang login
         $categories = SampahCategory::where('admin_id', $cms_user_id)->get();
 
         $sampahByCategory = [];

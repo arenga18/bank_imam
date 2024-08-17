@@ -45,6 +45,32 @@ th:last-child {
     font-size: 20px !important;
 }
 
+#box-statistic .bg-success {
+    background: linear-gradient(-90deg, #00aa5b -30.01%, #016d3b 170%);
+    border: 1px solid gray;
+    padding: 1rem 2rem !important;
+    color: white;
+    border-radius: 10px !important;
+}
+
+#box-statistic .small-box {
+    padding: 1.5rem 2rem !important;
+}
+
+#box-statistic .inner {
+    padding: 0;
+    margin: 0;
+}
+
+#box-statistic .small-box p {
+    font-size: 20px !important;
+    margin: 0;
+}
+
+#box-statistic .small-box h3 {
+    margin: 0;
+}
+
 .panel-default > .panel-heading {
     background-color: #337ab7 !important;
     color: white;
