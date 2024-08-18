@@ -3,31 +3,31 @@
     <div class="container p-0 d-flex justify-content-evenly">
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/dashboard">
-                <i class="bi bi-house secondary-color" style="font-size: 1.5rem;"></i>
+                <i class="bi bi-house{{ Request::is('dashboard') ? '-fill' : '' }} secondary-color" style="font-size: 1.5rem;"></i>
                 <p class="secondary-color p-0 m-0" style="font-size: 10px;">Beranda</p>
             </a>
         </div>
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/tukar-poin">
-                <i class="bi bi-gift secondary-color" style="font-size: 1.5rem;"></i>
+                <i class="bi bi-gift{{ Request::is('tukar-poin') ? '-fill' : '' }} secondary-color" style="font-size: 1.5rem;"></i>
                 <p class="secondary-color p-0 m-0" style="font-size: 10px;">Rewards</p>
             </a>
         </div>
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/kategori-sampah">
-                <i class="bi bi-trash secondary-color" style="font-size: 1.5rem;"></i>
+                <i class="bi bi-trash{{ Request::is('kategori-sampah') ? '-fill' : '' }} secondary-color" style="font-size: 1.5rem;"></i>
                 <p class="secondary-color p-0 m-0" style="font-size: 10px;">Jual Sampah</p>
             </a>
         </div>
         <div>
             <a class="btn btn-lg border-0 px-1 py-auto" href="/edukasi">
-                <i class="bi bi-book secondary-color" style="font-size: 1.5rem;"></i>
+                <i class="bi bi-book{{ Request::is('edukasi') ? '-fill' : '' }} secondary-color" style="font-size: 1.5rem;"></i>
                 <p class="secondary-color p-0 m-0" style="font-size: 10px;">Edukasi</p>
             </a>
         </div>
         <div>
-            <a class=" btn btn-lg border-0 px-1 py-auto" href="/settings" role="button">
-                <i class="bi bi-person secondary-color" style="font-size: 1.5rem;"></i>
+            <a class="btn btn-lg border-0 px-1 py-auto" href="/settings" role="button">
+                <i class="bi bi-person{{ Request::is('settings') ? '-fill' : '' }} secondary-color" style="font-size: 1.5rem;"></i>
                 <p class="secondary-color p-0 m-0" style="font-size: 10px;">Profil</p>
             </a>
         </div>

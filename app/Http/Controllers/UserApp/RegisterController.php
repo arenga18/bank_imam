@@ -14,7 +14,7 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        $data_bsu = BSU::where('id', '!=', 1)->get();
+        $data_bsu = BSU::whereNotIn('id', [1, 10])->get();
 
         return view('user-app.register', compact('data_bsu'));
     }

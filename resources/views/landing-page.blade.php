@@ -90,8 +90,11 @@
       </div>
       <div class="row">
          <div class="col">
-            <p style="text-align: justify">Bank Imam merupakan aplikasi yang dikembangkan dengan tujuan untuk menyediakan <span class="text-primary">Layanan Bank Sampah</span>. <br>
-            Dilatar belakangi oleh keinginan untuk mengatasi permasalahan sampah yang ada di Kelurahan Meruya Selatan.</p>
+            <p class="text-lg" style="text-align: justify; width:97%;">
+               Bank Imam adalah aplikasi yang dirancang untuk menyediakan <span class="text-primary">layanan bank sampah</span>, didorong oleh keinginan untuk menyelesaikan masalah sampah di Kelurahan Meruya Selatan.
+            </p>
+            
+            
          </div>   
       </div>
    </section>

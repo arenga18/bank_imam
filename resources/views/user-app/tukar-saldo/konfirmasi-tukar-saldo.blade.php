@@ -116,7 +116,7 @@
         @if ($saldo->total_saldo < $selected_nominal)
             <div class="row mt-5 mx-4">
                 <a class="btn btn-danger disabled rounded-pill fw-bold my-2 px-4 py-2" href="#">
-                    Poin tidak cukup <i class="bi bi-chevron-right"></i>
+                Saldo tidak cukup <i class="bi bi-chevron-right"></i>
                 </a>
             </div>
         @else

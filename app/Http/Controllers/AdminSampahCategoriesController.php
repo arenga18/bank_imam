@@ -239,7 +239,7 @@
 				
 			}
 			else {
-				$query->where('cms_user_id', $currentUserId);
+				$query->where('admin_id', $currentUserId);
 			}
 	    }
 

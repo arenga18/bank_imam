@@ -1,10 +1,6 @@
 @extends('layout.header-tukar-poin')
 @section('title', 'Tukar Reward | Bank Imam')
 
-@push('reward_id')
-    {{ $uang->id }}
-@endpush
-
 @section('tukar-point-content')
 <div class="container">
     {{-- MENU --}}
@@ -100,16 +96,4 @@
 </div>
  {{-- NAVIGATION MENU --}}
  @include('layout.navigation')
-@endsection
-
-@section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<script>
-    var swiper = new Swiper(".mySwiper", {
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-    });
-</script>
 @endsection

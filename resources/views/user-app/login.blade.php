@@ -43,7 +43,6 @@
                             <input type="checkbox" id="checkbox" style="width:30px">
                             <label for="checkbox" class="d-block">Ingat saya</label>
                         </div>
-                        <a href="#">Lupa Password?</a>
                     </div>
                     <div class="tombol mt-5">
                         <button type="submit" class="btn btn-primary-custom  btn-lg " style="padding: 0.5rem 6rem;">Login</button>

@@ -30,7 +30,7 @@
             </div>
         </div>
         @empty
-        <div class="card border-0 shadow mb-2">
+        <div class="card border shadow-sm mb-2">
             <div class="card-body">
                 <div class="row d-flex align-items-center">
                     <div class="col text-center text-danger">

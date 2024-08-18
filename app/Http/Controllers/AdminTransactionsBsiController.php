@@ -144,20 +144,23 @@
 	        |
 	        */
 			$this->index_statistic = array();
+
 			$profitSum = DB::table('transactions_bsi')
 							->where('admin_id', CRUDBooster::myId())
 							->sum('profit');
 
-			if ($profitSum == 0) {
+			// Jika admin_id adalah 1 atau 10, hitung semua profit tanpa filter admin_id
+			if (in_array(CRUDBooster::myId(), [1, 10])) {
 				$profitSum = DB::table('transactions_bsi')->sum('profit');
 			}
 
 			$this->index_statistic[] = [
-				'label'=> 'Total Profit',
+				'label' => 'Total Profit',
 				'count' => 'Rp. ' . number_format($profitSum, 0, ',', ','),
-				'icon'=> 'fa fa-check',
-				'color'=>'success'
+				'icon' => 'fa fa-check',
+				'color' => 'success'
 			];
+
 
 
 
@@ -265,7 +268,7 @@
 				
 			}
 			else {
-				$query->where('cms_user_id', $currentUserId);
+				$query->where('admin_id', $currentUserId);
 			}
 	    }
 

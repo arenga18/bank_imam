@@ -45,8 +45,8 @@
     </div>
     @empty
     <div class="mx-3 py-2">
-        <div class="card border-0 shadow mb-2">
-            <h5 class="text-center text-danger">
+        <div class="card border shadow-sm mb-2">
+            <h5 class="p-3 text-center text-danger">
                 Maaf, Kamu belum pernah melakukan transaksi!
             </h5>
         </div>
