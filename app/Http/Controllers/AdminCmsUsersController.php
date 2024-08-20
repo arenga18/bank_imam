@@ -37,7 +37,14 @@ class AdminCmsUsersController extends CBController {
 		$this->form[] = array("label"=>"No Whatsapp","name"=>"no_whatsapp");		
 		$this->form[] = array("label"=>"Photo","name"=>"photo","type"=>"upload","help"=>"Recommended resolution is 200x200px",'required'=>true,'validation'=>'required|image|max:1000','resize_width'=>90,'resize_height'=>90);
 		$this->form[] = array("label"=>"Status","name"=>"status","type"=>"select","dataenum"=>"Active;Inactive",'required'=>true);							
-		$this->form[] = array("label"=>"Privilege","name"=>"id_cms_privileges","type"=>"select","datatable"=>"cms_privileges,name",'required'=>true);						
+		$this->form[] = [
+			"label" => "Privilege",
+			"name" => "id_cms_privileges",
+			"type" => "select",
+			"datatable" => "cms_privileges,name",
+			'required' => true,
+			'datatable_where' => (CRUDBooster::myId() == 10) ? "id != 1" : ''
+		];			
 		$this->form[] = array("label"=>"Password","name"=>"password","type"=>"password","help"=>"Please leave empty if not change");
 		$this->form[] = array("label"=>"Password Confirmation","name"=>"password_confirmation","type"=>"password","help"=>"Please leave empty if not change");
 		// Add status field with active/inactive options		
@@ -71,7 +78,7 @@ class AdminCmsUsersController extends CBController {
 		if ($currentUserId == 1) {
 
 		}elseif($currentUserId == 10) {
-			
+			$query->where('cms_users.id', '!=', 1);
 		}
 	}
 }

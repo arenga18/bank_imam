@@ -35,6 +35,7 @@
 			$this->col[] = ["label"=>"Reward","name"=>"reward_id","join"=>"rewards,name"];
 			$this->col[] = ["label"=>"Quantity","name"=>"quantity"];
 			$this->col[] = ["label"=>"Total Harga","name"=>"total_price", 'callback_php' => '"Rp. ".number_format($row->total_price)'];
+			$this->col[] = ["label"=>"Bukti Foto","name"=>"bukti_foto","image"=>true];
 			$this->col[] = ["label" => "Tanggal & Waktu", "name" => "created_at", "callback" => function($row) {
 				return date('d/m/Y H:i:s', strtotime($row->created_at)); // Format alternatif
 			}];
@@ -56,6 +57,7 @@
 			];
 			$this->form[] = ['label'=>'Quantity','name'=>'quantity','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Total Price','name'=>'total_price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label' => 'Bukti Foto', 'name' => 'bukti_foto', 'type' => 'upload', 'validation'=>'required|image|max:20000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
 			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Pending;On Proses;Diterima'];
 			# END FORM DO NOT REMOVE THIS LINE
 
