@@ -128,3 +128,14 @@ th:last-child {
 #btn_show_data {
     display: none !important;
 }
+
+table thead tr th #checkall,
+table tbody tr td .checkbox {
+    display: none;
+}
+
+table thead tr th:first-child,
+table tbody tr td:first-child,
+table tfoot tr th:first-child {
+    display: none;
+}

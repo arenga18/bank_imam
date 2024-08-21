@@ -37,6 +37,7 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 
 		# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = [];
+		$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
 		$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
 		$this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
 		$this->col[] = ["label"=>"Jenis Sampah","name"=>"sampah_id","join"=>"sampah,name"];
@@ -277,7 +278,10 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    |
 	    */
 		public function hook_query_index(&$query) {
-	        $currentUserId = CRUDBooster::myId(); 
+	        $currentUserId = CRUDBooster::myId();
+			
+			$GLOBALS['index_number'] = 0;
+
 			if ($currentUserId == 1) {
 
 			}elseif($currentUserId == 10) {

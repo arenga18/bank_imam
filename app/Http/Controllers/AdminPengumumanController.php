@@ -30,6 +30,7 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
+			$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
 			$this->col[] = ["label"=>"Nama","name"=>"nama"];
 			$this->col[] = ["label"=>"Deskripsi","name"=>"deskripsi"];
 			$this->col[] = ["label" => "Tanggal & Waktu", "name" => "updated_at", "callback" => function($row) {
@@ -237,6 +238,9 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        $currentUserId = CRUDBooster::myId(); 
+
+			$GLOBALS['index_number'] = 0;
+
 			if ($currentUserId == 1) {
 
 			}elseif($currentUserId == 10) {

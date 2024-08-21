@@ -30,6 +30,7 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
+			$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
 			$this->col[] = ["label"=>"Judul","name"=>"judul"];
 			$this->col[] = ["label"=>"Url","name"=>"url"];
 			$this->col[] = ["label"=>"Gambar","name"=>"gambar","image"=>true];
@@ -236,7 +237,7 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	            
+	        $GLOBALS['index_number'] = 0;
 	    }
 
 	    /*

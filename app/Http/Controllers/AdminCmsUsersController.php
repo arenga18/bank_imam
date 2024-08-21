@@ -22,6 +22,7 @@ class AdminCmsUsersController extends CBController {
 	
 		# START COLUMNS DO NOT REMOVE THIS LINE
 		$this->col = array();
+		$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
 		$this->col[] = array("label"=>"Name","name"=>"name");
 		$this->col[] = array("label"=>"Email","name"=>"email");
 		$this->col[] = array("label"=>"Privilege","name"=>"id_cms_privileges","join"=>"cms_privileges,name");
@@ -75,6 +76,9 @@ class AdminCmsUsersController extends CBController {
 	}
 	public function hook_query_index(&$query) {
 		$currentUserId = CRUDBooster::myId(); 
+
+		$GLOBALS['index_number'] = 0;
+
 		if ($currentUserId == 1) {
 
 		}elseif($currentUserId == 10) {
