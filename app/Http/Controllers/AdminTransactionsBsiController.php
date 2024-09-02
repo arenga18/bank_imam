@@ -34,9 +34,11 @@
 			$this->col = [];
 			$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
 			$this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
+			$this->col[] = ["label" => "Jenis Sampah", "name" => "sampah_id", "join" => "sampah,name"];
 			$this->col[] = ["label"=>"Berat Total","name"=>"total_weight"];
-			$this->col[] = ["label"=>"Total Harga Jual","name"=>"total_price", 'callback_php' => '"Rp. ".number_format($row->total_price)'];
-			$this->col[] = ["label"=>"Profit","name"=>"profit", 'callback_php' => '"Rp. ".number_format($row->profit)'];
+			$this->col[] = ["label"=>"Harga per kg","name"=>"harga_satuan_bsi"];
+			$this->col[] = ["label"=>"Jumlah","name"=>"total_price", 'callback_php' => '"Rp. ".number_format($row->total_price)'];
+			// $this->col[] = ["label"=>"Profit","name"=>"profit", 'callback_php' => '"Rp. ".number_format($row->profit)'];
 			$this->col[] = ["label" => "Tanggal & Waktu", "name" => "created_at", "callback" => function($row) {
 				return date('d/m/Y H:i:s', strtotime($row->created_at)); // Format alternatif
 			}];
@@ -46,9 +48,12 @@
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
-			$this->form[] = ['label'=>'Total Weight','name'=>'total_weight','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Total Price','name'=>'total_price','type'=>'money','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label' => 'Jenis Sampah', 'name' => 'sampah_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'sampah,name'];
 			$this->form[] = ['label' => 'Periode', 'name' => 'periode', 'type' => 'text', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10'];
+			$this->form[] = ['label' => 'Total Weight', 'name' => 'total_weight', 'type' => 'text', 'validation' => 'required', 'width' => 'col-sm-10', 'readonly' => true];
+
+			$this->form[] = ['label'=>'Harga satuan BSI','name'=>'total_price','type'=>'money','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+		
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -144,17 +149,26 @@
 	        | @label, @count, @icon, @color 
 	        |
 	        */
+
+			
+
 			$this->index_statistic = array();
 
-			$profitSum = DB::table('transactions_bsi')
-							->where('admin_id', CRUDBooster::myId())
-							->sum('profit');
+			$adminId = CRUDBooster::myId();
+			$filterColumn = Request::get('filter_column');
+			$periodeFilter = $filterColumn['transactions_bsi.periode']['value'] ?? null;
+			// Query untuk menghitung profit dengan kondisi periode
+			$profitSumQuery = DB::table('transactions_bsi')
+								->where('transactions_bsi.periode', 'like', '%' . $periodeFilter . '%');
 
-			// Jika admin_id adalah 1 atau 10, hitung semua profit tanpa filter admin_id
-			if (in_array(CRUDBooster::myId(), [1, 10])) {
-				$profitSum = DB::table('transactions_bsi')->sum('profit');
+			// Filter berdasarkan admin_id kecuali jika admin_id adalah 1 atau 10
+			if (!in_array($adminId, [1, 10])) {
+				$profitSumQuery->where('transactions_bsi.admin_id', $adminId);
 			}
 
+			$profitSum = $profitSumQuery->sum('profit');
+
+			// Format data statistik
 			$this->index_statistic[] = [
 				'label' => 'Total Profit',
 				'count' => 'Rp. ' . number_format($profitSum, 0, ',', ','),
@@ -174,7 +188,53 @@
 	        | $this->script_js = "function() { ... }";
 	        |
 	        */
-	        $this->script_js = "";
+			
+
+
+	        $this->script_js = "
+			$(document).ready(function() {
+    // Ambil elemen form
+    let sampahSelect = $('select[name=\"sampah_id\"]');
+    let periodeInput = $('input[name=\"periode\"]');
+    let totalWeightInput = $('input[name=\"total_weight\"]');
+
+    // Fungsi untuk menghitung total_weight
+    function updateTotalWeight() {
+        let sampahId = sampahSelect.val();
+        let periode = periodeInput.val();
+
+        // Jika tidak ada nilai, reset total_weight
+        if (!sampahId || !periode) {
+            totalWeightInput.val('');
+            return;
+        }
+
+        // Ambil data total_weight dari tabel transactions
+        let totalWeight = 0;
+        @php
+        // Ambil data transaksi sesuai filter
+        $transactions = DB::table('transactions')
+            ->select('total_weight')
+            ->where('sampah_id', $sampahId)
+            ->where('periode', 'like', '%' . $periode . '%')
+            ->get();
+        
+        // Hitung total_weight
+        $totalWeight = $transactions->sum('total_weight');
+        @endphp
+
+        // Update input total_weight dengan data yang diperoleh
+        totalWeightInput.val({{ $totalWeight }});
+    }
+
+    // Event listener untuk update saat perubahan
+    sampahSelect.on('change', updateTotalWeight);
+    periodeInput.on('input', updateTotalWeight);
+
+    // Inisialisasi total_weight saat halaman dimuat
+    updateTotalWeight();
+});
+";
 
 
 
@@ -239,7 +299,6 @@
 	        
 	    }
 
-
 	    /*
 	    | ---------------------------------------------------------------------- 
 	    | Hook for button selected
@@ -272,7 +331,7 @@
 				
 			}
 			else {
-				$query->where('admin_id', $currentUserId);
+				$query->where('transactions_bsi.admin_id', $currentUserId);
 			}
 	    }
 

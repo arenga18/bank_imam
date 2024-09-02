@@ -183,10 +183,12 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 				let pointReceived = $('input[name=\"point_received\"]');
 				let totalWeight = $('input[name=\"total_weight\"]');
 				totalWeight.on('change', function() {
+				
 					// Get Sampah Price and convert to string
 					var sampah = $('.select2-selection__rendered').eq(2).text();
 					var match = sampah.match(/\\d+$/);
 					var price = match ? parseInt(match[0]) : null;
+
 					// fill total income and total point received automatically
 					var weight = this.value;
 					income.val(price * weight);
