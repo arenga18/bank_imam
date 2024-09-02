@@ -41,6 +41,7 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 		$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
 		$this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
 		$this->col[] = ["label"=>"Jenis Sampah","name"=>"sampah_id","join"=>"sampah,name"];
+		$this->col[] = ["label"=>"Harga per Kg","name"=>"sampah_id", "join"=>"sampah,price_per_kg"];
 		$this->col[] = ["label"=>"Total Berat","name"=>"total_weight"];
 		$this->col[] = ["label"=>"Saldo Didapat","name"=>"total_income",'callback_php' => '"Rp. ".number_format($row->total_income)'];
 		$this->col[] = ["label"=>"Poin Didapat","name"=>"point_received"];
@@ -162,7 +163,37 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        | @label, @count, @icon, @color 
 	        |
 	        */
-		$this->index_statistic = array();
+			$this->index_statistic = array();
+
+			$adminId = CRUDBooster::myId();
+			$filterColumn = Request::get('filter_column');
+			$periodeFilter = $filterColumn['transactions.periode']['value'] ?? null;
+			
+			$buySumQuery = DB::table('transactions')
+    						->where('transactions.periode', 'like', '%' . $periodeFilter . '%');
+
+			// Filter berdasarkan admin_id kecuali jika admin_id adalah 1 atau 10
+			if (!in_array($adminId, [1, 10])) {
+				$buySumQuery->where('transactions.admin_id', $adminId);
+			}
+
+			$buySum = $buySumQuery->sum('total_income');
+			$totalWeight = $buySumQuery->sum('total_weight');
+
+			// Format data statistik
+			$this->index_statistic[] = [
+				'label' => 'Total Tabungan Sampah',
+				'count' =>  $totalWeight. ' Kg',
+				'icon' => 'fa fa-check',
+				'color' => 'success'
+			];
+			$this->index_statistic[] = [
+				'label' => 'Total Pembelian',
+				'count' => 'Rp. ' . number_format($buySum, 0, ',', ','),
+				'icon' => 'fa fa-money',
+				'color' => 'primary'
+			];
+
 
 
 
@@ -183,7 +214,7 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 				let pointReceived = $('input[name=\"point_received\"]');
 				let totalWeight = $('input[name=\"total_weight\"]');
 				totalWeight.on('change', function() {
-				
+
 					// Get Sampah Price and convert to string
 					var sampah = $('.select2-selection__rendered').eq(2).text();
 					var match = sampah.match(/\\d+$/);

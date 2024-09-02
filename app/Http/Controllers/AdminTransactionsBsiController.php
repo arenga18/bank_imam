@@ -36,7 +36,7 @@
 			$this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
 			$this->col[] = ["label" => "Jenis Sampah", "name" => "sampah_id", "join" => "sampah,name"];
 			$this->col[] = ["label"=>"Berat Total","name"=>"total_weight"];
-			$this->col[] = ["label"=>"Harga per kg","name"=>"harga_satuan_bsi"];
+			$this->col[] = ["label"=>"Harga per kg","name"=>"harga_per_kg",'callback_php' => '"Rp. ".number_format($row->harga_per_kg)'];
 			$this->col[] = ["label"=>"Jumlah","name"=>"total_price", 'callback_php' => '"Rp. ".number_format($row->total_price)'];
 			// $this->col[] = ["label"=>"Profit","name"=>"profit", 'callback_php' => '"Rp. ".number_format($row->profit)'];
 			$this->col[] = ["label" => "Tanggal & Waktu", "name" => "created_at", "callback" => function($row) {
@@ -48,11 +48,10 @@
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
-			$this->form[] = ['label' => 'Jenis Sampah', 'name' => 'sampah_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'sampah,name'];
+			$this->form[] = ['label' => 'Jenis Sampah', 'name' => 'sampah_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'sampah,name', 'datatable_where' => 'admin_id = '.CRUDBooster::myId()];
 			$this->form[] = ['label' => 'Periode', 'name' => 'periode', 'type' => 'text', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10'];
-			$this->form[] = ['label' => 'Total Weight', 'name' => 'total_weight', 'type' => 'text', 'validation' => 'required', 'width' => 'col-sm-10', 'readonly' => true];
-
-			$this->form[] = ['label'=>'Harga satuan BSI','name'=>'total_price','type'=>'money','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label' => 'Total Weight', 'name' => 'total_weight', 'type' => 'text', 'validation' => 'required', 'width' => 'col-sm-10', ];
+			$this->form[] = ['label'=>'Harga satuan BSI','name'=>'harga_per_kg','type'=>'money','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 		
 			# END FORM DO NOT REMOVE THIS LINE
 
@@ -161,19 +160,32 @@
 			$profitSumQuery = DB::table('transactions_bsi')
 								->where('transactions_bsi.periode', 'like', '%' . $periodeFilter . '%');
 
+
+			$profitSum = $profitSumQuery->sum('total_price');
+			
+			$buySumQuery = DB::table('transactions')
+    						->where('transactions.periode', 'like', '%' . $periodeFilter . '%');
+
 			// Filter berdasarkan admin_id kecuali jika admin_id adalah 1 atau 10
 			if (!in_array($adminId, [1, 10])) {
-				$profitSumQuery->where('transactions_bsi.admin_id', $adminId);
+				$buySumQuery->where('transactions.admin_id', $adminId);
 			}
 
-			$profitSum = $profitSumQuery->sum('profit');
+			$buySum = $buySumQuery->sum('total_income');
 
+			$totalProfit = $profitSum - $buySum;
 			// Format data statistik
 			$this->index_statistic[] = [
 				'label' => 'Total Profit',
-				'count' => 'Rp. ' . number_format($profitSum, 0, ',', ','),
+				'count' => 'Rp. ' . number_format($totalProfit, 0, ',', ','),
 				'icon' => 'fa fa-check',
 				'color' => 'success'
+			];
+			$this->index_statistic[] = [
+				'label' => 'Total Penjualan',
+				'count' => 'Rp. ' . number_format($profitSum, 0, ',', ','),
+				'icon' => 'fa fa-money',
+				'color' => 'primary'
 			];
 
 
@@ -191,51 +203,7 @@
 			
 
 
-	        $this->script_js = "
-			$(document).ready(function() {
-    // Ambil elemen form
-    let sampahSelect = $('select[name=\"sampah_id\"]');
-    let periodeInput = $('input[name=\"periode\"]');
-    let totalWeightInput = $('input[name=\"total_weight\"]');
-
-    // Fungsi untuk menghitung total_weight
-    function updateTotalWeight() {
-        let sampahId = sampahSelect.val();
-        let periode = periodeInput.val();
-
-        // Jika tidak ada nilai, reset total_weight
-        if (!sampahId || !periode) {
-            totalWeightInput.val('');
-            return;
-        }
-
-        // Ambil data total_weight dari tabel transactions
-        let totalWeight = 0;
-        @php
-        // Ambil data transaksi sesuai filter
-        $transactions = DB::table('transactions')
-            ->select('total_weight')
-            ->where('sampah_id', $sampahId)
-            ->where('periode', 'like', '%' . $periode . '%')
-            ->get();
-        
-        // Hitung total_weight
-        $totalWeight = $transactions->sum('total_weight');
-        @endphp
-
-        // Update input total_weight dengan data yang diperoleh
-        totalWeightInput.val({{ $totalWeight }});
-    }
-
-    // Event listener untuk update saat perubahan
-    sampahSelect.on('change', updateTotalWeight);
-    periodeInput.on('input', updateTotalWeight);
-
-    // Inisialisasi total_weight saat halaman dimuat
-    updateTotalWeight();
-});
-";
-
+			
 
 
             /*
@@ -373,11 +341,19 @@
 				->where('admin_id', $transaction_bsi->admin_id)
 				->sum('total_income');
 
-			$final_profit = $transaction_bsi->total_price - $total_income_sum;
+				$jumlah = $transaction_bsi->total_weight * $transaction_bsi->harga_per_kg;
+				
+				$transaction_bsi->update([
+					'total_price' => $jumlah
+				]);
 
-			$transaction_bsi->update([
-				'profit' => $final_profit
-			]);
+				$final_profit = ($transaction_bsi->total_price - $total_income_sum);
+
+				$transaction_bsi->update([
+					'profit' => $final_profit
+				]);
+			
+				// dd($transaction_bsi->total_price);
 		}
 
 
@@ -404,21 +380,24 @@
 	    | 
 	    */
 	    public function hook_after_edit($id) {
-			// Ambil transaksi bsi yang baru saja diedit
 			$transaction_bsi = TransactionsBsi::find($id);
-		
-			// Ambil total_income dari tabel transactions berdasarkan periode yang sama
-			$sum_total_income = Transaction::where('admin_id', $transaction_bsi->admin_id)
-				->where('periode', $transaction_bsi->periode) // mencocokkan periode
+			$periode_bsi = $transaction_bsi->periode;
+
+			$total_income_sum = Transaction::where('periode', $periode_bsi)
+				->where('admin_id', $transaction_bsi->admin_id)
 				->sum('total_income');
-		
-			// Hitung profit baru
-			$final_price = $transaction_bsi->total_price - $sum_total_income;
-		
-			// Update profit di tabel transactions_bsi
-			$transaction_bsi->update([
-				'profit' => $final_price
-			]);
+
+				$jumlah = $transaction_bsi->total_weight * $transaction_bsi->harga_per_kg;
+				
+				$transaction_bsi->update([
+					'total_price' => $jumlah
+				]);
+
+				$final_profit = ($transaction_bsi->total_price - $total_income_sum);
+
+				$transaction_bsi->update([
+					'profit' => $final_profit
+				]);
 		}
 		
 

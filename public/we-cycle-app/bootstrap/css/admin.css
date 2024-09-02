@@ -52,6 +52,13 @@ th:last-child {
     color: white;
     border-radius: 10px !important;
 }
+#box-statistic .bg-primary {
+    background: linear-gradient(-90deg, #00c0ef -30.01%, #006b85 170%);
+    border: 1px solid gray;
+    padding: 1rem 2rem !important;
+    color: white;
+    border-radius: 10px !important;
+}
 
 #box-statistic .small-box {
     padding: 1.5rem 2rem !important;
