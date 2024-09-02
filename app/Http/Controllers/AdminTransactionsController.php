@@ -166,33 +166,44 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 			$this->index_statistic = array();
 
 			$adminId = CRUDBooster::myId();
-			$filterColumn = Request::get('filter_column');
-			$periodeFilter = $filterColumn['transactions.periode']['value'] ?? null;
-			
-			$buySumQuery = DB::table('transactions')
-    						->where('transactions.periode', 'like', '%' . $periodeFilter . '%');
-
-			// Filter berdasarkan admin_id kecuali jika admin_id adalah 1 atau 10
-			if (!in_array($adminId, [1, 10])) {
-				$buySumQuery->where('transactions.admin_id', $adminId);
-			}
-
-			$buySum = $buySumQuery->sum('total_income');
-			$totalWeight = $buySumQuery->sum('total_weight');
-
-			// Format data statistik
-			$this->index_statistic[] = [
-				'label' => 'Total Tabungan Sampah',
-				'count' =>  $totalWeight. ' Kg',
-				'icon' => 'fa fa-check',
-				'color' => 'success'
-			];
-			$this->index_statistic[] = [
-				'label' => 'Total Pembelian',
-				'count' => 'Rp. ' . number_format($buySum, 0, ',', ','),
-				'icon' => 'fa fa-money',
-				'color' => 'primary'
-			];
+            $filterColumn = Request::get('filter_column');
+            $periodeFilter = $filterColumn['transactions_bsi.periode']['value'] ?? null;
+            
+            // Query untuk menghitung profit dengan kondisi periode
+            $profitSumQuery = DB::table('transactions_bsi')
+                ->where('transactions_bsi.periode', 'like', '%' . $periodeFilter . '%');
+            
+            // Tambahkan kondisi untuk memfilter berdasarkan admin_id yang sesuai dengan ID Anda saat ini
+            $profitSumQuery->where('transactions_bsi.admin_id', $adminId);
+            
+            $profitSum = $profitSumQuery->sum('total_price');
+            
+            // Query untuk menghitung total pembelian (buySum) dari tabel transactions
+            $buySumQuery = DB::table('transactions')
+                ->where('transactions.periode', 'like', '%' . $periodeFilter . '%');
+            
+            // Filter berdasarkan admin_id kecuali jika admin_id adalah 1 atau 10
+            if (!in_array($adminId, [1, 10])) {
+                $buySumQuery->where('transactions.admin_id', $adminId);
+            }
+            
+            $buySum = $buySumQuery->sum('total_income');
+            
+            $totalProfit = $profitSum - $buySum;
+            
+            // Format data statistik
+            $this->index_statistic[] = [
+                'label' => 'Total Profit',
+                'count' => 'Rp. ' . number_format($totalProfit, 0, ',', ','),
+                'icon' => 'fa fa-check',
+                'color' => 'success'
+            ];
+            $this->index_statistic[] = [
+                'label' => 'Total Penjualan',
+                'count' => 'Rp. ' . number_format($profitSum, 0, ',', ','),
+                'icon' => 'fa fa-money',
+                'color' => 'primary'
+            ];
 
 
 
