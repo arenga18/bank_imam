@@ -6,6 +6,7 @@ use App\Models\Point;
 use App\Models\Saldo;
 use App\Models\Reward;
 use App\Models\TukarPoin;
+use Illuminate\Support\Facades\DB;
 
 class TukarPoinController extends Controller
 {
@@ -50,6 +51,20 @@ class TukarPoinController extends Controller
             'reward' => $reward, 
             'point' => $point,
             'saldo' => $saldo 
+        ]);
+    }
+
+    public function detail($id)
+    {
+        $tukar_poin = TukarPoin::findOrFail($id);
+        $userId = auth()->user()->id;
+        $cmsUserId = auth()->user()->cms_user_id; 
+
+        $admin = DB::table('cms_users')->where('id', $tukar_poin->admin_id)->first();
+
+        return view('user-app/detail-pesanan-poin')->with([
+            'tukar_poin' => $tukar_poin,
+            'bsu' => $admin
         ]);
     }
 

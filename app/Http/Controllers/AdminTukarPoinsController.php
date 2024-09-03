@@ -58,8 +58,8 @@
 				'datatable_where' => 'admin_id = ' . CRUDBooster::myId() . ' AND stock >= 0'
 			];
 			$this->form[] = ['label'=>'Quantity','name'=>'quantity','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Total Price','name'=>'total_price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label' => 'Bukti Foto', 'name' => 'bukti_foto', 'type' => 'upload', 'validation'=>'required|image|max:20000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
+			$this->form[] = ['label'=>'Total Poin','name'=>'total_price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label' => 'Bukti Foto', 'name' => 'bukti_foto', 'type' => 'upload', 'validation'=>'image|max:20000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
 			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'Pending;On Proses;Diterima'];
 			# END FORM DO NOT REMOVE THIS LINE
 
@@ -257,10 +257,10 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-	        $currentUserId = CRUDBooster::myId(); 
-
-			$GLOBALS['index_number'] = 0;
-
+	        $currentUserId = CRUDBooster::myId();
+	        
+	        $GLOBALS['index_number'] = 0;
+	        
 			if ($currentUserId == 1) {
 
 			}elseif($currentUserId == 10) {

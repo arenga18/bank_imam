@@ -92,7 +92,7 @@ th:last-child {
 }
 
 .box {
-    padding: 10px 20px;
+    padding: 10px 20px 20px 20px;
 }
 
 .box .box-header {
@@ -112,17 +112,17 @@ th:last-child {
     margin: 0 !important;
 }
 
-.pull-left {
-    display: none !important;
-}
+/*.pull-left {*/
+/*    display: none !important;*/
+/*}*/
 .pull-right {
     margin: 0 !important;
 }
 
-.pull-left,
-.pull-right {
-    float: none !important;
-}
+/*.pull-left,*/
+/*.pull-right {*/
+/*    float: none !important;*/
+/*}*/
 
 .button_action {
     display: flex;
@@ -136,6 +136,7 @@ th:last-child {
     display: none !important;
 }
 
+
 table thead tr th #checkall,
 table tbody tr td .checkbox {
     display: none;
@@ -146,3 +147,21 @@ table tbody tr td:first-child,
 table tfoot tr th:first-child {
     display: none;
 }
+
+table tbody tr td:nth-child(2){
+    text-align:center !important;
+}
+
+.flex {
+    display: flex !important;
+    gap: 18px;
+}
+
+.text-sm {
+    font-size: 16px !important;
+}
+
+.box .box-header .pull-left .selected-action {
+    display:none !important;
+}
+

@@ -123,9 +123,9 @@
         @empty
         <div class="mt-3 mx-3">
             <div class="card p-2 border shadow-sm mb-2">
-                <h5 class="text-center text-danger p-0">
+                <p class="text-center text-danger p-0 m-0">
                     Anda belum pernah melakukan transaksi.
-                </h5>
+                </p>
             </div>
         </div>
         @endforelse

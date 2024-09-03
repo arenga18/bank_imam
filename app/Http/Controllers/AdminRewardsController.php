@@ -57,7 +57,7 @@
 			$this->form[] = ['label'=>'Deskripsi','name'=>'description','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Harga(Poin)','name'=>'price','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','help'=>'Isi jika dapat ditukarkan dengan poin'];
 			$this->form[] = ['label'=>'Jumlah Stok','name'=>'stock','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
-			$this->form[] = ['label'=>'Foto','name'=>'image','type'=>'upload','validation'=>'required|image|max:3000','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Foto','name'=>'image','type'=>'upload','validation'=>'required|image|max:20000','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Harga(Saldo)','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
 			$this->form[] = ['label' => 'Nama Petugas', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
 			# END FORM DO NOT REMOVE THIS LINE
@@ -258,9 +258,9 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        $currentUserId = CRUDBooster::myId(); 
-
-			$GLOBALS['index_number'] = 0;
-
+	        
+	        $GLOBALS['index_number'] = 0;
+	        
 			if ($currentUserId == 1) {
 
 			}elseif($currentUserId == 10) {

@@ -46,11 +46,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/kategori-sampah', [SampahController::class, 'index'])->name('index');
 
     // Tukar Poin -> Transaction
+     Route::get('/tukarPoin/{id}/detail', [TukarPoinController::class, 'detail'])->name('tukarPoinDetail');
     Route::get('/tukar-poin', [TukarPoinController::class, 'index'])->name('indexTukarPoin');
     Route::get('/tukar-poin/reward/{id}', [TukarPoinController::class, 'show'])->name('showReward');
     Route::get('/tukar-poin/reward/{id}/konfirmasi', [TukarPoinController::class, 'confirm'])->name('confirmReward');
     
     // Tukar Saldo -> Transaction
+    Route::get('/tukarSaldo/{id}/detail', [TukarSaldoController::class, 'detail'])->name('tukarPoinDetail');
     Route::get('/tukar-saldo', [TukarSaldoController::class, 'index'])->name('indexTukarSaldo');
     Route::get('/tukar-saldo/reward/{id}', [TukarSaldoController::class, 'show'])->name('showReward');
     Route::post('/tukar-saldo/reward/{id}/konfirmasi', [TukarSaldoController::class, 'confirm'])->name('confirmReward');

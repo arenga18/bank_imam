@@ -234,9 +234,9 @@
 	    */
 		public function hook_query_index(&$query) {
 	        $currentUserId = CRUDBooster::myId(); 
-			
-			$GLOBALS['index_number'] = 0;
-
+	        
+	        $GLOBALS['index_number'] = 0;
+	        
 			if ($currentUserId == 1) {
 
 			}elseif($currentUserId == 10) {

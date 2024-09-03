@@ -16,8 +16,8 @@
         </div>
     </div>
 </header>
-<main id="education-page" class="main-container p-3">
-        <div class="row">
+<main id="education-page" class="main-container p-3 pb-5">
+        <div class="row pb-5">
             <div class="col-12">
                 <!-- Tabs for Article and News -->
                 <ul class="nav nav-tabs mb-3" id="edukasiTabs" role="tablist">

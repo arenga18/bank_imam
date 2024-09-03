@@ -5,13 +5,11 @@
 <header class="user-profile pt-4 rounded-top rounded-5">
     <div class="">
         <div class="col d-flex justify-content-center">
-            <img 
-            src="{{ $user->picture ?? asset('/images/profile3.png') }}"
-            class="rounded-circle border border-3 border-custom bg-light" style="z-index:11;" width="120px" height="120px"
-            >
+            <img class="rounded-circle border border-3 border-custom bg-light" style="z-index:11;" width="120px" height="120px"
+                src="{{ $user->picture ?? asset('/images/profile3.png') }}">
         </div>
     </div>
-    <div class="mt-2">
+    <div class=" mt-2">
         <div class="col-12">
             <h4 id="username" name="username" class="text-center font-md fw-bold m-0">
                 {{ $user->username ?? 'Anonim' }}
@@ -22,7 +20,7 @@
     </div>
 </header>
 <main class="main-container">
-    <div class="container p-0">
+    <div class="container">
         <div>
             <div class="pt-1">
                 <div class="card border-0 shadow-sm mb-1">

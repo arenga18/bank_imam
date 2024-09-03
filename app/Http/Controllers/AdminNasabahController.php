@@ -37,6 +37,7 @@
 			$this->col[] = ["label"=>"Alamat","name"=>"address"];
 			$this->col[] = ["label"=>"No. Hp","name"=>"phone_number"];
 			$this->col[] = ["label"=>"Foto","name"=>"picture","image"=>true];
+			
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -244,9 +245,9 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        $currentUserId = CRUDBooster::myId(); 
-
-			$GLOBALS['index_number'] = 0;
-
+	        
+	        $GLOBALS['index_number'] = 0;
+	        
 			if ($currentUserId == 1) {
 
 			}elseif($currentUserId == 10) {

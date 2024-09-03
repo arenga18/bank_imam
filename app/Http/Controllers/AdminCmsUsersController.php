@@ -44,14 +44,15 @@ class AdminCmsUsersController extends CBController {
 			"type" => "select",
 			"datatable" => "cms_privileges,name",
 			'required' => true,
-			'datatable_where' => (CRUDBooster::myId() == 10) ? "id != 1" : ''
-		];			
+			'datatable_where' => (CRUDBooster::myId() == 10) ? "id != 1 AND id != 2" : ""
+		];						
 		$this->form[] = array("label"=>"Password","name"=>"password","type"=>"password","help"=>"Please leave empty if not change");
 		$this->form[] = array("label"=>"Password Confirmation","name"=>"password_confirmation","type"=>"password","help"=>"Please leave empty if not change");
 		// Add status field with active/inactive options		
 		# END FORM DO NOT REMOVE THIS LINE
+		
+		$this->load_css[] =  asset('we-cycle-app/bootstrap/css/admin.css');
 
-				
 	}
 
 	public function getProfile() {			
@@ -76,9 +77,9 @@ class AdminCmsUsersController extends CBController {
 	}
 	public function hook_query_index(&$query) {
 		$currentUserId = CRUDBooster::myId(); 
-
+		
 		$GLOBALS['index_number'] = 0;
-
+		
 		if ($currentUserId == 1) {
 
 		}elseif($currentUserId == 10) {

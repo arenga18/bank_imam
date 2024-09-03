@@ -45,7 +45,6 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 		$this->col[] = ["label"=>"Total Berat","name"=>"total_weight"];
 		$this->col[] = ["label"=>"Saldo Didapat","name"=>"total_income",'callback_php' => '"Rp. ".number_format($row->total_income)'];
 		$this->col[] = ["label"=>"Poin Didapat","name"=>"point_received"];
-		$this->col[] = ["label"=>"Bukti Foto","name"=>"photo_evidence","image"=>true];
 		$this->col[] = [
 			"label" => "Tanggal & Waktu",
 			"name" => "created_at",
@@ -64,7 +63,6 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 		$this->form[] = ['label' => 'Total Berat(kg)', 'name' => 'total_weight', 'type' => 'text', 'validation' => 'required|min:0|numeric', 'width' => 'col-sm-10'];
 		$this->form[] = ['label' => 'Total Pendapatan', 'name' => 'total_income', 'type' => 'number', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'readonly' => 'true'];
 		$this->form[] = ['label' => 'Poin Didapat', 'name' => 'point_received', 'type' => 'number', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'readonly' => 'true'];
-		$this->form[] = ['label' => 'Bukti Foto', 'name' => 'photo_evidence', 'type' => 'upload', 'validation'=>'required|image|max:3000','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
 		$this->form[] = ['label' => 'Periode', 'name' => 'periode', 'type' => 'text', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10'];
 		# END FORM DO NOT REMOVE THIS LINE
 
@@ -166,44 +164,33 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 			$this->index_statistic = array();
 
 			$adminId = CRUDBooster::myId();
-            $filterColumn = Request::get('filter_column');
-            $periodeFilter = $filterColumn['transactions_bsi.periode']['value'] ?? null;
-            
-            // Query untuk menghitung profit dengan kondisi periode
-            $profitSumQuery = DB::table('transactions_bsi')
-                ->where('transactions_bsi.periode', 'like', '%' . $periodeFilter . '%');
-            
-            // Tambahkan kondisi untuk memfilter berdasarkan admin_id yang sesuai dengan ID Anda saat ini
-            $profitSumQuery->where('transactions_bsi.admin_id', $adminId);
-            
-            $profitSum = $profitSumQuery->sum('total_price');
-            
-            // Query untuk menghitung total pembelian (buySum) dari tabel transactions
-            $buySumQuery = DB::table('transactions')
-                ->where('transactions.periode', 'like', '%' . $periodeFilter . '%');
-            
-            // Filter berdasarkan admin_id kecuali jika admin_id adalah 1 atau 10
-            if (!in_array($adminId, [1, 10])) {
-                $buySumQuery->where('transactions.admin_id', $adminId);
-            }
-            
-            $buySum = $buySumQuery->sum('total_income');
-            
-            $totalProfit = $profitSum - $buySum;
-            
-            // Format data statistik
-            $this->index_statistic[] = [
-                'label' => 'Total Profit',
-                'count' => 'Rp. ' . number_format($totalProfit, 0, ',', ','),
-                'icon' => 'fa fa-check',
-                'color' => 'success'
-            ];
-            $this->index_statistic[] = [
-                'label' => 'Total Penjualan',
-                'count' => 'Rp. ' . number_format($profitSum, 0, ',', ','),
-                'icon' => 'fa fa-money',
-                'color' => 'primary'
-            ];
+			$filterColumn = Request::get('filter_column');
+			$periodeFilter = $filterColumn['transactions.periode']['value'] ?? null;
+			
+			$buySumQuery = DB::table('transactions')
+    						->where('transactions.periode', 'like', '%' . $periodeFilter . '%');
+
+			// Filter berdasarkan admin_id kecuali jika admin_id adalah 1 atau 10
+			if (!in_array($adminId, [1, 10])) {
+				$buySumQuery->where('transactions.admin_id', $adminId);
+			}
+
+			$buySum = $buySumQuery->sum('total_income');
+			$totalWeight = $buySumQuery->sum('total_weight');
+
+			// Format data statistik
+			$this->index_statistic[] = [
+				'label' => 'Total Tabungan Sampah',
+				'count' =>  $totalWeight. ' Kg',
+				'icon' => 'fa fa-check',
+				'color' => 'success'
+			];
+			$this->index_statistic[] = [
+				'label' => 'Total Pembelian',
+				'count' => 'Rp. ' . number_format($buySum, 0, ',', ','),
+				'icon' => 'fa fa-money',
+				'color' => 'primary'
+			];
 
 
 

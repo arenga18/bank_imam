@@ -237,7 +237,7 @@
 	    */
 	    public function hook_query_index(&$query) {
 	        //Your code here
-	        $GLOBALS['index_number'] = 0;
+	       $GLOBALS['index_number'] = 0;
 	    }
 
 	    /*
