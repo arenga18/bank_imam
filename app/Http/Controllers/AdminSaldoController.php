@@ -32,7 +32,7 @@
 			$this->col = [];
 			$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
 			$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
-			$this->col[] = ["label"=>"Total Saldo","name"=>"total_saldo", 'callback_php' => '"Rp. ".number_format($row->total_income)'];
+			$this->col[] = ["label"=>"Total Saldo","name"=>"total_saldo", 'callback_php' => '"Rp. ".number_format($row->total_saldo)'];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE

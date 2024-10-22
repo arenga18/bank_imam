@@ -5,6 +5,8 @@
 	use DB;
 	use CRUDBooster;
 	use App\Models\Reward;
+	use App\Models\Point;
+	use App\Models\TukarPoin;
 
 	class AdminTukarPoinsController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -33,10 +35,12 @@
 			$this->col = [];
 			$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
 			$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
-			$this->col[] = ["label" => "Nama BSU", "name" => "admin_id", "join" => "cms_users,name"];
+			if (in_array(CRUDBooster::myId(), [1, 10])) {
+			    $this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
+			}
 			$this->col[] = ["label"=>"Reward","name"=>"reward_id","join"=>"rewards,name"];
 			$this->col[] = ["label"=>"Jumlah","name"=>"quantity"];
-			$this->col[] = ["label"=>"Total Harga","name"=>"total_price"];
+			$this->col[] = ["label"=>"Total Poin","name"=>"total_price"];
 			$this->col[] = ["label"=>"Bukti Foto","name"=>"bukti_foto","image"=>true];
 			$this->col[] = ["label" => "Tanggal & Waktu", "name" => "created_at", "callback" => function($row) {
 				return date('d/m/Y H:i:s', strtotime($row->created_at)); // Format alternatif
@@ -47,7 +51,7 @@
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'Nama User','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,username'];
-			$this->form[] = ['label'=>'Nama BSU','name'=>'admin_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_where'=>'id = '.CRUDBooster::myId()];
+			$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'hidden', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'value' => CRUDBooster::myId()];
 			$this->form[] = [
 				'label' => 'Reward',
 				'name' => 'reward_id',
@@ -336,8 +340,29 @@
 	    | 
 	    */
 	    public function hook_before_delete($id) {
-	        //Your code here
-
+	        // Ambil data reward yang dihapus dari model Reward
+            $data = TukarPoin::find($id);
+        
+            // Pastikan data reward ditemukan
+            if ($data) {
+                $user_id = $data->user_id;
+                $total_price = $data->total_price; // Total poin yang terhapus
+        
+                // Cari data Points berdasarkan user_id
+                $user_points = Point::where('user_id', $user_id)->first();
+                if ($user_points) {
+                    // Kembalikan poin pengguna berdasarkan total_price yang terhapus
+                    $user_points->update([
+                        'total_points' => $user_points->total_points + $total_price
+                    ]);
+                } else {
+                    // Jika tidak ada record Points untuk user_id ini, buat baru
+                    Point::create([
+                        'user_id' => $user_id,
+                        'total_points' => $total_price
+                    ]);
+                }
+            }
 	    }
 
 	    /* 
@@ -347,10 +372,11 @@
 	    | @id       = current id 
 	    | 
 	    */
-	    public function hook_after_delete($id) {
-	        //Your code here
+	    public function hook_after_delete($id)
+        {
+            
+        }
 
-	    }
 
 
 

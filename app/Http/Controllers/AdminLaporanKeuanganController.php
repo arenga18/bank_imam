@@ -5,14 +5,14 @@
 	use DB;
 	use CRUDBooster;
 
-	class AdminSampahCategoriesController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class AdminLaporanKeuanganController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
 
 			# START CONFIGURATION DO NOT REMOVE THIS LINE
-			$this->title_field = "name";
+			$this->title_field = "id";
 			$this->limit = "20";
-			$this->orderby = "updated_at,desc";
+			$this->orderby = "id,desc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
 			$this->button_bulk_action = true;
@@ -24,29 +24,42 @@
 			$this->button_show = true;
 			$this->button_filter = true;
 			$this->button_import = false;
-			$this->button_export = false;
-			$this->table = "sampah_categories";
+			$this->button_export = true;
+			$this->table = "laporan_keuangan";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
 			$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
-			$this->col[] = ["label"=>"Nama Kategori","name"=>"name"];
-			$this->col[] = ["label"=>"Deskripsi","name"=>"description"];
+			if (in_array(CRUDBooster::myId(), [1, 10])) {
+			    $this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
+			}
+			$this->col[] = ["label"=>"Periode","name"=>"periode"];
+			$this->col[] = ["label"=>"Total Beli","name"=>"total_beli",'callback_php' => '"Rp. ".number_format($row->total_beli)'];
+			$this->col[] = ["label"=>"Total Jual","name"=>"total_jual",'callback_php' => '"Rp. ".number_format($row->total_jual)'];
+			$this->col[] = ["label"=>"Profit","name"=>"profit",'callback_php' => '"Rp. ".number_format($row->profit)'];
+			$this->col[] = ["label"=>"Ambil Saldo","name"=>"ambil_saldo",'callback_php' => '"Rp. ".number_format($row->ambil_saldo)'];
+			$this->col[] = ["label"=>"Saldo Akhir","name"=>"saldo_akhir",'callback_php' => '"Rp. ".number_format($row->saldo_akhir)'];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Nama Kategori','name'=>'name','type'=>'text','validation'=>'required|string|min:1|max:100','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			$this->form[] = ['label'=>'Deskripsi','name'=>'description','type'=>'text','validation'=>'max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'hidden', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'value' => CRUDBooster::myId()];
-
+			$this->form[] = ['label'=>'Periode','name'=>'periode','type'=>'text','validation'=>'required|string|min:1|max:5000','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Total Beli','name'=>'total_beli','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Total Jual','name'=>'total_jual','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Profit','name'=>'profit','type'=>'number','validation'=>'required|integer','width'=>'col-sm-10','readonly' => 'true'];
+			$this->form[] = ['label'=>'Ambil Saldo','name'=>'ambil_saldo','type'=>'number','validation'=>'integer|min:0','width'=>'col-sm-10','help'=>'Isi jika ingin mengambil saldo, jika tidak kosongkan'];
+			$this->form[] = ['label'=>'Saldo Akhir','name'=>'saldo_akhir','type'=>'number','validation'=>'required|integer','width'=>'col-sm-10','readonly' => 'true'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ["label"=>"Name","name"=>"name","type"=>"text","required"=>TRUE,"validation"=>"required|string|min:3|max:70","placeholder"=>"You can only enter the letter only"];
-			//$this->form[] = ["label"=>"Description","name"=>"description","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ['label'=>'Periode','name'=>'periode','type'=>'textarea','validation'=>'required|string|min:5|max:5000','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Total Beli','name'=>'total_beli','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Total Jual','name'=>'total_jual','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Profit','name'=>'profit','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Ambil Saldo','name'=>'ambil_saldo','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Saldo Akhir','name'=>'saldo_akhir','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','disabled'=>'true'];
 			# OLD END FORM
 
 			/* 
@@ -136,6 +149,34 @@
 	        */
 	        $this->index_statistic = array();
 
+	        $adminId = CRUDBooster::myId();
+            $filterColumn = Request::get('filter_column');
+            
+            $laporanQuery = DB::table('laporan_keuangan')
+                ->where('laporan_keuangan.periode', 'like', '%' . $periodeFilter . '%');
+            
+            if (!in_array($adminId, [1, 10])) {
+                $laporanQuery->where('laporan_keuangan.admin_id', $adminId);
+            }
+            
+            $saldoAkhir = $laporanQuery->sum('saldo_akhir');
+
+
+            $ambilSaldo = $laporanQuery->sum('ambil_saldo');
+
+            // Format data statistik
+            $this->index_statistic[] = [
+                'label' => 'Total Saldo',
+                'count' => 'Rp. ' . number_format($saldoAkhir, 0, ',', ','),
+                'icon' => 'fa fa-check',
+                'color' => 'success'
+            ];
+             $this->index_statistic[] = [
+                'label' => 'Total Saldo Diambil',
+                'count' => 'Rp. ' . number_format($ambilSaldo, 0, ',', ','),
+                'icon' => 'fa fa-money',
+                'color' => 'primary'
+            ];
 
 
 	        /*
@@ -146,7 +187,52 @@
 	        | $this->script_js = "function() { ... }";
 	        |
 	        */
-	        $this->script_js = NULL;
+	        $this->script_js = "
+                $(document).ready(function() {
+                    let totalBeli = $('input[name=\"total_beli\"]');
+                    let totalJual = $('input[name=\"total_jual\"]');
+                    let profit = $('input[name=\"profit\"]');
+                    let ambilSaldo = $('input[name=\"ambil_saldo\"]');
+                    let saldoAkhir = $('input[name=\"saldo_akhir\"]');
+                    
+                    // Fungsi untuk menghitung profit
+                    function calculateProfit() {
+                        var beli = parseFloat(totalBeli.val()) || 0;
+                        var jual = parseFloat(totalJual.val()) || 0;
+                        var calculatedProfit = jual - beli;
+                        profit.val(calculatedProfit); // Set nilai profit
+                    }
+                    
+                    // Fungsi untuk menghitung saldo akhir
+                    function calculateSaldoAkhir() {
+                        var calculatedProfit = parseFloat(profit.val()) || 0;
+                        var saldoAmbil = parseFloat(ambilSaldo.val()) || 0;
+                        var calculatedSaldoAkhir = calculatedProfit - saldoAmbil;
+                        saldoAkhir.val(calculatedSaldoAkhir); // Set nilai saldo akhir
+                    }
+                    
+                    // Jalankan perhitungan ketika nilai total_beli atau total_jual berubah
+                    totalBeli.on('input', function() {
+                        calculateProfit();
+                        calculateSaldoAkhir();
+                    });
+                    
+                    totalJual.on('input', function() {
+                        calculateProfit();
+                        calculateSaldoAkhir();
+                    });
+                    
+                    // Jalankan perhitungan ketika nilai ambil_saldo berubah
+                    ambilSaldo.on('input', function() {
+                        calculateSaldoAkhir();
+                    });
+                    
+                    // Inisialisasi perhitungan saat pertama kali halaman dimuat
+                    calculateProfit();
+                    calculateSaldoAkhir();
+                });
+            ";
+
 
 
             /*
@@ -193,7 +279,8 @@
 	        | $this->style_css = ".style{....}";
 	        |
 	        */
-	        $this->style_css = NULL;
+	       // $this->style_css = NULL;
+	        $this->load_css[] =  asset('we-cycle-app/bootstrap/css/admin.css');
 	        
 	        
 	        
@@ -205,7 +292,7 @@
 	        | $this->load_css[] = asset("myfile.css");
 	        |
 	        */
-	        $this->load_css[] =  asset('we-cycle-app/bootstrap/css/admin.css');
+	       // $this->load_css = array();
 	        
 	        
 	    }
@@ -232,18 +319,18 @@
 	    | @query = current sql query 
 	    |
 	    */
-		public function hook_query_index(&$query) {
+	     public function hook_query_index(&$query) {
 	        $currentUserId = CRUDBooster::myId(); 
-	        
-	        $GLOBALS['index_number'] = 0;
-	        
+
+			$GLOBALS['index_number'] = 0;
+
 			if ($currentUserId == 1) {
 
 			}elseif($currentUserId == 10) {
 				
 			}
 			else {
-				$query->where('admin_id', $currentUserId);
+				$query->where('laporan_keuangan.admin_id', $currentUserId);
 			}
 	    }
 
@@ -266,7 +353,7 @@
 	    */
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
-
+            $postdata['admin_id'] = CRUDBooster::myId();
 	    }
 
 	    /* 

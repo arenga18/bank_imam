@@ -1,4 +1,4 @@
-@extends('layout.header-tukar-poin')
+@extends('layout.header-to-rewards')
 
 @section('title', 'Reward | Bank Imam')
 
@@ -30,8 +30,8 @@
             </a>
         </div>
     </div>
-
-    {{-- NAVIGATION MENU --}}
-    @include('layout.navigation')
 </div>
+{{-- NAVIGATION MENU --}} 
+@include('layout.navigation')
+
 @endsection

@@ -8,12 +8,13 @@
                 <div class="col d-flex justify-content-between align-items-center text-start">
                     <div>
                         <h6 class="mb-0 text-light" style="font-weight: 600;">Hello, 
-                            {{ auth()->user()->username ?? 'Anonim'}}
+                            {{ auth()->user()->username ?? 'Nasabah'}}
                         </h6>
                     </div>
                     <div class="profile">
-                        <img src="{{ auth()->user()->picture ?? asset('images/profile3.png')  }}" alt="profile"
-                            style="width: 48px; height:48px;" class="rounded-circle bg-light border-custom">
+                        <img src="{{ auth()->user()->picture ? asset(auth()->user()->picture) : asset('images/profile3.png') }}" alt="profile"
+     style="width: 48px; height:48px;" class="rounded-circle bg-light border-custom">
+
                     </div>
                 </div>
             </div>

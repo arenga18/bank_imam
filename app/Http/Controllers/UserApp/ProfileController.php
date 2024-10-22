@@ -37,8 +37,8 @@ class ProfileController extends Controller
         if ($request->hasFile('picture')) {
             $picture = $request->file('picture');
             $pictureName = time() . '_' . $picture->getClientOriginalName();
-            $picture->move(public_path('uploads/profile'), $pictureName);
-            $user->picture = '/uploads/profile/' . $pictureName;
+            $picture->move('uploads/profile', $pictureName);
+            $user->picture = 'uploads/profile/' . $pictureName;
         }
 
         $user->save();

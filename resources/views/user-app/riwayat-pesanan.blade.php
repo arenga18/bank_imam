@@ -55,7 +55,7 @@
                 <div class="row d-flex align-items-center">
                     <div class="col text-center text-danger">
                         <p class="mb-0 fw-bold">
-                            Anda belum pernah melakukan penukaran poin menjadi reward.
+                            Anda belum pernah melakukan penukaran poin
                         </p>
                     </div>
                 </div>

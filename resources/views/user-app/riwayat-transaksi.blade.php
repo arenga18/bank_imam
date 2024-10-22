@@ -1,8 +1,8 @@
 @extends('layout.header-to-dashboard')
-@section('title', 'Riwayat Transaksi')
+@section('title', 'Riwayat Tabungan')
 
 @section('transaction-content')
-@section('transaction-title', 'RIWAYAT TRANSAKSI')
+@section('transaction-title', 'RIWAYAT TABUNGAN')
 <main class="main-container">
     @if (isset($transactions) || !empty($transactions))
     @forelse ($transactions as $transaction)
@@ -30,7 +30,7 @@
                                 Pendapatan
                             </p>
                             <p class="mb-0 text-secondary fw-bold">
-                                Rp. {{$transaction->total_income}}
+                                Rp{{ number_format($transaction->total_income, 0, ',', '.') }}
                             </p>
                             <p class="mb-0 ">
                                 <span class="text-light text-primary fw-bold">
@@ -45,10 +45,10 @@
     </div>
     @empty
     <div class="mx-3 py-2">
-        <div class="card border shadow-sm mb-2">
-            <h5 class="p-3 text-center text-danger">
-                Maaf, Kamu belum pernah melakukan transaksi!
-            </h5>
+        <div class="card p-2 border shadow-sm mb-2">
+             <p class="text-center text-danger p-0 m-0">
+                Maaf, Kamu belum pernah melakukan setoran!
+            </p>
         </div>
     </div>
     @endforelse

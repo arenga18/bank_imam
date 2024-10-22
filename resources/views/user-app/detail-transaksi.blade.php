@@ -1,8 +1,8 @@
 @extends('layout.header-to-dashboard')
-@section('title', 'Detail Transaksi')
+@section('title', 'Detail Setoran')
 
 @section('transaction-content')
-@section('transaction-title', 'DETAIL TRANSAKSI')
+@section('transaction-title', 'DETAIL SETORAN')
 <main class="main-container" style="min-height: calc(100vh - 64px);">
     <div class="pt-3 mx-3">
         <p class="btn btn-outline-custom rounded-pill text-dark">

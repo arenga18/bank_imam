@@ -67,15 +67,15 @@
 
         this.locale = {
             direction: "ltr",
-            format: "YYYY-MM-DD", // Menggunakan format hanya tanggal
+            format: "YYYY-MM-DD",
             separator: " - ",
             applyLabel: "Apply",
             cancelLabel: "Cancel",
             weekLabel: "W",
             customRangeLabel: "Custom Range",
-            daysOfWeek: moment.weekdaysMin(),
+            daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"], // Tentukan secara manual
             monthNames: moment.monthsShort(),
-            firstDay: moment.localeData().firstDayOfWeek(),
+            firstDay: 0, // Pastikan Minggu adalah hari pertama
         };
 
         this.callback = function () {};

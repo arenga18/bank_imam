@@ -46,11 +46,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/kategori-sampah', [SampahController::class, 'index'])->name('index');
 
     // Tukar Poin -> Transaction
-     Route::get('/tukarPoin/{id}/detail', [TukarPoinController::class, 'detail'])->name('tukarPoinDetail');
+    Route::get('/tukarPoin/{id}/detail', [TukarPoinController::class, 'detail'])->name('tukarPoinDetail');
     Route::get('/tukar-poin', [TukarPoinController::class, 'index'])->name('indexTukarPoin');
     Route::get('/tukar-poin/reward/{id}', [TukarPoinController::class, 'show'])->name('showReward');
     Route::get('/tukar-poin/reward/{id}/konfirmasi', [TukarPoinController::class, 'confirm'])->name('confirmReward');
-    
+
     // Tukar Saldo -> Transaction
     Route::get('/tukarSaldo/{id}/detail', [TukarSaldoController::class, 'detail'])->name('tukarPoinDetail');
     Route::get('/tukar-saldo', [TukarSaldoController::class, 'index'])->name('indexTukarSaldo');
@@ -65,6 +65,9 @@ Route::middleware(['auth'])->group(function () {
     route::post('/tukar-poin/reward/{id}', [TukarPoinController::class, 'store'])->name('storeTukarPoin');
     route::post('/tukar-saldo/reward/{id}', [TukarSaldoController::class, 'store'])->name('storeTukarSaldo');
 
+    // Sampah
+    Route::get('/sampah/{id}/detail', [SampahController::class, 'detail'])->name('sampahDetail');
+
     // Sale
     Route::post('/sales/store', [SalesController::class, 'store'])->name('sales.store');
     Route::get('/transaction-details', [SalesController::class, 'showTransactionDetails'])->name('transaction.details');
@@ -72,5 +75,4 @@ Route::middleware(['auth'])->group(function () {
     // Education
     Route::resource('educational-news', 'EducationalNewsController');
     Route::get('/edukasi', [EducationalNewsController::class, 'index'])->name('edukasi.index');
-
 });

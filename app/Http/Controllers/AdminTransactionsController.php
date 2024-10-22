@@ -39,7 +39,9 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 		$this->col = [];
 		$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
 		$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
-		$this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
+		if (in_array(CRUDBooster::myId(), [1, 10])) {
+			    $this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
+			}
 		$this->col[] = ["label"=>"Jenis Sampah","name"=>"sampah_id","join"=>"sampah,name"];
 		$this->col[] = ["label"=>"Harga per Kg","name"=>"sampah_id", "join"=>"sampah,price_per_kg"];
 		$this->col[] = ["label"=>"Total Berat","name"=>"total_weight"];
@@ -55,11 +57,20 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 		$this->col[] = ["label"=>"Periode","name"=>"periode"];
 		# END COLUMNS DO NOT REMOVE THIS LINE
 
-			# START FORM DO NOT REMOVE THIS LINE
+		# START FORM DO NOT REMOVE THIS LINE
 		$this->form = [];
 		$this->form[] = ['label' => 'Nama User', 'name' => 'user_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'users,username', 'datatable_where' => 'cms_user_id = '.CRUDBooster::myId()];
-		$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
-		$this->form[] = ['label' => 'Jenis Sampah', 'name' => 'sampah_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'sampah,name', 'datatable_format' => 'name,\'. Harga per Kg =  \',price_per_kg', 'datatable_where' => 'admin_id = '.CRUDBooster::myId()];
+		$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'hidden', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'value' => CRUDBooster::myId()];
+		$this->form[] = [
+            'label' => 'Jenis Sampah',
+            'name' => 'sampah_id',
+            'type' => 'select2',
+            'validation' => 'required|min:1|max:255',
+            'width' => 'col-sm-10',
+            'datatable' => 'sampah,name',
+            'datatable_format' => "name,'. Harga per Kg = ',price_per_kg,'. Poin per Kg = ',poin_per_kg",
+            'datatable_where' => 'admin_id = '.CRUDBooster::myId()
+        ];
 		$this->form[] = ['label' => 'Total Berat(kg)', 'name' => 'total_weight', 'type' => 'text', 'validation' => 'required|min:0|numeric', 'width' => 'col-sm-10'];
 		$this->form[] = ['label' => 'Total Pendapatan', 'name' => 'total_income', 'type' => 'number', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'readonly' => 'true'];
 		$this->form[] = ['label' => 'Poin Didapat', 'name' => 'point_received', 'type' => 'number', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'readonly' => 'true'];
@@ -164,11 +175,65 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 			$this->index_statistic = array();
 
 			$adminId = CRUDBooster::myId();
-			$filterColumn = Request::get('filter_column');
-			$periodeFilter = $filterColumn['transactions.periode']['value'] ?? null;
-			
-			$buySumQuery = DB::table('transactions')
-    						->where('transactions.periode', 'like', '%' . $periodeFilter . '%');
+            $filterColumn = Request::get('filter_column');
+            
+            // Inisialisasi query dengan join tabel terkait
+            $buySumQuery = DB::table('transactions')
+                ->join('users', 'transactions.user_id', '=', 'users.id') // Join dengan tabel users
+                ->join('cms_users', 'transactions.admin_id', '=', 'cms_users.id') // Join dengan tabel cms_users
+                ->join('sampah', 'transactions.sampah_id', '=', 'sampah.id'); // Join dengan tabel sampah
+                
+            if (!empty( $filterColumn['transactions.periode']['value'])) {
+                $buySumQuery->where('transactions.periode', 'like', '%' . $filterColumn['transactions.periode']['value'] . '%');
+            }
+            
+            // Filter Nama User
+            if (!empty($filterColumn['users.username']['value'])) {
+                $buySumQuery->where('users.username', 'like', '%' . $filterColumn['users.username']['value'] . '%');
+            }
+            
+            // Filter Nama BSU
+            if (!empty($filterColumn['cms_users.name']['value'])) {
+                $buySumQuery->where('cms_users.name', 'like', '%' . $filterColumn['cms_users.name']['value'] . '%');
+            }
+            
+            // Filter Jenis Sampah
+            if (!empty($filterColumn['sampah.name']['value'])) {
+                $buySumQuery->where('sampah.name', 'like', '%' . $filterColumn['sampah.name']['value'] . '%');
+            }
+            
+            // Filter Harga per Kg
+            if (!empty($filterColumn['sampah.price_per_kg']['value'])) {
+                $buySumQuery->where('sampah.price_per_kg', '=', $filterColumn['sampah.price_per_kg']['value']);
+            }
+            
+            // Filter Total Berat
+            if (!empty($filterColumn['transactions.total_weight']['value'])) {
+                $buySumQuery->where('transactions.total_weight', '=', $filterColumn['transactions.total_weight']['value']);
+            }
+            
+            // Filter Saldo Didapat
+            if (!empty($filterColumn['transactions.total_income']['value'])) {
+                $buySumQuery->where('transactions.total_income', '=', $filterColumn['transactions.total_income']['value']);
+            }
+            
+            // Filter Poin Didapat
+            if (!empty($filterColumn['transactions.point_received']['value'])) {
+                $buySumQuery->where('transactions.point_received', '=', $filterColumn['transactions.point_received']['value']);
+            }
+            
+            if (!empty($filterColumn['transactions.created_at']['value'])) {
+                $createdAtRange = $filterColumn['transactions.created_at']['value']; // Misalkan formatnya array [start, end]
+                
+                // Jika diberikan rentang tanggal (array dengan 2 nilai: start dan end)
+                if (is_array($createdAtRange) && count($createdAtRange) === 2) {
+                    $buySumQuery->whereBetween('transactions.created_at', [$createdAtRange[0], $createdAtRange[1]]);
+                }
+                // Jika hanya satu tanggal yang diberikan
+                elseif (!empty($createdAtRange)) {
+                    $buySumQuery->where('transactions.created_at', '=', $createdAtRange);
+                }
+            }
 
 			// Filter berdasarkan admin_id kecuali jika admin_id adalah 1 atau 10
 			if (!in_array($adminId, [1, 10])) {
@@ -207,24 +272,39 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	        */
 			
 		$this->script_js = "
-			$(document).ready(function() {
-				let income = $('input[name=\"total_income\"]');
-				let pointReceived = $('input[name=\"point_received\"]');
-				let totalWeight = $('input[name=\"total_weight\"]');
-				totalWeight.on('change', function() {
+            $(document).ready(function() {
+                let income = $('input[name=\"total_income\"]');
+                let pointReceived = $('input[name=\"point_received\"]');
+                let totalWeight = $('input[name=\"total_weight\"]');
+                
+                totalWeight.on('change', function() {
+                    // Get Sampah details from the selected option text (price and poin per kg)
+                    var sampah = $('.select2-selection__rendered').eq(1).text();
+                    
+                    // Extract the price per kg from sampah string
+                    var priceMatch = sampah.match(/Harga per Kg = (\\d+)/);
+                    var price = priceMatch ? parseInt(priceMatch[1]) : null;
+        
+                    // Extract poin_per_kg from sampah string
+                    var poinMatch = sampah.match(/Poin per Kg = (\\d+)/);
+                    var poinPerKg = poinMatch ? parseInt(poinMatch[1]) : null;
+        
+                    // Get total weight
+                    var weight = parseFloat(this.value);
+                    
+                    if (!isNaN(price) && !isNaN(weight)) {
+                        // Calculate income and round to nearest integer
+                        var calculatedIncome = Math.round(price * weight);
+                        income.val(calculatedIncome); // Set income value
+                    }
+    
+                    // Calculate total points and round it
+                    var totalPoints = Math.round(poinPerKg * weight);
+                    pointReceived.val(totalPoints); // Set point value
+                });
+            });
+        ";
 
-					// Get Sampah Price and convert to string
-					var sampah = $('.select2-selection__rendered').eq(2).text();
-					var match = sampah.match(/\\d+$/);
-					var price = match ? parseInt(match[0]) : null;
-
-					// fill total income and total point received automatically
-					var weight = this.value;
-					income.val(price * weight);
-					pointReceived.val(Math.round(weight * 100));
-				});
-			});
-			";
 
 			/*
 	        | ---------------------------------------------------------------------- 
@@ -364,8 +444,7 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    */
 	public function hook_before_add(&$postdata)
 	{
-		//Your code here
-
+	    
 	}
 
 	/* 
@@ -449,8 +528,36 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    */
 	public function hook_before_delete($id)
 	{
-		//Your code here
-
+		$transaction = Transaction::find($id);
+        
+        // Pastikan data transaksi ditemukan
+        if ($transaction) {
+            $user_id = $transaction->user_id;
+            $point_received = $transaction->point_received;
+            $total_income = $transaction->total_income;
+        
+            // Kurangi poin pengguna berdasarkan transaksi yang dihapus
+            $user_point = Point::where('user_id', $user_id)->first();
+            if ($user_point) {
+                $new_total_points = $user_point->total_points - $point_received;
+                
+                // Jika hasilnya negatif, set total_points menjadi 0
+                $user_point->update([
+                    'total_points' => $new_total_points < 0 ? 0 : $new_total_points
+                ]);
+            }
+        
+            // Kurangi saldo pengguna berdasarkan transaksi yang dihapus
+            $user_saldo = Saldo::where('user_id', $user_id)->first();
+            if ($user_saldo) {
+                $new_total_saldo = $user_saldo->total_saldo - $total_income;
+                
+                // Jika hasilnya negatif, set total_saldo menjadi 0
+                $user_saldo->update([
+                    'total_saldo' => $new_total_saldo < 0 ? 0 : $new_total_saldo
+                ]);
+            }
+        }
 	}
 
 	/* 

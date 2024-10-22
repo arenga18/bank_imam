@@ -4,6 +4,9 @@
 	use Request;
 	use DB;
 	use CRUDBooster;
+	use App\Models\Reward;
+	use App\Models\Saldo;
+	use App\Models\TukarSaldo;
 
 	class AdminTukarSaldoController extends \crocodicstudio\crudbooster\controllers\CBController {
 
@@ -32,7 +35,9 @@
 			$this->col = [];
 			$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
 			$this->col[] = ["label"=>"Nama User","name"=>"user_id","join"=>"users,username"];
-			$this->col[] = ["label" => "Nama BSU", "name" => "admin_id", "join" => "cms_users,name"];
+			if (in_array(CRUDBooster::myId(), [1, 10])) {
+			    $this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
+			}
 			$this->col[] = ["label"=>"Reward","name"=>"reward_id","join"=>"rewards,name"];
 			$this->col[] = ["label"=>"Quantity","name"=>"quantity"];
 			$this->col[] = ["label"=>"Total Harga","name"=>"total_price", 'callback_php' => '"Rp. ".number_format($row->total_price)'];
@@ -45,8 +50,9 @@
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'User','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,id'];
-			$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
+			$this->form[] = ['label'=>'Nama User','name'=>'user_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'users,username'];
+// 			$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
+            $this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'hidden', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'value' => CRUDBooster::myId()];
 			$this->form[] = [
 				'label' => 'Reward',
 				'name' => 'reward_id',
@@ -335,7 +341,28 @@
 	    | 
 	    */
 	    public function hook_before_delete($id) {
-	        //Your code here
+            $data = TukarSaldo::find($id);
+            
+            // Pastikan data reward ditemukan
+            if ($data) {
+                $user_id = $data->user_id;
+                $total_price = $data->total_price; // Total poin yang terhapus
+        
+                // Cari data Points berdasarkan user_id
+                $user_saldo = Saldo::where('user_id', $user_id)->first();
+                if ($user_saldo) {
+                    // Kembalikan poin pengguna berdasarkan total_price yang terhapus
+                    $user_saldo->update([
+                        'total_saldo' => $user_saldo->total_saldo + $total_price
+                    ]);
+                } else {
+                    // Jika tidak ada record Points untuk user_id ini, buat baru
+                    Saldo::create([
+                        'user_id' => $user_id,
+                        'total_saldo' => $total_price
+                    ]);
+                }
+            }
 
 	    }
 

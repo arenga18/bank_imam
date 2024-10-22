@@ -33,7 +33,9 @@
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
 			$this->col[] = ["label" => "No", "callback_php" => '($row->index_number = (++$GLOBALS["index_number"]))'];
-			$this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
+			if (in_array(CRUDBooster::myId(), [1, 10])) {
+			    $this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
+			}
 			$this->col[] = ["label" => "Jenis Sampah", "name" => "sampah_id", "join" => "sampah,name"];
 			$this->col[] = ["label"=>"Berat Total","name"=>"total_weight"];
 			$this->col[] = ["label"=>"Harga per kg","name"=>"harga_per_kg",'callback_php' => '"Rp. ".number_format($row->harga_per_kg)'];
@@ -47,10 +49,10 @@
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
+            $this->form[] = ['label' => 'Nama BSU', 'name' => 'admin_id', 'type' => 'hidden', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'value' => CRUDBooster::myId()];
 			$this->form[] = ['label' => 'Jenis Sampah', 'name' => 'sampah_id', 'type' => 'select2', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10', 'datatable' => 'sampah,name', 'datatable_where' => 'admin_id = '.CRUDBooster::myId()];
 			$this->form[] = ['label' => 'Periode', 'name' => 'periode', 'type' => 'text', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10'];
-			$this->form[] = ['label' => 'Total Weight', 'name' => 'total_weight', 'type' => 'text', 'validation' => 'required', 'width' => 'col-sm-10', ];
+			$this->form[] = ['label' => 'Total Berat', 'name' => 'total_weight', 'type' => 'text', 'validation' => 'required', 'width' => 'col-sm-10', ];
 			$this->form[] = ['label'=>'Harga satuan BSI','name'=>'harga_per_kg','type'=>'money','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 		
 			# END FORM DO NOT REMOVE THIS LINE
@@ -155,13 +157,53 @@
 
 		    $adminId = CRUDBooster::myId();
             $filterColumn = Request::get('filter_column');
-            $periodeFilter = $filterColumn['transactions_bsi.periode']['value'] ?? null;
             
-            // Query untuk menghitung profit dengan kondisi periode
+            // Inisialisasi query dengan join tabel terkait
             $profitSumQuery = DB::table('transactions_bsi')
-                ->where('transactions_bsi.periode', 'like', '%' . $periodeFilter . '%');
+                ->join('cms_users', 'transactions_bsi.admin_id', '=', 'cms_users.id') // Join dengan tabel cms_users
+                ->join('sampah', 'transactions_bsi.sampah_id', '=', 'sampah.id'); // Join dengan tabel sampah
+                
+            if (!empty( $filterColumn['transactions_bsi.periode']['value'])) {
+                $profitSumQuery->where('transactions_bsi.periode', 'like', '%' . $filterColumn['transactions_bsi.periode']['value'] . '%');
+            }
+            
+            // Filter Nama BSU
+            if (!empty($filterColumn['cms_users.name']['value'])) {
+                $profitSumQuery->where('cms_users.name', 'like', '%' . $filterColumn['cms_users.name']['value'] . '%');
+            }
+            
+            // Filter Jenis Sampah
+            if (!empty($filterColumn['sampah.name']['value'])) {
+                $profitSumQuery->where('sampah.name', 'like', '%' . $filterColumn['sampah.name']['value'] . '%');
+            }
+            
+            // Filter Harga per Kg
+            if (!empty($filterColumn['transactions_bsi.harga_per_kg']['value'])) {
+                $profitSumQuery->where('transactions_bsi.harga_per_kg', '=', $filterColumn['transactions_bsi.harga_per_kg']['value']);
+            }
+            
+            // Filter Jumlah
+            if (!empty($filterColumn['transactions_bsi.total_price']['value'])) {
+                $profitSumQuery->where('transactions_bsi.total_price', '=', $filterColumn['transactions_bsi.total_price']['value']);
+            }
+            
+            if (!empty($filterColumn['transactions_bsi.created_at']['value'])) {
+                $createdAtRange = $filterColumn['transactions_bsi.created_at']['value']; // Misalkan formatnya array [start, end]
+                
+                // Jika diberikan rentang tanggal (array dengan 2 nilai: start dan end)
+                if (is_array($createdAtRange) && count($createdAtRange) === 2) {
+                    $profitSumQuery->whereBetween('transactions_bsi.created_at', [$createdAtRange[0], $createdAtRange[1]]);
+                }
+                // Jika hanya satu tanggal yang diberikan
+                elseif (!empty($createdAtRange)) {
+                    $profitSumQuery->where('transactions_bsi.created_at', '=', $createdAtRange);
+                }
+            }
             
             // Tambahkan kondisi untuk memfilter berdasarkan admin_id yang sesuai dengan ID Anda saat ini
+            if ($adminId == 1 || $adminId == 10) {
+                $profitSumQuery->orWhereIn('transactions_bsi.admin_id', [1, 10]);
+            }
             $profitSumQuery->where('transactions_bsi.admin_id', $adminId);
             
             $profitSum = $profitSumQuery->sum('total_price');
@@ -171,9 +213,9 @@
                 ->where('transactions.periode', 'like', '%' . $periodeFilter . '%');
             
             // Filter berdasarkan admin_id kecuali jika admin_id adalah 1 atau 10
-            if (!in_array($adminId, [1, 10])) {
-                $buySumQuery->where('transactions.admin_id', $adminId);
-            }
+           	if (!in_array($adminId, [1, 10])) {
+				$buySumQuery->where('transactions.admin_id', $adminId);
+			}
             
             $buySum = $buySumQuery->sum('total_income');
             

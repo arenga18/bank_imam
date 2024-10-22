@@ -59,7 +59,9 @@
 			$this->form[] = ['label'=>'Jumlah Stok','name'=>'stock','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10','help'=>'File types support : JPG, JPEG, PNG, GIF, BMP'];
 			$this->form[] = ['label'=>'Foto','name'=>'image','type'=>'upload','validation'=>'required|image|max:20000','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Harga(Saldo)','type'=>'text','validation'=>'required','width'=>'col-sm-9'];
-			$this->form[] = ['label' => 'Nama Petugas', 'name' => 'admin_id', 'type' => 'select2', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'datatable' => 'cms_users,name', 'datatable_where' => 'id = '.CRUDBooster::myId()];
+			if (in_array(CRUDBooster::myId(), [1, 10])) {
+			    $this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
+			}
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM

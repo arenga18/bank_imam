@@ -3,18 +3,18 @@
 @section('title', 'Bank Imam | Landing Page')
 
 @section('content')
-<main id="home-page" class="main-container pt-5">
-   <!-- Hero -->
-   <section class="hero text-center bg-image ">
+  <main id="home-page" class="main-container pt-5">
+    <!-- Hero -->
+    <section class="hero text-center bg-image ">
       <div class="d-flex justify-content-center align-items-center h-100">
-         <div class="text-white">
-            <img src="{{ asset('images/image 17.png') }}" alt="bank-imam-brand" width="250">
-         </div>
+        <div class="text-white">
+          <img src="{{ asset('images/image 17.png') }}" alt="bank-imam-brand" width="250">
+        </div>
       </div>
-   </section>
-   <!-- Hero End -->
-   {{-- Slider --}}
-   <section class="container px-4">
+    </section>
+    <!-- Hero End -->
+    {{-- Slider --}}
+    <section class="container px-4">
       {{-- <div class="row text-center">
          <div class="col">
             <!-- Swiper -->
@@ -53,161 +53,162 @@
          </div>
       </div> --}}
       <div class="row">
-         <div class="col">
-            <h1 class="mt-4 fs-2 fw-bold mb-0">
-               Halo!
-            </h1>
-            <h3 class="fs-4 fw-bold">
-               Selamat Datang di Bank IMAM!
-            </h3>
-            <p class="mt-4">
-               Ayo Tukarkan Sampahmu Dan Dapatkan <br> Reward Menarik Sekarang Juga!
-            </p>
-         </div>
+        <div class="col">
+          <h1 class="mt-4 fs-2 fw-bold mb-0">
+            Halo!
+          </h1>
+          <h3 class="fs-4 fw-bold">
+            Selamat Datang di Bank IMAM!
+          </h3>
+          <p class="mt-4">
+            Ayo Tukarkan Sampahmu Dan Dapatkan <br> Reward Menarik Sekarang Juga!
+          </p>
+        </div>
       </div>
       {{-- Login action --}}
       <div class="row mt-2">
-         <div class="col">
-            <div class="d-grid gap-2">
-               <a class="btn btn-primary-custom rounded-pill fw-bold my-2" href="{{ url('login') }}">
-                  Login
-               </a>
-               <a class="btn btn-outline-custom rounded-pill fw-bold mt-1" href="{{ url('register') }}">
-                  Buat Akun
-               </a>
-            </div>
-         </div>
+        <div class="col">
+          <div class="d-grid gap-2">
+            <a class="btn btn-primary-custom rounded-pill fw-bold my-2" href="{{ url('login') }}">
+              Login
+            </a>
+            <a class="btn btn-outline-custom rounded-pill fw-bold mt-1" href="{{ url('register') }}">
+              Buat Akun
+            </a>
+          </div>
+        </div>
       </div>
-   </section>
-   {{-- Pengertian Bank Imam --}}
-   <section class="container mt-5 pt-2 px-4">
+    </section>
+    {{-- Pengertian Bank Imam --}}
+    <section class="container mt-5 pt-2 px-4">
       <div class="row">
-         <div class="col">
-            <h4 class="fw-bold">
-               Apa itu <span class="text-primary">Bank IMAM</span> ?
-            </h4>
-         </div>
-      </div>
-      <div class="row">
-         <div class="col">
-            <p class="text-lg" style="text-align: justify; width:97%;">
-               Bank Imam adalah aplikasi yang dirancang untuk menyediakan <span class="text-primary">layanan bank sampah</span>, didorong oleh keinginan untuk menyelesaikan masalah sampah di Kelurahan Meruya Selatan.
-            </p>
-            
-            
-         </div>   
-      </div>
-   </section>
-   {{-- Alur penanganan Sampah --}}
-   <section class="container mt-4 pt-2 px-4">
-      <div class="row">
-         <div class="col">
-            <h4 class="fw-bold">
-               Alur Penanganan Sampah<br>
-               Oleh <span class="text-primary">Bank IMAM</span>
-            </h4>
-            <img class="w-100" src="{{ asset('images/waste-art-1.jpg') }}" alt="Alur Penanganan Sampah" srcset="">
-         </div>
+        <div class="col">
+          <h4 class="fw-bold">
+            Apa itu <span class="text-primary">Bank IMAM</span> ?
+          </h4>
+        </div>
       </div>
       <div class="row">
-         <div class="col">
-            <div class="card mb-1 landing-card-shadow border-light">
-               <div class=" row g-0">
-                  <div class="col-3 p-2 d-flex justify-content-center align-items-center text-center">
-                     <i class="bi bi-people-fill text-primary" style="font-size: 45px"></i>
-                  </div>
-                  <div class="col-9">
-                     <div class="card-body">
-                        
-                        <h6 class="card-title fw-bold">
-                           Pemberdayaan Masyarakat
-                        </h6>
-                        <p class="font-sm card-text">
-                           Mengajak Komunitas Masyarakat Mengikuti Campaign Bank Imam
-                        </p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="card mb-1 landing-card-shadow border-light">
-               <div class=" row g-0">
-                  <div class="col-3 p-2 d-flex justify-content-center align-items-center text-center">
-                     <i class="bi bi-book text-primary" style="font-size: 45px"></i>
-                  </div>
-                  <div class="col-9">
-                     <div class="card-body">
-                        <h6 class="card-title fw-bold">
-                           Edukasi
-                        </h6>
-                        <p class="font-sm card-text">
-                           Mengajarkan Ilmu & Keterampilan Terkait Kepada Masyarakat
-                        </p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="card mb-1 landing-card-shadow border-light">
-               <div class=" row g-0">
-                  <div class="col-3 p-2 d-flex justify-content-center align-items-center text-center">
-                     <i class="bi bi-gift-fill text-primary" style="font-size: 45px"></i>
-                  </div>
-                  <div class="col-9">
-                     <div class="card-body">
-                        <h6 class="card-title fw-bold">
-                           Reward
-                        </h6>
-                        <p class="font-sm card-text">
-                           Masyarakat mendapatkan Reward Berdasarkan Kontribusinya
-                        </p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="card mb-1 landing-card-shadow border-light">
-               <div class=" row g-0">
-                  <div class="col-3 p-2 d-flex justify-content-center align-items-center text-center">
-                     <i class="bi bi-arrow-repeat text-primary" style="font-size: 45px"></i>
-                  </div>
-                  <div class="col-9">
-                     <div class="card-body">
-                        <h6 class="card-title fw-bold">
-                           Siklus Ekonomi
-                        </h6>
-                        <p class="font-sm card-text">
-                           Menjalankan Roda Ekonomi Melalui Transaksi di Bank Imam
-                        </p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
+        <div class="col">
+          <p class="text-lg" style="text-align: justify; width:97%;">
+            Bank Imam adalah aplikasi yang dirancang untuk menyediakan <span class="text-primary">layanan bank
+              sampah</span>, didorong oleh keinginan untuk menyelesaikan masalah sampah di Kelurahan Meruya Selatan.
+          </p>
+
+
+        </div>
       </div>
-   </section>
-   {{-- PENYETORAN SAMPAH --}}
-   <section class="container mt-5 pt-2 px-4">
+    </section>
+    {{-- Alur penanganan Sampah --}}
+    <section class="container mt-4 pt-2 px-4">
       <div class="row">
-         <div class="col-sm-12 text-center">
-            <h4 class="fw-bold">
-               Penyetoran Sampah Ke <span class="text-primary">Bank IMAM</span>
-            </h4>
-            <img class="w-100 px-5 mt-3" src="{{ asset('images/waste-management.jpg') }}" alt="alur penyetoran sampah"
-               srcset="">
-         </div>
-         <div class="col-sm-12">
-            <ol class="list-group list-group-numbered fw-bold">
-               <li class="list-group-item d-flex border-0 justify-content-between align-items-start ">
-                  <div class="ms-2 me-auto fw-normal">
-                     <div class="fw-bold">
-                        Sampah dipilah berdasarkan kategori yang diterima di bank sampah.
-                     </div>
-                  </div>
-               </li>
-               <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
-                  <div class="ms-2 me-auto fw-normal">
-                     <div class="fw-bold">
-                        Sampah yang telah dipilah diantarkan ke bank sampah RW/RT terdekat.
-                     </div>
-                     {{-- <ul class="list-group border-light">
+        <div class="col">
+          <h4 class="fw-bold">
+            Alur Penanganan Sampah<br>
+            Oleh <span class="text-primary">Bank IMAM</span>
+          </h4>
+          <img class="w-100" src="{{ asset('images/waste-art-1.jpg') }}" alt="Alur Penanganan Sampah" srcset="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="card mb-1 landing-card-shadow border-light">
+            <div class=" row g-0">
+              <div class="col-3 p-2 d-flex justify-content-center align-items-center text-center">
+                <i class="bi bi-people-fill text-primary" style="font-size: 45px"></i>
+              </div>
+              <div class="col-9">
+                <div class="card-body">
+
+                  <h6 class="card-title fw-bold">
+                    Pemberdayaan Masyarakat
+                  </h6>
+                  <p class="font-sm card-text">
+                    Mengajak Komunitas Masyarakat Mengikuti Campaign Bank Imam
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-1 landing-card-shadow border-light">
+            <div class=" row g-0">
+              <div class="col-3 p-2 d-flex justify-content-center align-items-center text-center">
+                <i class="bi bi-book text-primary" style="font-size: 45px"></i>
+              </div>
+              <div class="col-9">
+                <div class="card-body">
+                  <h6 class="card-title fw-bold">
+                    Edukasi
+                  </h6>
+                  <p class="font-sm card-text">
+                    Mengajarkan Ilmu & Keterampilan Terkait Kepada Masyarakat
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-1 landing-card-shadow border-light">
+            <div class=" row g-0">
+              <div class="col-3 p-2 d-flex justify-content-center align-items-center text-center">
+                <i class="bi bi-gift-fill text-primary" style="font-size: 45px"></i>
+              </div>
+              <div class="col-9">
+                <div class="card-body">
+                  <h6 class="card-title fw-bold">
+                    Reward
+                  </h6>
+                  <p class="font-sm card-text">
+                    Masyarakat mendapatkan Reward Berdasarkan Kontribusinya
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-1 landing-card-shadow border-light">
+            <div class=" row g-0">
+              <div class="col-3 p-2 d-flex justify-content-center align-items-center text-center">
+                <i class="bi bi-arrow-repeat text-primary" style="font-size: 45px"></i>
+              </div>
+              <div class="col-9">
+                <div class="card-body">
+                  <h6 class="card-title fw-bold">
+                    Siklus Ekonomi
+                  </h6>
+                  <p class="font-sm card-text">
+                    Menjalankan Roda Ekonomi Melalui Transaksi di Bank Imam
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {{-- PENYETORAN SAMPAH --}}
+    <section class="container mt-5 pt-2 px-4">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <h4 class="fw-bold">
+            Penyetoran Sampah Ke <span class="text-primary">Bank IMAM</span>
+          </h4>
+          <img class="w-100 px-5 mt-3" src="{{ asset('images/waste-management.jpg') }}" alt="alur penyetoran sampah"
+            srcset="">
+        </div>
+        <div class="col-sm-12">
+          <ol class="list-group list-group-numbered fw-bold">
+            <li class="list-group-item d-flex border-0 justify-content-between align-items-start ">
+              <div class="ms-2 me-auto fw-normal">
+                <div class="fw-bold">
+                  Sampah dipilah berdasarkan kategori yang diterima di bank sampah.
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
+              <div class="ms-2 me-auto fw-normal">
+                <div class="fw-bold">
+                  Sampah yang telah dipilah diantarkan ke bank sampah RW/RT terdekat.
+                </div>
+                {{-- <ul class="list-group border-light">
                         <li class="list-group-item border-0">
                            <i class="bi-geo-alt-fill text-primary" style="font-size: 25px"></i>
                            Bank Sampah Meruya Selatan Jl. Yos Sudarso No.KM. 8, Umban Sari, Kec. Rumbai, Kota Pekanbaru, Riau 28266.
@@ -219,108 +220,75 @@
                            <span class="fw-bold" style="color: red"> LIBUR</span>
                         </li>
                      </ul> --}}
-                  </div>
-               </li>
-               <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
-                  <div class="ms-2 me-auto fw-normal">
-                     <div class="fw-bold">
-                        Untuk warga yang belum terdaftar, dapat mendaftarkan diri terlebih dahulu ke melalui
-                        website Bank Imam.
-                     </div>
-                  </div>
-               </li>
-               <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
-                  <div class="ms-2 me-auto fw-normal">
-                     <div class="fw-bold">
-                        Apabila sudah terdaftar, sampah yang dikumpulkan akan langsung dihitung dan diperiksa oleh
-                        petugas.
-                     </div>
-                  </div>
-               </li>
-               <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
-                  <div class="ms-2 me-auto fw-normal">
-                     <div class="fw-bold">
-                        Terjadi transaksi antara petugas dan anggota, sampah yang dikumpulkan akan ditukarkan
-                        dengan
-                     </div>
-                     <ul class="list-group border-light">
-                        <li class="list-group-item border-0">
-                           - Uang: harga per kategori/kilogram
-                        </li>
-                        <li class="list-group-item border-0">
-                           - Point: 100 point/kilogram
-                        </li>
-                     </ul>
-                  </div>
-               </li>
-               <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
-                  <div class="ms-2 me-auto fw-normal">
-                     <div class="fw-bold">
-                        Anggota dapat mengecek progress pada dashboard user dengan mengakses website Bank Imam dan
-                        login dengan akun yang telah terdaftar.
-                     </div>
-                  </div>
-               </li>
-               <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
-                  <div class="ms-2 me-auto fw-normal">
-                     <div class="fw-bold">
-                        Anggota dapat menukar point yang telah dikumpulkan dengan reward.
-                     </div>
-                  </div>
-               </li>
-            </ol>
-         </div>
-         <h6 class="my-4 fw-bold text-center text-primary">
-            Mulailah mengelola sampah dengan kami!
-         </h6>
+              </div>
+            </li>
+            <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
+              <div class="ms-2 me-auto fw-normal">
+                <div class="fw-bold">
+                  Untuk warga yang belum terdaftar, dapat mendaftarkan diri terlebih dahulu ke melalui
+                  website Bank Imam.
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
+              <div class="ms-2 me-auto fw-normal">
+                <div class="fw-bold">
+                  Apabila sudah terdaftar, sampah yang dikumpulkan akan langsung dihitung dan diperiksa oleh
+                  petugas.
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
+              <div class="ms-2 me-auto fw-normal">
+                <div class="fw-bold">
+                  Terjadi transaksi antara petugas dan anggota, sampah yang dikumpulkan akan ditukarkan
+                  dengan
+                </div>
+                <ul class="list-group border-light">
+                  <li class="list-group-item border-0">
+                    - Uang: harga per kategori/kilogram
+                  </li>
+                  <li class="list-group-item border-0">
+                    - Point: poin per kategori/kilogram
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
+              <div class="ms-2 me-auto fw-normal">
+                <div class="fw-bold">
+                  Anggota dapat mengecek progress pada dashboard user dengan mengakses website Bank Imam dan
+                  login dengan akun yang telah terdaftar.
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item d-flex border-0 justify-content-between align-items-start">
+              <div class="ms-2 me-auto fw-normal">
+                <div class="fw-bold">
+                  Anggota dapat menukar point yang telah dikumpulkan dengan reward.
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <h6 class="my-4 fw-bold text-center text-primary">
+          Mulailah mengelola sampah dengan kami!
+        </h6>
       </div>
-   </section>
-</main>
-{{-- <footer class="landing-footer">
-   <div class="container px-4 pt-5 pb-2">
-      <div class="row">
-         <h5 class="text-center mt-2 fw-bold">
-            Contact Us
-         </h5>
-         <div class="col mt-3 d-flex justify-content-center align-items-center">
-            <a class="btn btn-dark btn-circle" href="#!" role="button">
-               <i class="bi bi-facebook"></i>
-            </a>
-            <a class="btn btn-dark btn-circle" href="#!" role="button">
-               <i class="bi bi-instagram"></i>
-            </a>
-            <a class="btn btn-dark btn-circle" href="#!" role="button">
-               <i class="bi bi-twitter"></i>
-            </a>
-         </div>
-         <a href="#" class="text-dark mt-4 mb-2">
-            <h6 class="fw-bold">
-               Syarat dan Ketentuan*
-            </h6>
-         </a>
-         <hr>
-      </div>
-   </div>
-   <div class="container d-flex justify-content-between px-3">
-      <p>
-         &#169; Copyright @2023
-      </p>
-      <p>
-         All Right Reserved
-      </p>
-   </div>
-</footer> --}}
+    </section>
+  </main>
+
 @endsection
 
 
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<!-- Initialize Swiper -->
-<script>
-   var swiper = new Swiper(".sampahSlider", {
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper(".sampahSlider", {
       pagination: {
-       el: ".swiper-pagination",
+        el: ".swiper-pagination",
       },
-      });
-</script>
+    });
+  </script>
 @endsection

@@ -28,7 +28,7 @@
         <h5 class="fw-bold secondary-color">Pengumuman:</h5>
         <p class="text-danger">{{ $pengumuman->deskripsi }}</p>
     @else
-        <p class="text-danger">Belum ada jadwal penukaran sampah</p>
+        <p class="text-danger">Belum ada jadwal setoran sampah</p>
     @endif
 </div>
 <div class="bsu-profile p-4 pb-0">
@@ -36,7 +36,11 @@
 </div>
 <div class="row border mt-4 mx-3 py-3 rounded-4 bg-light text-center">
     <div class="col">
-        <p class="m-0 fw-bold mb-1">{{ $point->total_points }}</p>
+        @if($point->total_points != 0)
+            <p class="m-0 fw-bold mb-1">{{ $point->total_points }}</p>
+        @else
+            <p class="m-0 fw-bold mb-1">0</p>
+        @endif
         <p class="m-0 font-sm">
             <i class="fa-solid fa-coins"></i> Points
         </p>
@@ -76,7 +80,7 @@
     <section class="container mt-4 pb-4">
         <div class="d-flex justify-content-between align-items-center mx-2">
             <h6 class="fw-bold m-0">
-                Riwayat Transaksi
+                Riwayat Tabungan
             </h6>
             <a class="text-dark fs-6" href="/history/transaction">
                 Lihat Semua
@@ -124,7 +128,7 @@
         <div class="mt-3 mx-3">
             <div class="card p-2 border shadow-sm mb-2">
                 <p class="text-center text-danger p-0 m-0">
-                    Anda belum pernah melakukan transaksi.
+                    Anda belum pernah melakukan setor sampah.
                 </p>
             </div>
         </div>

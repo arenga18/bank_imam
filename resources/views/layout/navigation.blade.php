@@ -16,7 +16,7 @@
         <div style="align-content:center;">
             <a class="btn btn-lg border-0 px-1 py-0" href="/kategori-sampah">
                 <i class="bi bi-trash{{ Request::is('kategori-sampah') ? '-fill' : '' }} secondary-color" style="font-size: 1.5rem;"></i>
-                <p class="secondary-color p-0 m-0" style="font-size: 10px;">Jual Sampah</p>
+                <p class="secondary-color p-0 m-0" style="font-size: 10px;">Nabung Sampah</p>
             </a>
         </div>
         <div style="align-content:center;">

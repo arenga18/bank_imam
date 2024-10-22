@@ -1,8 +1,8 @@
 @extends('layout.header-rewards')
-@section('title', 'Riwayat Transaksi')
+@section('title', 'Riwayat Tabungan')
 
 @section('transaction-content')
-@section('transaction-title', 'RIWAYAT TRANSAKSI')
+@section('transaction-title', 'RIWAYAT PENDAPATAN')
 <main class="main-container" style="min-height: calc(100vh - 64px);">
     <div class=" pt-3 mx-3">
         @if (isset($transactions) || !empty($transactions))
@@ -35,7 +35,7 @@
                 <div class="row d-flex align-items-center">
                     <div class="col text-center text-danger">
                         <p class="mb-0 fw-bold">
-                            Anda belum pernah melakukan transaksi
+                            Anda belum pernah melakukan setoran
                         </p>
                     </div>
                 </div>
