@@ -78,6 +78,11 @@ th:last-child {
     margin: 0;
 }
 
+.bg-red,
+.bg-yellow {
+    border-radius: 10px !important;
+}
+
 .panel-default > .panel-heading {
     background-color: #337ab7 !important;
     color: white;
@@ -136,7 +141,6 @@ th:last-child {
     display: none !important;
 }
 
-
 table thead tr th #checkall,
 table tbody tr td .checkbox {
     display: none;
@@ -148,8 +152,8 @@ table tfoot tr th:first-child {
     display: none;
 }
 
-table tbody tr td:nth-child(2){
-    text-align:center !important;
+table tbody tr td:nth-child(2) {
+    text-align: center !important;
 }
 
 .flex {
@@ -162,6 +166,5 @@ table tbody tr td:nth-child(2){
 }
 
 .box .box-header .pull-left .selected-action {
-    display:none !important;
+    display: none !important;
 }
-
