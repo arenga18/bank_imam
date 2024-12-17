@@ -54,13 +54,13 @@
       </div> --}}
       <div class="row">
         <div class="col">
-          <h1 class="mt-4 fs-2 fw-bold mb-0">
+          <h1 class="mt-4 fs-2 fw-bold mb-0 text-center">
             Halo!
           </h1>
-          <h3 class="fs-4 fw-bold">
+          <h3 class="fs-4 fw-bold text-center">
             Selamat Datang di Bank IMAM!
           </h3>
-          <p class="mt-4">
+          <p class="mt-4 text-center">
             Ayo Tukarkan Sampahmu Dan Dapatkan <br> Reward Menarik Sekarang Juga!
           </p>
         </div>
