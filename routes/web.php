@@ -12,6 +12,8 @@ use App\Http\Controllers\UserApp\TukarPoinController;
 use App\Http\Controllers\UserApp\TukarSaldoController;
 use App\Http\Controllers\UserApp\SalesController;
 use App\Http\Controllers\UserApp\EducationalNewsController;
+use App\Http\Controllers\UserApp\PanduanController as PanduanNasabahController;
+use App\Http\Controllers\PanduanController as PanduanPengelolaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +75,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaction-details', [SalesController::class, 'showTransactionDetails'])->name('transaction.details');
 
     // Education
-    Route::resource('educational-news', 'EducationalNewsController');
+    //Route::resource('educational-news', 'EducationalNewsController');
     Route::get('/edukasi', [EducationalNewsController::class, 'index'])->name('edukasi.index');
+
+    //Panduan
+    Route::get('/nasabah/panduan', [PanduanNasabahController::class, 'index'])->name('nasabah.panduan');
+    // Route::get('/pengelola/panduan', [PanduanPengelolaController::class, 'index'])->name('admin.panduan');
+
+
+
+
+
 });

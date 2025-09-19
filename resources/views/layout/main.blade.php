@@ -41,4 +41,7 @@
     <script src="https://kit.fontawesome.com/a027d00185.js" crossorigin="anonymous"></script>
     <script src="{{ asset('we-cycle-app/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     @yield('scripts')
+   {{-- NAVIGATION MENU --}}
+    @include('layout.navigation')
+
 </body>

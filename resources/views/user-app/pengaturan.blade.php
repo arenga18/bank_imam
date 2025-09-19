@@ -43,10 +43,10 @@
                 <div class="card border-0 shadow-sm mb-1">
                     <div class="card-body px-4">
                         <div class="row d-flex align-items-center">
-                            <div class="col text-start d-flex align-items-center">
-                                <i class="bi bi-question-circle me-3 secondary-color" style="font-size: 25px;"></i>
+                            <div class="col text-start d-flex align-items-center" onclick="location.href='{{ route('nasabah.panduan') }}';" style="cursor: pointer;">
+                                <i class="bi bi-journal-text me-3 secondary-color" style="font-size: 25px;"></i>
                                 <p class="mb-0 fw-bold">
-                                    Pusat Bantuan
+                                    Panduan Nasabah
                                 </p>
                             </div>
                         </div>
