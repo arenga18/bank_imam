@@ -1,6 +1,6 @@
 @extends('layout.main')
 
-@section('title', 'Profil | Bank Imam')
+@section('title', 'Profil | MeBank')
 @section('content')
 
 {{-- Profile Header --}}

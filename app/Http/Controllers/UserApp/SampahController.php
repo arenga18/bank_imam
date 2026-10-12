@@ -18,12 +18,15 @@ class SampahController extends Controller
 
         $categories = SampahCategory::where('admin_id', $cms_user_id)->get();
 
+        $allSampah = Sampah::where('admin_id', $cms_user_id)
+            ->whereIn('category_id', $categories->pluck('id'))
+            ->get()
+            ->groupBy('category_id');
+
         $sampahByCategory = [];
 
         foreach ($categories as $category) {
-            $sampahByCategory[$category->name] = Sampah::where('category_id', $category->id)
-            ->where('admin_id', $cms_user_id)
-            ->get();
+            $sampahByCategory[$category->name] = $allSampah->get($category->id, collect());
         }
 
         return view('user-app/sampah', compact('sampahByCategory'));

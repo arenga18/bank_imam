@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Detail Sampah | Bank Imam')
+@section('title', 'Detail Sampah | MeBank')
 
 @section('content')
 @php

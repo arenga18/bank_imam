@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Edit Profil | Bank Imam')
+@section('title', 'Edit Profil | MeBank')
 
 @section('content')
 @php

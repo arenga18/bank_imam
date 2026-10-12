@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Penukaran Saldo Dalam Proses | Bank Imam')
+@section('title', 'Penukaran Saldo Dalam Proses | MeBank')
 
 @section('content')
 <div class="container main-container d-flex align-items-center justify-content-center" style="min-height: 100vh">

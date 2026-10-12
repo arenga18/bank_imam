@@ -1,6 +1,6 @@
 @extends('layout.main')
 
-@section('title', 'Bank Imam | Landing Page')
+@section('title', 'MeBank | Landing Page')
 
 @section('content')
   <main id="home-page" class="main-container pt-0" style="background:#ffffff; min-height:100vh;">
@@ -8,7 +8,7 @@
     {{-- ==================== 1. BRAND LOGO SECTION ==================== --}}
     <section class="text-center pt-5 pb-2 px-4" style="background: #ffffff;">
       <div class="d-flex justify-content-center align-items-center py-2">
-        <img src="{{ asset('images/logo.png') }}" alt="Bank Imam" style="max-width: 210px; width: 100%; height: auto; object-fit: contain;">
+        <img src="{{ asset('images/logo.png') }}" alt="MeBank" style="max-width: 210px; width: 100%; height: auto; object-fit: contain;">
       </div>
     </section>
 
@@ -18,7 +18,7 @@
         Halo! 👋
       </h1>
       <h3 class="fw-bold mb-2" style="font-size:18px; color:#00a056;">
-        Selamat Datang di Bank IMAM!
+        Selamat Datang di MeBank!
       </h3>
       <p class="mt-1 mb-3 text-muted mx-auto" style="font-size:13px; max-width:320px; line-height:1.6;">
         Ayo tukarkan sampah anorganikmu dan dapatkan tabungan tunai serta reward menarik sekarang juga!
@@ -50,14 +50,14 @@
       </div>
     </section>
 
-    {{-- ==================== 3. APA ITU BANK IMAM ==================== --}}
+    {{-- ==================== 3. APA ITU MEBANK ==================== --}}
     <section class="container mt-4 pt-2 px-4">
       <div class="text-center mb-3">
         <span class="badge rounded-pill mb-2 px-3 py-1" style="background:#e6f7ef; color:#00a056; font-size:11px; font-weight:700; letter-spacing:0.5px;">
           🌱 TENTANG KAMI
         </span>
         <h4 class="fw-bold mb-1" style="font-size:22px; color:#1a1a2e; letter-spacing:-0.5px;">
-          Apa Itu <span style="color:#00a056;">Bank IMAM</span>?
+          Apa Itu <span style="color:#00a056;">MeBank</span>?
         </h4>
         <p class="text-muted mx-auto mb-0" style="font-size:13px; max-width:320px; line-height:1.5;">
           Aplikasi bank sampah digital untuk warga dalam mengubah sampah anorganik menjadi rupiah & reward berkah.
@@ -121,7 +121,7 @@
     <section class="container mt-5 pt-2 px-4">
       <div class="text-center mb-3">
         <span class="badge rounded-pill mb-2 px-3 py-1" style="background:#eff6ff; color:#1e4d8c; font-size:11px; font-weight:700; letter-spacing:0.5px;">
-          🔄 EKOSISTEM BANK IMAM
+          🔄 EKOSISTEM MEBANK
         </span>
         <h4 class="fw-bold mb-1" style="font-size:22px; color:#1a1a2e; letter-spacing:-0.5px;">
           Alur Penanganan Sampah
@@ -234,7 +234,7 @@
             ♻️ CARA MENABUNG SAMPAH
           </span>
           <h4 class="fw-bold mb-1" style="font-size:20px; color:#1a1a2e; letter-spacing:-0.5px;">
-            Alur Penyetoran Sampah Ke <span style="color:#00a056;">Bank IMAM</span>
+            Alur Penyetoran Sampah Ke <span style="color:#00a056;">MeBank</span>
           </h4>
           <p class="text-muted m-0" style="font-size:13px;">Ikuti 6 langkah mudah berikut untuk menukarkan sampah menjadi saldo & poin</p>
 
@@ -284,7 +284,7 @@
                     <span class="badge" style="background:#eff6ff; color:#1e4d8c; font-size:10px; font-weight:600;">Gratis & Cepat</span>
                   </div>
                   <p class="m-0 text-muted" style="font-size:12px; line-height:1.5;">
-                    Bagi warga yang belum terdaftar, lakukan registrasi secara online melalui aplikasi Bank IMAM dan pilih unit BSU terdekat.
+                    Bagi warga yang belum terdaftar, lakukan registrasi secara online melalui aplikasi MeBank dan pilih unit BSU terdekat.
                   </p>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 @extends('layout.header-tukar-poin')
-@section('title', 'Tukar Reward | Bank Imam')
+@section('title', 'Tukar Reward | MeBank')
 
 @section('tukar-point-content')
 <div class="px-3 pb-5">

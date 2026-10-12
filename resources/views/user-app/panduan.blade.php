@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Panduan Nasabah | Bank Imam')
+@section('title', 'Panduan Nasabah | MeBank')
 
 @section('content')
 {{-- ======================== HEADER PANDUAN ======================== --}}

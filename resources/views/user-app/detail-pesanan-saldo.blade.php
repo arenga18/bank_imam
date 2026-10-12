@@ -1,5 +1,5 @@
 @extends('layout.header-rewards')
-@section('title', 'Detail Pesanan Saldo | Bank Imam')
+@section('title', 'Detail Pesanan Saldo | MeBank')
 
 @section('transaction-content')
 @section('transaction-title', 'DETAIL PESANAN')

@@ -1,5 +1,5 @@
 @extends('layout.header-to-dashboard')
-@section('title', 'Riwayat Tabungan | Bank Imam')
+@section('title', 'Riwayat Tabungan | MeBank')
 @section('transaction-title', 'Riwayat Tabungan')
 
 @section('transaction-content')

@@ -1,6 +1,6 @@
 @extends('layout.header-to-rewards')
 
-@section('title', 'Reward | Bank Imam')
+@section('title', 'Reward | MeBank')
 
 @section('tukar-point-content')
 {{-- HERO REWARD --}}

@@ -1,5 +1,5 @@
 @extends('layout.header-rewards')
-@section('title', 'Riwayat Poin | Bank Imam')
+@section('title', 'Riwayat Poin | MeBank')
 @section('transaction-title', 'Riwayat Poin')
 
 @section('transaction-content')

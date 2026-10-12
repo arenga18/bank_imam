@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Katalog Sampah | Bank Imam')
+@section('title', 'Katalog Sampah | MeBank')
 @section('content')
 
 {{-- ======================== HEADER KATALOG ======================== --}}

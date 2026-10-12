@@ -1,6 +1,6 @@
 @extends('layout.header-to-rewards')
 
-@section('title', 'Tukar Saldo | Bank Imam')
+@section('title', 'Tukar Saldo | MeBank')
 
 @section('tukar-point-content')
 <div class="px-3 pt-2" style="padding-bottom: 110px;">

@@ -1,6 +1,6 @@
 @extends('layout.header-transaksi')
 
-@section('title', 'Konfirmasi Tukar Saldo | Bank Imam')
+@section('title', 'Konfirmasi Tukar Saldo | MeBank')
 @section('transaction-title', 'KONFIRMASI PENARIKAN')
 
 @section('transaction-content')

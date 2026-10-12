@@ -1,6 +1,6 @@
 @extends('layout.main')
 
-@section('title', 'Login | Bank Imam')
+@section('title', 'Login | MeBank')
 
 @section('content')
 <main class="min-vh-100 d-flex flex-column justify-content-between" style="background: #ffffff; padding: 24px 20px 40px;">
@@ -14,12 +14,12 @@
                     <i class="bi bi-arrow-left" style="font-size:18px;"></i>
                 </div>
             </a>
-            <span style="font-size:12px; color:#94a3b8; font-weight:600;">Bank IMAM</span>
+            <span style="font-size:12px; color:#94a3b8; font-weight:600;">MeBank</span>
         </div>
 
         {{-- Brand Logo --}}
         <div class="text-center mb-4">
-            <img src="{{ asset('images/logo.png') }}" alt="Bank Imam" style="max-width: 175px; width: 100%; height: auto; object-fit: contain;">
+            <img src="{{ asset('images/logo.png') }}" alt="MeBank" style="max-width: 175px; width: 100%; height: auto; object-fit: contain;">
         </div>
 
         {{-- Heading --}}

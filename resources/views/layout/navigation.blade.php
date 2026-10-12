@@ -169,3 +169,50 @@
         box-shadow: 0 0 6px rgba(0, 135, 68, 0.5);
     }
 </style>
+
+<script>
+    (function () {
+        let isNavigating = false;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const navItems = document.querySelectorAll('.bottom-nav-item');
+            const navMenu = document.querySelector('.navigation-menu');
+
+            navItems.forEach(function (item) {
+                item.addEventListener('click', function (e) {
+                    // 1. Mencegah request ulang jika tab yang diklik sudah aktif saat ini
+                    if (this.classList.contains('active')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+
+                    // 2. Mencegah spam klik bertubi-tubi saat request navigasi sedang diproses
+                    if (isNavigating) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        return false;
+                    }
+
+                    // Kunci navigasi & beri indikator visual halus
+                    isNavigating = true;
+                    if (navMenu) {
+                        navMenu.style.pointerEvents = 'none';
+                    }
+                    this.style.opacity = '0.7';
+                });
+            });
+
+            // Pulihkan status navigasi jika halaman dibuka dari bfcache browser (misal tombol Back)
+            window.addEventListener('pageshow', function () {
+                isNavigating = false;
+                if (navMenu) {
+                    navMenu.style.pointerEvents = 'auto';
+                }
+                navItems.forEach(function (item) {
+                    item.style.opacity = '1';
+                });
+            });
+        });
+    })();
+</script>

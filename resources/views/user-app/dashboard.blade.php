@@ -1,6 +1,6 @@
 @extends('layout.main')
 
-@section('title', 'Beranda | Bank Imam')
+@section('title', 'Beranda | MeBank')
 
 @section('content')
 {{-- ======================== HEADER BERANDA ======================== --}}

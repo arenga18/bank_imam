@@ -31,8 +31,18 @@ class EducationalNewsController extends Controller
     // Fungsi helper untuk mengambil domain utama dari URL
     private function getHostFromUrl($url)
     {
+        if (empty($url) || trim($url) === '') {
+            return 'MeBank Edukasi';
+        }
+        if (!preg_match('~^(?:f|ht)tps?://~i', $url)) {
+            $url = 'https://' . ltrim($url, '/');
+        }
         $parsedUrl = parse_url($url);
-        return $parsedUrl['host'] ?? 'undefined';
+        $host = $parsedUrl['host'] ?? 'MeBank Edukasi';
+        if (empty($host) || $host === 'undefined') {
+            return 'MeBank Edukasi';
+        }
+        return preg_replace('/^www\./', '', $host);
     }
 }
 

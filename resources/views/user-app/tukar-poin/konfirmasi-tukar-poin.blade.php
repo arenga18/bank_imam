@@ -1,5 +1,5 @@
 @extends('layout.header-transaksi')
-@section('title', 'Konfirmasi Tukar Poin | Bank Imam')
+@section('title', 'Konfirmasi Tukar Poin | MeBank')
 
 @section('transaction-content')
 @section('transaction-title', 'KONFIRMASI')
