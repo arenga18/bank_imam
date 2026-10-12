@@ -165,6 +165,91 @@
 	        */
 	        $this->index_statistic = array();
 
+	        $adminId = CRUDBooster::myId();
+	        $filterColumn = Request::get('filter_column');
+
+	        $queryTukarSaldo = DB::table('tukar_saldo')
+	            ->leftJoin('users', 'tukar_saldo.user_id', '=', 'users.id');
+
+	        // Filter berdasarkan BSU (admin_id / nasabah terdaftar di BSU ini) kecuali jika Superadmin (id 1 dan 10)
+	        if (!in_array($adminId, [1, 10])) {
+	            $queryTukarSaldo->where(function($q) use ($adminId) {
+	                $q->where('users.cms_user_id', $adminId)
+	                  ->orWhere('tukar_saldo.admin_id', $adminId);
+	            });
+	        }
+
+	        // Dukung filter pencarian kolom jika ada
+	        if (!empty($filterColumn['users.username']['value'])) {
+	            $queryTukarSaldo->where('users.username', 'like', '%' . $filterColumn['users.username']['value'] . '%');
+	        }
+
+	        if (!empty($filterColumn['tukar_saldo.created_at']['value'])) {
+	            $createdAtRange = $filterColumn['tukar_saldo.created_at']['value'];
+	            if (is_array($createdAtRange) && count($createdAtRange) === 2) {
+	                $queryTukarSaldo->whereBetween('tukar_saldo.created_at', [$createdAtRange[0], $createdAtRange[1]]);
+	            } elseif (!empty($createdAtRange)) {
+	                $queryTukarSaldo->where('tukar_saldo.created_at', '=', $createdAtRange);
+	            }
+	        }
+
+	        $qSearch = Request::get('q');
+	        if (!empty($qSearch)) {
+	            $queryTukarSaldo->where(function($w) use ($qSearch) {
+	                $w->where('users.username', 'like', '%' . $qSearch . '%')
+	                  ->orWhere('tukar_saldo.total_price', 'like', '%' . $qSearch . '%');
+	            });
+	        }
+
+	        // Jika ada filter status spesifik dari filter dialog
+	        if (!empty($filterColumn['tukar_saldo.status']['value'])) {
+	            $statusVal = $filterColumn['tukar_saldo.status']['value'];
+	            $filteredSum = (clone $queryTukarSaldo)->where('tukar_saldo.status', $statusVal)->sum('tukar_saldo.total_price');
+
+	            $this->index_statistic[] = [
+	                'label' => 'Total Saldo (' . $statusVal . ')',
+	                'count' => 'Rp. ' . number_format($filteredSum, 0, ',', ','),
+	                'icon'  => 'fa fa-money',
+	                'color' => ($statusVal === 'Diterima') ? 'success' : 'primary',
+	                'width' => 'col-sm-4',
+	            ];
+	        } else {
+	            $totalSaldoDiambil = (clone $queryTukarSaldo)
+	                ->where('tukar_saldo.status', 'Diterima')
+	                ->sum('tukar_saldo.total_price');
+
+	            $totalSaldoPending = (clone $queryTukarSaldo)
+	                ->where('tukar_saldo.status', 'Pending')
+	                ->sum('tukar_saldo.total_price');
+
+	            $totalSemuaPenarikan = (clone $queryTukarSaldo)
+	                ->sum('tukar_saldo.total_price');
+
+	            $this->index_statistic[] = [
+	                'label' => 'Total Saldo Diambil',
+	                'count' => 'Rp. ' . number_format($totalSaldoDiambil, 0, ',', ','),
+	                'icon'  => 'fa fa-money',
+	                'color' => 'success',
+	                'width' => 'col-sm-4',
+	            ];
+
+	            $this->index_statistic[] = [
+	                'label' => 'Total Saldo Pending',
+	                'count' => 'Rp. ' . number_format($totalSaldoPending, 0, ',', ','),
+	                'icon'  => 'fa fa-clock-o',
+	                'color' => 'primary',
+	                'width' => 'col-sm-4',
+	            ];
+
+	            $this->index_statistic[] = [
+	                'label' => 'Total Semua Penarikan',
+	                'count' => 'Rp. ' . number_format($totalSemuaPenarikan, 0, ',', ','),
+	                'icon'  => 'fa fa-check',
+	                'color' => 'yellow',
+	                'width' => 'col-sm-4',
+	            ];
+	        }
+
 
 
 	        /*
