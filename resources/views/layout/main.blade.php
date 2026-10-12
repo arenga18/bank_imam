@@ -11,17 +11,17 @@
     <meta content="" name="keywords" />
     <meta content="" name="description" />
     {{-- Favicon --}}
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon/logo.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon/logo.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon/logo.png')}}">
-    <link rel="manifest" href="{{ asset('images/favicon/logo.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/logo.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/logo.png')}}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/logo.png') }}">
     {{-- Typography --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     {{-- Template Stylesheet --}}
     <link href="{{ asset('we-cycle-app/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="{{ asset('we-cycle-app/bootstrap/css/main.css') }}" rel="stylesheet" />
     <link href="{{ asset('we-cycle-app/bootstrap/css/pages/dashboard.css') }}" rel="stylesheet" />
     <!-- Bootstrap Font Icon CSS -->
@@ -41,7 +41,9 @@
     <script src="https://kit.fontawesome.com/a027d00185.js" crossorigin="anonymous"></script>
     <script src="{{ asset('we-cycle-app/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     @yield('scripts')
-   {{-- NAVIGATION MENU --}}
-    @include('layout.navigation')
+   {{-- NAVIGATION MENU: Hanya tampil ketika user sudah login --}}
+    @auth
+        @include('layout.navigation')
+    @endauth
 
 </body>

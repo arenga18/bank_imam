@@ -23,12 +23,22 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
+        $request->validate([
+            'username' => ['required', 'string'],
             'password' => ['required']
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $loginInput = $request->input('username');
+        $fieldType = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $credentials = [
+            $fieldType => $loginInput,
+            'password' => $request->input('password')
+        ];
+
+        $remember = $request->has('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
             $point = Point::where('user_id', $user->id)->first();
             $saldo = Saldo::where('user_id', $user->id)->first();
@@ -44,7 +54,7 @@ class LoginController extends Controller
             ]);
         }
 
-        return back()->with('loginError', 'Email Atau Password Salah.');
+        return back()->with('loginError', 'Username atau password salah.')->withInput($request->only('username'));
     }
 
     public function login()

@@ -11,19 +11,23 @@
 <script>
 document.addEventListener("DOMContentLoaded", function(){
     const ctx = document.getElementById('kompostingChart').getContext('2d');
+    {{-- [SECURITY] Gunakan JSON.parse dari {{ }} (escaped) bukan {!! !!} (unescaped) --}}
+    const labels = JSON.parse('{{ addslashes($labels) }}');
+    const sampahData = JSON.parse('{{ addslashes($sampah) }}');
+    const komposData = JSON.parse('{{ addslashes($kompos) }}');
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: {!! $labels !!},
+            labels: labels,
             datasets: [
                 {
                     label: 'Sampah Basah (Kg)',
-                    data: {!! $sampah !!},
+                    data: sampahData,
                     backgroundColor: 'rgba(75,192,192,0.6)'
                 },
                 {
                     label: 'Hasil Kompos (Kg)',
-                    data: {!! $kompos !!},
+                    data: komposData,
                     backgroundColor: 'rgba(119,221,119,0.6)'
                 }
             ]

@@ -31,7 +31,8 @@ Route::middleware(['guest'])->group(function () {
         return view('landing-page');
     });
     Route::get('/login', [LoginController::class, 'index'])->name('login');
-    Route::post('/login', [LoginController::class, 'store'])->name('store');
+    // [SECURITY] throttle:5,1 = maks 5 percobaan login per menit per IP
+    Route::post('/login', [LoginController::class, 'store'])->name('store')->middleware('throttle:5,1');
     Route::get('/register', [RegisterController::class, 'index'])->name('indexRegister');
     Route::post('/register', [RegisterController::class, 'store'])->name('storeUser');
 });
@@ -39,7 +40,8 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     // AUTH
     Route::get('/dashboard', [LoginController::class, 'login'])->name('loginDashboard');
-    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    // [SECURITY] Logout harus POST bukan GET (mencegah CSRF logout attack)
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/profile', [ProfileController::class, 'show'])->name('showProfile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('editProfile');
 

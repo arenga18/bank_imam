@@ -14,7 +14,11 @@ class HistoryController extends Controller
 {
     public function show($id)
     {
-        $transaction = Transaction::findOrFail($id);
+        // [SECURITY] IDOR fix: pastikan transaksi milik nasabah yang login
+        $transaction = Transaction::where('id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->firstOrFail();
+
         $sampah = Sampah::where('id', $transaction->sampah_id)->first();
         $admin = DB::table('cms_users')->where('id', $transaction->admin_id)->first();
         return view('user-app/detail-transaksi')->with([

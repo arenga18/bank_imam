@@ -1,11 +1,447 @@
 @import url("brand.css");
 
+/* ==========================================
+   DESIGN TOKENS
+   ========================================== */
+:root {
+    --primary:        #00a056;
+    --primary-dark:   #005c2e;
+    --primary-light:  #e6f7ef;
+    --secondary:      #1e4d8c;
+    --accent:         #f6e96b;
+
+    --bg-page:        #f4f6f8;
+    --bg-white:       #ffffff;
+    --text-main:      #1a1a2e;
+    --text-muted:     #6b7280;
+    --text-light:     #9ca3af;
+
+    --radius-sm:      8px;
+    --radius-md:      16px;
+    --radius-lg:      24px;
+    --radius-pill:    50px;
+
+    --shadow-xs:      0 1px 4px rgba(0,0,0,0.06);
+    --shadow-sm:      0 2px 12px rgba(0,0,0,0.08);
+    --shadow-md:      0 4px 24px rgba(0,0,0,0.12);
+    --shadow-green:   0 4px 16px rgba(0,160,86,0.25);
+
+    --transition:     all 0.22s ease;
+}
+
+/* ==========================================
+   RESET & BASE
+   ========================================== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Hanken Grotesk", sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
 }
+
+body {
+    background-color: var(--bg-page);
+    min-height: 100vh;
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+main {
+    background-color: var(--bg-white);
+    min-height: 100vh;
+}
+
+/* ==========================================
+   COLORS & BRAND
+   ========================================== */
+.bg-primary-custom  { background-color: var(--primary); }
+.primary-color      { color: var(--accent); }
+.text-primary       { color: var(--primary) !important; }
+.secondary-color    { color: var(--secondary); }
+.text-muted-custom  { color: var(--text-muted); font-size: 13px; }
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+.btn-primary-custom {
+    background: linear-gradient(135deg, #00c96e 0%, #005c2e 100%);
+    color: white !important;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border: none;
+    border-radius: var(--radius-pill);
+    transition: var(--transition);
+    box-shadow: var(--shadow-green);
+}
+.btn-primary-custom:hover {
+    background: linear-gradient(135deg, #00b862 0%, #004d26 100%);
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,160,86,0.35);
+}
+.btn-primary-custom:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-green);
+}
+
+.btn-secondary-custom,
+.btn-secondary-custom:focus,
+.btn-secondary-custom:active,
+.btn-secondary-custom:not(:focus):not(:active) {
+    background-color: var(--secondary) !important;
+    border: none;
+    font-weight: 700;
+    color: white !important;
+    border-radius: var(--radius-pill);
+    transition: var(--transition);
+}
+.btn-secondary-custom:hover {
+    background-color: #163a6e !important;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-outline-custom {
+    border: 1.5px solid var(--primary);
+    color: var(--secondary);
+    background: transparent;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    transition: var(--transition);
+}
+.btn-outline-custom:hover {
+    border-color: var(--primary-dark);
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+}
+.btn-outline-custom:focus,
+.btn-outline-custom:active {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, #00c96e 0%, #005c2e 100%);
+    outline: none;
+    color: white !important;
+}
+.btn-outline-custom:not(:focus):not(:active) {
+    border: 1.5px solid var(--primary);
+    color: var(--secondary);
+    background: transparent;
+}
+
+/* ==========================================
+   BORDERS & MISC
+   ========================================== */
+.border-custom { border: 1.5px solid var(--secondary) !important; }
+
+.bg-green-main { background-color: #387f39; }
+
+/* ==========================================
+   LAYOUT
+   ========================================== */
+.loginscreen, .registerscreen {
+    overflow: hidden;
+}
+
+.form-wrapper {
+    width: 90%;
+    padding: 1rem;
+    margin: auto;
+}
+
+.input-group-text {
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border-right: none;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0,160,86,0.15);
+}
+
+.max-w-screen-sm  { max-width: 428px !important; }
+.min-h-full       { min-height: 100% !important; }
+.my-0             { margin-bottom: 0 !important; margin-top: 0 !important; }
+.mx-auto          { margin-left: auto !important; margin-right: auto !important; }
+
+.list-group-item {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* ==========================================
+   HEADER
+   ========================================== */
+.header-container {
+    position: fixed;
+    margin: 0 auto;
+    max-width: 428px;
+    width: 100%;
+    z-index: 11;
+}
+
+.header-wrapper {
+    max-width: 428px;
+    display: flex;
+    margin: 0px auto;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+}
+
+.header-user {
+    max-width: 428px;
+    margin: 0px auto;
+    width: 100%;
+}
+
+/* ==========================================
+   GRADIENTS
+   ========================================== */
+.gradient-brand {
+    background: linear-gradient(89.8deg, #d7f4b1 -18.28%, #f1d302 113.98%);
+}
+
+.gradient-brand-toRight {
+    background: linear-gradient(135deg, #00c96e 0%, #005c2e 100%);
+    color: white !important;
+}
+
+.gradient-top-bottom {
+    background: linear-gradient(180deg, #d7f4b1 -0%, #f1d302 141%);
+}
+
+/* ==========================================
+   LANDING PAGE
+   ========================================== */
+#home-page {
+    min-height: calc(100vh - 60px);
+}
+
+.hero {
+    height: 200px;
+    background-size: cover;
+    background-blend-mode: multiply;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Wave decorative background for hero */
+.hero::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--bg-white);
+    clip-path: ellipse(55% 100% at 50% 100%);
+}
+
+.hero-text {
+    text-align: left;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    color: white;
+    font-size: 14px;
+}
+
+/* ==========================================
+   CARDS
+   ========================================== */
+.landing-card-shadow {
+    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-md) !important;
+    border: none !important;
+    transition: var(--transition);
+}
+.landing-card-shadow:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.card-modern {
+    border-radius: var(--radius-md);
+    border: none;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+.card-modern:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   TYPOGRAPHY
+   ========================================== */
+.font-sm      { font-size: 13px !important; }
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.2px;
+}
+
+/* ==========================================
+   MAIN CONTAINER
+   ========================================== */
+.main-container {
+    box-sizing: border-box;
+    position: relative;
+    margin: 0px auto;
+    background-color: var(--bg-white);
+    width: 100%;
+}
+
+/* ==========================================
+   DASHBOARD
+   ========================================== */
+#dashboard-page {
+    min-height: calc(100vh - 256px);
+}
+
+.dashboard-header {
+    margin: 0 auto;
+    max-width: 428px;
+    width: 100%;
+}
+
+/* ==========================================
+   REWARDS / CATALOG
+   ========================================== */
+.card-img-top {
+    width: 100%;
+    object-fit: cover;
+}
+
+.reward-name {
+    overflow: hidden;
+    max-width: 75ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-limit {
+    overflow: hidden;
+    max-width: 20ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   PROFILE PAGE
+   ========================================== */
+#profile-header {
+    position: relative;
+    height: 200px;
+    top: -90px;
+    background: linear-gradient(180deg, #d7f4b1 -4.03%, #f1d302 100%);
+    border-radius: 180px;
+    z-index: 10;
+    margin-bottom: -160px;
+}
+
+.bg-profile-detail { background-color: #6da7be; }
+
+/* ==========================================
+   NAVIGATION BAR
+   ========================================== */
+.navigation-menu {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 428px;
+    background: var(--bg-white);
+    border-top: 1px solid rgba(0,0,0,0.07);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    z-index: 1000;
+}
+
+.navigation-menu a {
+    transition: var(--transition);
+}
+.navigation-menu a:hover i,
+.navigation-menu a:hover p {
+    color: var(--primary) !important;
+    opacity: 1;
+}
+.navigation-menu .active-nav i,
+.navigation-menu .active-nav p {
+    color: var(--primary) !important;
+}
+
+/* ==========================================
+   STICKY CART
+   ========================================== */
+#cart {
+    background-color: white;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    bottom: 0px;
+    z-index: 1000;
+}
+
+/* ==========================================
+   FILTER TAGS
+   ========================================== */
+.filter-tags-wrapper {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    gap: 4px;
+    padding: 4px 2px;
+}
+.filter-tags-wrapper::-webkit-scrollbar { display: none; }
+
+.filter-tag {
+    flex-shrink: 0;
+    cursor: pointer;
+    padding: 6px 16px;
+    border: 1.5px solid var(--primary);
+    background-color: transparent;
+    border-radius: var(--radius-pill);
+    color: var(--text-main);
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+.filter-tag:hover  { background-color: var(--primary-light); }
+.filter-tag.active { background-color: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ==========================================
+   MISC
+   ========================================== */
+.landing-footer    { background-color: #d9d9d9; }
+.btn-circle        { border-radius: 30px; margin: 0 1em; background-color: #0c0c20; }
+.container-body    { min-height: 100vh; }
+
+.news-img          { width: 100px; }
+.judul-news        { text-decoration: none; }
+
+.text-truncate-2-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 3em;
+    line-height: 1.5em;
+}
+
+.nominal-option.active {
+    border: 2px solid var(--primary);
+    background-color: var(--primary-light);
+}
+
 
 body {
     background-color: #f7f7f7;
@@ -277,33 +713,9 @@ main {
     z-index: 1000;
 }
 
-.filter-tags-wrapper {
-    display: flex;
-    overflow-x: auto;
-    white-space: nowrap; /* Prevent line breaks */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    scrollbar-width: none; /* Firefox */
-}
-
-.filter-tags-wrapper::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-}
-
-.filter-tag {
-    flex-shrink: 0;
-    cursor: pointer;
-    padding: 5px 15px;
-    margin: 5px;
-    border: 1px solid #016d3b;
-    background-color: transparent;
-    border-radius: 20px;
-    color: #191919;
-    white-space: nowrap;
-}
-
-.filter-tag.active {
-    background-color: #016d3b;
-    color: rgb(255, 255, 255);
+.category-group {
+    display: block;
+    width: 100%;
 }
 
 .container-body {

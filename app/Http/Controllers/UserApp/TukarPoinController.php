@@ -56,9 +56,10 @@ class TukarPoinController extends Controller
 
     public function detail($id)
     {
-        $tukar_poin = TukarPoin::findOrFail($id);
-        $userId = auth()->user()->id;
-        $cmsUserId = auth()->user()->cms_user_id; 
+        // [SECURITY] IDOR fix: pastikan pesanan poin milik nasabah yang login
+        $tukar_poin = TukarPoin::where('id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->firstOrFail();
 
         $admin = DB::table('cms_users')->where('id', $tukar_poin->admin_id)->first();
 

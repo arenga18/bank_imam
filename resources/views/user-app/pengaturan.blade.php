@@ -1,98 +1,93 @@
 @extends('layout.main')
 
-@section('title', 'User Dashboard | Bank Imam')
+@section('title', 'Profil | Bank Imam')
 @section('content')
-<header class="user-profile pt-4 rounded-top rounded-5">
-    <div class="">
-        <div class="col d-flex justify-content-center">
-            <img class="rounded-circle border border-3 border-custom bg-light" style="z-index:11;" width="120px" height="120px"
-                src="{{ $user->picture ?? asset('/images/profile3.png') }}">
+
+{{-- Profile Header --}}
+<div style="background: linear-gradient(135deg, #00c96e 0%, #005c2e 100%); padding: 2rem 1rem 4rem; position:relative; overflow:hidden;">
+    {{-- Decorative circles --}}
+    <div style="position:absolute; top:-20px; right:-20px; width:100px; height:100px; background:rgba(255,255,255,0.07); border-radius:50%;"></div>
+    <div style="position:absolute; bottom:-30px; left:-20px; width:120px; height:120px; background:rgba(255,255,255,0.05); border-radius:50%;"></div>
+</div>
+
+{{-- Avatar & Info --}}
+<div class="text-center" style="margin-top: -50px; position:relative; z-index:10;">
+    @php
+        $pPic = $user->picture ?? '';
+        $pPicUrl = (strpos($pPic, 'data:image') === 0 || filter_var($pPic, FILTER_VALIDATE_URL)) ? $pPic : (!empty($pPic) ? asset($pPic) : asset('images/profile3.png'));
+    @endphp
+    <img class="rounded-circle" style="width:96px; height:96px; border: 4px solid #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.15); object-fit:cover;"
+        src="{{ $pPicUrl }}"
+        onerror="this.onerror=null; this.src='{{ asset('images/profile3.png') }}';">
+    <h5 id="username" name="username" class="fw-bold mt-2 mb-0" style="font-size:18px;">
+        {{ $user->username ?? 'Anonim' }}
+    </h5>
+    <p style="color:#6b7280; font-size:13px; margin:2px 0;">{{ $user->email ?? 'abc@gmail.com' }}</p>
+    <span style="background:#e6f7ef; color:#00a056; font-size:12px; font-weight:600; padding: 3px 12px; border-radius:50px;">
+        {{ $bsu_name ?? 'Bank Sampah Unit' }}
+    </span>
+</div>
+
+<main class="main-container px-3 pt-4 pb-5">
+
+    {{-- Menu Items --}}
+    <div style="display:flex; flex-direction:column; gap:8px;">
+
+        <a href="/profile" class="text-decoration-none">
+            <div class="d-flex align-items-center justify-content-between px-4 py-3 rounded-3 bg-white shadow-sm" style="transition: all 0.2s ease;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:40px; height:40px; background:#e6f7ef; border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                        <i class="bi bi-person-fill" style="font-size:18px; color:#00a056;"></i>
+                    </div>
+                    <p class="mb-0 fw-semibold" style="font-size:14px; color:#1a1a2e;">Edit Profil</p>
+                </div>
+                <i class="bi bi-chevron-right" style="font-size:14px; color:#9ca3af;"></i>
+            </div>
+        </a>
+
+        <a href="{{ route('nasabah.panduan') }}" class="text-decoration-none">
+            <div class="d-flex align-items-center justify-content-between px-4 py-3 rounded-3 bg-white shadow-sm" style="transition: all 0.2s ease;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width:40px; height:40px; background:#e8f0fe; border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                        <i class="bi bi-journal-text" style="font-size:18px; color:#1e4d8c;"></i>
+                    </div>
+                    <p class="mb-0 fw-semibold" style="font-size:14px; color:#1a1a2e;">Panduan Nasabah</p>
+                </div>
+                <i class="bi bi-chevron-right" style="font-size:14px; color:#9ca3af;"></i>
+            </div>
+        </a>
+
+        <div class="d-flex align-items-center justify-content-between px-4 py-3 rounded-3 bg-white shadow-sm">
+            <div class="d-flex align-items-center gap-3">
+                <div style="width:40px; height:40px; background:#fff0e6; border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                    <i class="bi bi-pencil-square" style="font-size:18px; color:#d07000;"></i>
+                </div>
+                <p class="mb-0 fw-semibold" style="font-size:14px; color:#1a1a2e;">Syarat Dan Ketentuan</p>
+            </div>
+            <i class="bi bi-chevron-right" style="font-size:14px; color:#9ca3af;"></i>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between px-4 py-3 rounded-3 bg-white shadow-sm">
+            <div class="d-flex align-items-center gap-3">
+                <div style="width:40px; height:40px; background:#f3e8ff; border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                    <i class="bi bi-shield-lock-fill" style="font-size:18px; color:#7c3aed;"></i>
+                </div>
+                <p class="mb-0 fw-semibold" style="font-size:14px; color:#1a1a2e;">Tentang Kami</p>
+            </div>
+            <i class="bi bi-chevron-right" style="font-size:14px; color:#9ca3af;"></i>
         </div>
     </div>
-    <div class=" mt-2">
-        <div class="col-12">
-            <h4 id="username" name="username" class="text-center font-md fw-bold m-0">
-                {{ $user->username ?? 'Anonim' }}
-            </h4>
-            <p class="text-body-tertiary text-center font-sm m-0">{{ $user->email ?? 'abc@gmail.com' }}</p>
-            <p class="text-body-tertiary text-center text-danger fw-bold font-sm">{{ $bsu_name ?? 'bank sampah unit' }}</p>
-        </div>
+
+    {{-- Logout — POST form untuk mencegah CSRF logout attack --}}
+    <div class="mt-4 px-2 pb-5">
+        <form method="POST" action="{{ route('logout') }}" id="logoutForm">
+            @csrf
+            <button type="submit" class="btn w-100 py-3 fw-bold rounded-3"
+                    style="background:#fff1f2; color:#dc2626; font-size:14px; border: 1.5px solid #fecaca; letter-spacing:0.3px;">
+                <i class="bi bi-box-arrow-right me-2"></i>Keluar
+            </button>
+        </form>
     </div>
-</header>
-<main class="main-container">
-    <div class="container">
-        <div>
-            <div class="pt-1">
-                <div class="card border-0 shadow-sm mb-1">
-                    <div class="card-body px-4">
-                        <div class="row d-flex align-items-center">
-                            <div class="col text-start d-flex align-items-center" onclick="location.href='/profile';" style="cursor: pointer;">
-                                <i class="bi bi-person-circle me-3 secondary-color" style="font-size: 25px;"></i>
-                                <p class="mb-0 fw-bold">
-                                    Edit Profil
-                                </p>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="pt-1">
-                <div class="card border-0 shadow-sm mb-1">
-                    <div class="card-body px-4">
-                        <div class="row d-flex align-items-center">
-                            <div class="col text-start d-flex align-items-center" onclick="location.href='{{ route('nasabah.panduan') }}';" style="cursor: pointer;">
-                                <i class="bi bi-journal-text me-3 secondary-color" style="font-size: 25px;"></i>
-                                <p class="mb-0 fw-bold">
-                                    Panduan Nasabah
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="pt-1">
-                <div class="card border-0 shadow-sm mb-1">
-                    <div class="card-body px-4">
-                        <div class="row d-flex align-items-center">
-                            <div class="col text-start d-flex align-items-center">
-                                <i class="bi bi-pencil-square me-3 secondary-color" style="font-size: 25px;"></i>
-                                <p class="mb-0 fw-bold">
-                                    Syarat Dan Ketentuan
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="pt-1">
-                <div class="card border-0 shadow-sm mb-1">
-                    <div class="card-body px-4">
-                        <div class="row d-flex align-items-center">
-                            <div class="col text-start d-flex align-items-center">
-                                <i class="bi bi-shield-lock-fill me-3 secondary-color" style="font-size: 25px;"></i>
-                                <p class="mb-0 fw-bold">
-                                    Tentang kami
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4 mx-4 pb-5 px-3">
-            <a class="btn btn-danger rounded-pill fw-bold my-2 px-4 py-2" href="/logout">
-                LOGOUT
-            </a>
-        </div>
-        {{-- NAVIGATION MENU --}}
-        @include('layout.navigation')
-    </div>
+
 </main>
 @endsection

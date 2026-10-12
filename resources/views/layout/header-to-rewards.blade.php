@@ -12,9 +12,13 @@
                         </h6>
                     </div>
                     <div class="profile">
-                        <img src="{{ auth()->user()->picture ? asset(auth()->user()->picture) : asset('images/profile3.png') }}" alt="profile"
-     style="width: 48px; height:48px;" class="rounded-circle bg-light border-custom">
-
+                        @php
+                            $rPic = auth()->user()->picture ?? '';
+                            $rPicUrl = (strpos($rPic, 'data:image') === 0 || filter_var($rPic, FILTER_VALIDATE_URL)) ? $rPic : (!empty($rPic) ? asset($rPic) : asset('images/profile3.png'));
+                        @endphp
+                        <img src="{{ $rPicUrl }}" alt="profile"
+                             style="width: 48px; height:48px; object-fit:cover;" class="rounded-circle bg-light border-custom"
+                             onerror="this.onerror=null; this.src='{{ asset('images/profile3.png') }}';">
                     </div>
                 </div>
             </div>

@@ -43,7 +43,7 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 			    $this->col[] = ["label"=>"Nama BSU","name"=>"admin_id","join"=>"cms_users,name"];
 			}
 		$this->col[] = ["label"=>"Jenis Sampah","name"=>"sampah_id","join"=>"sampah,name"];
-		$this->col[] = ["label"=>"Harga per Kg","name"=>"sampah_id", "join"=>"sampah,price_per_kg"];
+		$this->col[] = ["label"=>"Harga per Kg","name"=>"price_per_kg", 'callback_php' => '"Rp. ".number_format($row->price_per_kg)'];
 		$this->col[] = ["label"=>"Total Berat","name"=>"total_weight"];
 		$this->col[] = ["label"=>"Saldo Didapat","name"=>"total_income",'callback_php' => '"Rp. ".number_format($row->total_income)'];
 		$this->col[] = ["label"=>"Poin Didapat","name"=>"point_received"];
@@ -74,6 +74,9 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 		$this->form[] = ['label' => 'Total Berat(kg)', 'name' => 'total_weight', 'type' => 'text', 'validation' => 'required|min:0|numeric', 'width' => 'col-sm-10'];
 		$this->form[] = ['label' => 'Total Pendapatan', 'name' => 'total_income', 'type' => 'number', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'readonly' => 'true'];
 		$this->form[] = ['label' => 'Poin Didapat', 'name' => 'point_received', 'type' => 'number', 'validation' => 'required|integer|min:0', 'width' => 'col-sm-10', 'readonly' => 'true'];
+		// Snapshot harga & poin per kg saat transaksi dibuat (hidden, diisi otomatis di hook_before_add)
+		$this->form[] = ['label' => 'Harga per Kg', 'name' => 'price_per_kg', 'type' => 'hidden', 'validation' => 'required|integer|min:0', 'value' => 0];
+		$this->form[] = ['label' => 'Poin per Kg', 'name' => 'poin_per_kg', 'type' => 'hidden', 'validation' => 'required|integer|min:0', 'value' => 0];
 		$this->form[] = ['label' => 'Periode', 'name' => 'periode', 'type' => 'text', 'validation' => 'required|min:1|max:255', 'width' => 'col-sm-10'];
 		# END FORM DO NOT REMOVE THIS LINE
 
@@ -202,9 +205,9 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
                 $buySumQuery->where('sampah.name', 'like', '%' . $filterColumn['sampah.name']['value'] . '%');
             }
             
-            // Filter Harga per Kg
-            if (!empty($filterColumn['sampah.price_per_kg']['value'])) {
-                $buySumQuery->where('sampah.price_per_kg', '=', $filterColumn['sampah.price_per_kg']['value']);
+            // Filter Harga per Kg (dari snapshot di tabel transactions)
+            if (!empty($filterColumn['transactions.price_per_kg']['value'])) {
+                $buySumQuery->where('transactions.price_per_kg', '=', $filterColumn['transactions.price_per_kg']['value']);
             }
             
             // Filter Total Berat
@@ -444,7 +447,15 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    */
 	public function hook_before_add(&$postdata)
 	{
-	    
+	    // Snapshot harga & poin per kg dari master sampah saat transaksi dibuat
+	    // Sehingga perubahan harga di master tidak mempengaruhi history transaksi
+	    if (!empty($postdata['sampah_id'])) {
+	        $sampah = DB::table('sampah')->where('id', $postdata['sampah_id'])->first();
+	        if ($sampah) {
+	            $postdata['price_per_kg'] = $sampah->price_per_kg;
+	            $postdata['poin_per_kg']  = $sampah->poin_per_kg;
+	        }
+	    }
 	}
 
 	/* 
@@ -454,11 +465,18 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 	    | @id = last insert id
 	    | 
 	    */
-		public function hook_after_add($id)
+	public function hook_after_add($id)
 		{
+			// [SECURITY] Gunakan request() helper (bukan $_REQUEST) untuk sanitasi Laravel
+			$user_id       = (int) request('user_id');
+			$point_received = max(0, (int) request('point_received'));
+			$total_income   = max(0, (float) request('total_income'));
+
+			// Validasi: pastikan user_id valid dan milik nasabah terdaftar
+			if ($user_id <= 0) { return; }
+
 			// Mengupdate atau menambahkan total points
-			$user_point = Point::where('user_id', $_REQUEST['user_id'])->first();
-			$point_received = $_REQUEST['point_received'];
+			$user_point = Point::where('user_id', $user_id)->first();
 
 			if ($user_point) {
 				$user_point->update([
@@ -466,14 +484,13 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 				]);
 			} else {
 				Point::create([
-					'user_id' => $_REQUEST['user_id'],
+					'user_id'      => $user_id,
 					'total_points' => $point_received
 				]);
 			}
 
 			// Mengupdate atau menambahkan total saldo
-			$user_saldo = Saldo::where('user_id', $_REQUEST['user_id'])->first();
-			$total_income = $_REQUEST['total_income'];
+			$user_saldo = Saldo::where('user_id', $user_id)->first();
 
 			if ($user_saldo) {
 				$user_saldo->update([
@@ -481,7 +498,7 @@ class AdminTransactionsController extends \crocodicstudio\crudbooster\controller
 				]);
 			} else {
 				Saldo::create([
-					'user_id' => $_REQUEST['user_id'],
+					'user_id'     => $user_id,
 					'total_saldo' => $total_income
 				]);
 			}
